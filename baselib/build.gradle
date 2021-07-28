@@ -1,0 +1,116 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion build_tools_version
+
+    defaultConfig {
+        minSdkVersion min_sdk_version
+        targetSdkVersion target_sdk_version
+        versionCode 1
+        versionName "1.0"
+
+        multiDexEnabled true
+        flavorDimensions "1"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    lintOptions {
+        abortOnError false
+    }
+}
+
+dependencies {
+    api fileTree(dir: 'libs', include: ['*.jar'])
+
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    api "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
+
+    //android x 库
+    api 'androidx.core:core-ktx:1.3.1'
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'com.google.android.material:material:1.2.1'
+    api 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+
+    //分包
+    api 'androidx.multidex:multidex:2.0.1'
+
+    //协程 MVVM
+    //ViewModel
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    //LiveData
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    //lifecycle
+    api "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
+
+    //https://github.com/greenrobot/EventBus
+    api 'org.greenrobot:eventbus:3.2.0'
+
+    //权限 https://github.com/tbruyelle/RxPermissions
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+
+    //封装adapter
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    //网络相关
+    //https://github.com/ReactiveX/RxJava/tree/2.x 暂时用2.0
+    api 'io.reactivex.rxjava2:rxjava:2.2.19'
+    //https://github.com/ReactiveX/RxAndroid
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    //https://github.com/square/okhttp
+    api 'com.squareup.okhttp3:okhttp:4.7.2'
+    api 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+    api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    //https://github.com/square/retrofit
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    //dns
+    api 'com.qiniu:happy-dns:0.2.13'
+    //gson
+    api 'com.google.code.gson:gson:2.8.6'
+
+    //rxlifecycle https://github.com/trello/RxLifecycle
+    api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
+
+    //rxbinding https://github.com/JakeWharton/RxBinding 后续删除多余
+    api 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+
+    //图片选择
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
+
+    //基于 mmap 的高性能通用 key-value 组件 https://github.com/Tencent/MMKV/blob/master/readme_cn.md
+    api 'com.tencent:mmkv-static:1.2.10'
+
+    //刷新加载库
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+    api 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+
+    //banner 采用上面 https://github.com/saiwu-bigkoo/Android-ConvenientBanner
+    api 'com.bigkoo:convenientbanner:2.1.5'
+
+    //圆形
+    api 'de.hdodenhof:circleimageview:3.1.0'
+
+    //tablayout
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+
+    //阿里云oss
+    api 'com.aliyun.dpa:oss-android-sdk:2.9.4'
+}
