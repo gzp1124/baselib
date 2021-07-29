@@ -36,6 +36,7 @@ abstract class BaseMvvmFragment<out Repository : BaseRepository, out ViewModel :
         savedInstanceState: Bundle?
     ): View? {
         initViewModelActions()
+        initViewModel()
         return super.initRootView(inflater, container, savedInstanceState)
     }
 
@@ -45,6 +46,8 @@ abstract class BaseMvvmFragment<out Repository : BaseRepository, out ViewModel :
         hideLoading()
         super.onDestroyView()
     }
+
+    protected abstract fun initViewModel()
 
     private fun initViewModelActions() {
         mViewModel.statusLiveData.observe(viewLifecycleOwner, Observer { status ->

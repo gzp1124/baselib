@@ -57,6 +57,7 @@ dependencies {
     api 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
     api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
+    api 'androidx.annotation:annotation:1.1.0'
 
     //分包
     api 'androidx.multidex:multidex:2.0.1'
@@ -81,6 +82,7 @@ dependencies {
     //组件化改造的框架 https://github.com/alibaba/ARouter/blob/master/README_CN.md
     api "com.alibaba:arouter-api:1.5.2"
     kapt "com.alibaba:arouter-compiler:1.5.2"
+    kapt 'androidx.annotation:annotation:1.1.0'
 
     //网络相关
     //https://github.com/ReactiveX/RxJava/tree/2.x 暂时用2.0

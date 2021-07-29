@@ -2,7 +2,6 @@ package com.thirtydays.baselib.net.ok
 
 import android.content.Context
 import android.os.Environment
-import android.util.Log
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
@@ -50,7 +49,6 @@ class OkHttpManager private constructor() {
         // 设置 Log 拦截器，可以用于以后处理一些异常情况
         val logger: HttpLoggingInterceptor.Logger = object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
-                Log.e("gzp1124",message)
             }
         }
         val interceptor = HttpLoggingInterceptor(logger)

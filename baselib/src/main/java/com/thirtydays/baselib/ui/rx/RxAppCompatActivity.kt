@@ -81,7 +81,7 @@ abstract class RxAppCompatActivity() : AppCompatActivity(), LifecycleProvider<Ac
     /**
      * 添加订阅
      */
-    open fun addDisposable(disposable: Disposable) {
+    open infix fun addDisposable(disposable: Disposable) {
         mCompositeDisposable.add(disposable)
     }
 

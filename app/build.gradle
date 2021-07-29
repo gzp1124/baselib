@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
 }
 
 android {
@@ -10,12 +11,19 @@ android {
 
     defaultConfig {
         applicationId "com.thirtydays.baselibdev"
-        minSdkVersion 21
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
     }
 
     buildTypes {
@@ -45,4 +53,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
     implementation project(':baselib')
+
+
+    kapt "com.alibaba:arouter-compiler:1.5.2"
+    kapt 'androidx.annotation:annotation:1.1.0'
 }

@@ -3,6 +3,8 @@ package com.thirtydays.baselib
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
+import androidx.lifecycle.ViewModelStore
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.multidex.MultiDexApplication
 import com.alibaba.android.arouter.launcher.ARouter
 import com.scwang.smart.refresh.header.ClassicsHeader
@@ -20,7 +22,7 @@ import okhttp3.OkHttpClient
  * Des:
  */
 
-open class BaseApplication : MultiDexApplication() {
+open class BaseApplication : MultiDexApplication(), ViewModelStoreOwner {
 
     override fun attachBaseContext(base: Context) {
         CommonHelper.context = base
@@ -44,8 +46,10 @@ open class BaseApplication : MultiDexApplication() {
         val rootDir: String = MMKV.initialize(this)
 
         //ARouter初始化
-        ARouter.openLog() // 打印日志
-        ARouter.openDebug()
+        if (BuildConfig.DEBUG) {
+            ARouter.openLog() // 打印日志
+            ARouter.openDebug()
+        }
         ARouter.init(this)
 
         //腾讯
@@ -60,6 +64,14 @@ open class BaseApplication : MultiDexApplication() {
             ClassicsHeader(context)
         }
 //        LoadMoreModuleConfig.defLoadMoreView = CustomLoadMoreView()
+    }
+
+    private val appViewModelStore: ViewModelStore by lazy {
+        ViewModelStore()
+    }
+
+    override fun getViewModelStore(): ViewModelStore {
+        return appViewModelStore
     }
 
 }

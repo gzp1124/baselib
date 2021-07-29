@@ -26,10 +26,10 @@ abstract class BaseMvvmActivity<out Repository : BaseRepository, out ViewModel :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        setLayout()
+
         //ARouter注册
         ARouter.getInstance().inject(this)
-
-        setLayout()
 
         if (isImmersionBar()) {
             setImmersionBar()
@@ -37,7 +37,7 @@ abstract class BaseMvvmActivity<out Repository : BaseRepository, out ViewModel :
 
         initViewModelActions()
         initViewModel()
-        initData()
+        if (savedInstanceState == null) requestData()
     }
 
     protected open fun setLayout() {
@@ -86,7 +86,7 @@ abstract class BaseMvvmActivity<out Repository : BaseRepository, out ViewModel :
 
     protected abstract fun initViewModel()
 
-    protected abstract fun initData()
+    protected abstract fun requestData()
 
     override fun onDestroy() {
         hideLoading()

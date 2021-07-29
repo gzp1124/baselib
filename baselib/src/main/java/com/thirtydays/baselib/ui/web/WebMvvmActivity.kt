@@ -42,7 +42,7 @@ abstract class WebMvvmActivity<out V : BaseRepository, out T : BaseViewModel<V>>
     override fun getLayoutId() = R.layout.activity_web
 
     @SuppressLint("SetJavaScriptEnabled")
-    override fun initData() {
+    override fun requestData() {
         BroadCastManager(this, key, mWebViews)
         mWebView = find(R.id.webView)
         webSettings()
