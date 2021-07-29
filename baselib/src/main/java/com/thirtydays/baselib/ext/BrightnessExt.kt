@@ -6,7 +6,7 @@ import android.Manifest
 import android.app.Activity
 import android.provider.Settings
 import androidx.annotation.RequiresPermission
-import com.thirtydays.baselib.common.AppContext
+import com.thirtydays.baselib.AppContext
 
 /**
  * <pre>

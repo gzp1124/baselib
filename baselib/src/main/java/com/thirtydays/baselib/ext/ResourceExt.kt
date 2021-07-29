@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.*
 import androidx.core.content.ContextCompat
-import com.thirtydays.baselib.common.AppContext
+import com.thirtydays.baselib.AppContext
 
 /**
  * <pre>

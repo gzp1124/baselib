@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.LayoutRes
-import com.thirtydays.baselib.common.AppContext
+import com.thirtydays.baselib.AppContext
 
 /**
  * <pre>

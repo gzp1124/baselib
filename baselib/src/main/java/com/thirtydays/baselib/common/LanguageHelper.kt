@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.os.Build
 import androidx.annotation.StringDef
+import com.thirtydays.baselib.Settings
 import java.util.*
 
 /**

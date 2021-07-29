@@ -13,7 +13,7 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.view.WindowManager
 import androidx.annotation.RequiresPermission
-import com.thirtydays.baselib.common.AppContext
+import com.thirtydays.baselib.AppContext
 
 /**
  * <pre>

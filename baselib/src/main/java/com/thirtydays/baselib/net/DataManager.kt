@@ -1,6 +1,6 @@
 package com.thirtydays.baselib.net
 
-import com.thirtydays.baselib.common.BaseApplication.Companion.dataManager
+import com.thirtydays.baselib.BaseApplication.Companion.dataManager
 import com.thirtydays.baselib.ext.Mmkv
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

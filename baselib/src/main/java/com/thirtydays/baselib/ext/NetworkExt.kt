@@ -4,7 +4,7 @@ package com.thirtydays.baselib.ext
 
 import android.content.Context
 import android.net.ConnectivityManager
-import com.thirtydays.baselib.common.AppContext
+import com.thirtydays.baselib.AppContext
 
 /**
  * <pre>
