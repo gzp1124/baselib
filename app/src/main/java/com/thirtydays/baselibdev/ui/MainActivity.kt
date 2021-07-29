@@ -1,11 +1,10 @@
-package com.thirtydays.baselibdev
+package com.thirtydays.baselibdev.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
 import com.thirtydays.baselib.ext.singleClick
-import com.thirtydays.baselib.net.DataManager.Companion.app_token
+import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.net.bean.TestBean
 import kotlinx.android.synthetic.main.activity_main.*
 

@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BaseLibDev"
         tools:replace="android:theme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".TestActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".ui.TestActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
     </application>
 
 </manifest>

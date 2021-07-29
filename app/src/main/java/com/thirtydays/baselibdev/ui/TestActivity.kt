@@ -1,4 +1,4 @@
-package com.thirtydays.baselibdev
+package com.thirtydays.baselibdev.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.thirtydays.baselib.ext.click
 import com.thirtydays.baselib.ui.activity.BaseMvvmActivity
+import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.net.MainRepository
 import com.thirtydays.baselibdev.net.bean.TestBean
 import com.thirtydays.baselibdev.vm.MainViewModel
