@@ -2,23 +2,19 @@ package com.thirtydays.baselibdev.ui
 
 import android.os.Bundle
 import android.util.Log
-import androidx.lifecycle.ViewModelProvider
+import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Autowired
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.thirtydays.baselib.ext.click
-import com.thirtydays.baselib.ui.activity.BaseMvvmActivity
+import com.seabreeze.robot.base.ext.view.click
+import com.seabreeze.robot.base.ui.activity.BaseVmActivity
 import com.thirtydays.baselibdev.R
-import com.thirtydays.baselibdev.net.MainRepository
+import com.thirtydays.baselibdev.databinding.ActivityTestBinding
 import com.thirtydays.baselibdev.net.bean.TestBean
 import com.thirtydays.baselibdev.vm.MainViewModel
-import kotlinx.android.synthetic.main.activity_test.*
 
 
 @Route(path = "/test/test")
-class TestActivity: BaseMvvmActivity<MainRepository, MainViewModel>() {
-    override fun createViewModel(): MainViewModel = ViewModelProvider(this)[MainViewModel::class.java]
-
-    override fun getLayoutId(): Int  = R.layout.activity_test
+class TestActivity: BaseVmActivity<MainViewModel, ActivityTestBinding>(R.layout.activity_test) {
 
     var testFragment: TestFragment
     var testFragment2: Test2Fragment
@@ -41,13 +37,13 @@ class TestActivity: BaseMvvmActivity<MainRepository, MainViewModel>() {
         }
     }
 
-    override fun initViewModel() {
-        qiehuan.click {
+    override fun initData() {
+        findViewById<View>(R.id.qiehuan).click {
             supportFragmentManager.beginTransaction().replace(R.id.frameLin,testFragment2).commitAllowingStateLoss()
         }
     }
 
-    override fun requestData() {
-        mViewModel.getTime()
+    override fun onInitDataBinding() {
+        mDataBinding.viewModel = mViewModel
     }
 }

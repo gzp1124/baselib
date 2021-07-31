@@ -1,9 +1,8 @@
-plugins {
-    id 'com.android.library'
-    id 'kotlin-android'
-    id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
-}
+apply plugin: 'com.android.library'
+
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-parcelize'
 
 android {
     compileSdkVersion compile_sdk_version
@@ -17,6 +16,10 @@ android {
 
         multiDexEnabled true
         flavorDimensions "1"
+
+        ndk {
+            abiFilters "armeabi", "armeabi-v7a"
+        }
 
         javaCompileOptions {
             annotationProcessorOptions {
@@ -32,35 +35,36 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = "1.8"
     }
+
     lintOptions {
         abortOnError false
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
     }
 }
 
 dependencies {
+
+    api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+//    api "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.7"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.7"
+
     api fileTree(dir: 'libs', include: ['*.jar'])
 
-    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    api "org.jetbrains.kotlin:kotlin-android-extensions-runtime:$kotlin_version"
-
-    //android x 库
-    api 'androidx.core:core-ktx:1.3.1'
-    api 'androidx.appcompat:appcompat:1.2.0'
-    api 'com.google.android.material:material:1.2.1'
-    api 'androidx.constraintlayout:constraintlayout:2.0.0-beta7'
-    api 'androidx.recyclerview:recyclerview:1.1.0'
-    api 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
-    api 'androidx.annotation:annotation:1.1.0'
-
-    //分包
-    api 'androidx.multidex:multidex:2.0.1'
+    api project(path: ':fragmentation_core')
 
     //协程 MVVM
     //ViewModel
@@ -70,75 +74,199 @@ dependencies {
     //lifecycle
     api "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
-    //https://github.com/greenrobot/EventBus
-    api 'org.greenrobot:eventbus:3.2.0'
+    //leakCanary
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
-    //权限 https://github.com/tbruyelle/RxPermissions
-    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    // bugly
+    api 'com.tencent.bugly:crashreport:3.1.0'
+    api 'com.tencent.bugly:nativecrashreport:3.1.0'
 
-    //封装adapter
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+    //android x 库
+    api 'androidx.appcompat:appcompat:1.2.0'
+    api 'androidx.constraintlayout:constraintlayout:2.0.1'
+    api 'com.google.android.material:material:1.1.0'
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'androidx.cardview:cardview:1.0.0'
+    api 'androidx.browser:browser:1.2.0'
+    api 'androidx.annotation:annotation:1.1.0'
+    api 'androidx.legacy:legacy-support-v4:1.0.0'
+    api "androidx.dynamicanimation:dynamicanimation:1.0.0"
+    api 'androidx.core:core-ktx:1.3.0'
+    api 'androidx.viewpager2:viewpager2:1.0.0'
 
-    //组件化改造的框架 https://github.com/alibaba/ARouter/blob/master/README_CN.md
-    api "com.alibaba:arouter-api:1.5.2"
-    kapt "com.alibaba:arouter-compiler:1.5.2"
-    kapt 'androidx.annotation:annotation:1.1.0'
+    api 'androidx.camera:camera-view:1.0.0-alpha10'
+    api 'androidx.camera:camera-lifecycle:1.0.0-beta03'
 
-    //网络相关
-    //https://github.com/ReactiveX/RxJava/tree/2.x 暂时用2.0
-    api 'io.reactivex.rxjava2:rxjava:2.2.19'
-    //https://github.com/ReactiveX/RxAndroid
-    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    //https://github.com/square/okhttp
-    api 'com.squareup.okhttp3:okhttp:4.7.2'
-    api 'com.squareup.okhttp3:logging-interceptor:4.7.2'
-    api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-    //https://github.com/square/retrofit
-    api 'com.squareup.retrofit2:retrofit:2.9.0'
-    api 'com.squareup.retrofit2:converter-gson:2.9.0'
-    api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
-    //dns
-    api 'com.qiniu:happy-dns:0.2.13'
-    //gson
-    api 'com.google.code.gson:gson:2.8.6'
+    api 'androidx.arch.core:core-common:2.1.0'
+    api 'androidx.navigation:navigation-ui:2.2.2'
+    api 'androidx.navigation:navigation-fragment:2.2.2'
+    api 'androidx.navigation:navigation-ui-ktx:2.2.2'
+    api 'androidx.navigation:navigation-fragment-ktx:2.2.2'
 
-    //rxlifecycle https://github.com/trello/RxLifecycle
-    api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
-    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
 
-    //rxbinding https://github.com/JakeWharton/RxBinding 后续删除多余
-    api 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+    //异步加载布局
+    api 'androidx.asynclayoutinflater:asynclayoutinflater:1.0.0'
 
-    //图片选择
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
-
-    //基于 mmap 的高性能通用 key-value 组件 https://github.com/Tencent/MMKV/blob/master/readme_cn.md
-    api 'com.tencent:mmkv-static:1.2.10'
-
-    //刷新加载库
-    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
-    api 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
-
-    //banner 采用上面 https://github.com/saiwu-bigkoo/Android-ConvenientBanner
-    api 'com.bigkoo:convenientbanner:2.1.5'
-
-    //圆形
-    api 'de.hdodenhof:circleimageview:3.1.0'
-
-    //tablayout
-    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
-
-    //阿里云oss
-    api 'com.aliyun.dpa:oss-android-sdk:2.9.4'
-
-    //滑动返回 AndroidX https://github.com/bingoogolapple/BGASwipeBackLayout-Android
-    api 'cn.bingoogolapple:bga-swipebacklayout:2.0.1'
+    //分包
+    api 'androidx.multidex:multidex:2.0.1'
 
     //沉浸式 https://github.com/gyf-dev/ImmersionBar
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
+    //适配 https://github.com/jackmoore/autosize
+    api 'me.jessyan:autosize:1.2.1'
+
+    //rxlifecycle https://github.com/trello/RxLifecycle
+    api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'
+    api 'com.trello.rxlifecycle3:rxlifecycle-android:3.1.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:3.1.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle:3.1.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-kotlin:3.1.0'
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android-lifecycle-kotlin:3.1.0'
+
+    //网络相关
+    //https://github.com/ReactiveX/RxJava/tree/2.x 暂时用2.0
+    api 'io.reactivex.rxjava2:rxjava:2.2.19'
+    //https://github.com/ReactiveX/RxAndroid
+    api 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
+    //rxbinding https://github.com/JakeWharton/RxBinding 后续删除多余
+    api 'com.jakewharton.rxbinding3:rxbinding:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-core:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-drawerlayout:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-leanback:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-recyclerview:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-slidingpanelayout:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-swiperefreshlayout:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-viewpager:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-viewpager2:3.1.0'
+    api 'com.jakewharton.rxbinding3:rxbinding-material:3.1.0'
+
+    //https://github.com/square/retrofit
+    api 'com.squareup.retrofit2:retrofit:2.9.0'
+    api 'com.squareup.retrofit2:converter-gson:2.9.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.9.0'
+    //协程相关
+//    api 'com.squareup.retrofit2:converter-scalars:2.5.0'
+
+    //https://github.com/square/okhttp
+    api 'com.squareup.okhttp3:okhttp:4.7.2'
+//    api 'com.squareup.okhttp3:mockwebserver:4.2.0'
+    api 'com.squareup.okhttp3:logging-interceptor:4.7.2'
+
+    api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+
+    //https://github.com/greenrobot/EventBus
+    api 'org.greenrobot:eventbus:3.2.0'
+
+    //dns
+    api 'com.qiniu:happy-dns:0.2.13'
+
+    //gson
+    api 'com.google.code.gson:gson:2.8.6'
+
+    //封装adapter
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    //https://github.com/bumptech/glide
+    api 'com.github.bumptech.glide:glide:4.11.0'
+    kapt 'com.github.bumptech.glide:compiler:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    api "com.github.bumptech.glide:okhttp3-integration:4.11.0"
+
+    //图片压缩 https://github.com/Curzibn/Luban
+    api 'top.zibin:Luban:1.1.8'
+    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
+
+    //最好用一个图片框架 PictureSelector 中包含此框架
+    //高清大图加载库 https://github.com/davemorrissey/subsampling-scale-image-view
+//    api 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+
+    //滑动返回 AndroidX https://github.com/bingoogolapple/BGASwipeBackLayout-Android
+    api 'cn.bingoogolapple:bga-swipebacklayout:2.0.1'
+
     //解决Toast崩溃BadTokenException问题 https://github.com/PureWriter/ToastCompat
     api 'me.drakeet.support:toastcompat:1.1.0'
+    //https://github.com/Tapadoo/Alerter 4.0.0以后支持AndroidX
+    api 'com.tapadoo.android:alerter:5.1.2'
+
+    //更新apk
+    api "com.github.ssseasonnn:RxDownload:1.0.9"
+
+    //权限 https://github.com/tbruyelle/RxPermissions
+//    api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    api 'com.permissionx.guolindev:permissionx:1.4.0'
+
+    //改为xlog 系统保存日志文件 https://github.com/elvishew/XLog/blob/master/README_ZH.md
+    api 'com.elvishew:xlog:1.6.1'
+    //开发定位使用 https://github.com/orhanobut/logger
+    api 'com.orhanobut:logger:2.2.0'
+
+    //material风格弹窗
+    api 'com.afollestad.material-dialogs:core:3.3.0'
+    api 'com.afollestad.material-dialogs:input:3.3.0'
+    api 'com.afollestad.material-dialogs:lifecycle:3.3.0'
+    api 'com.ldoublem.loadingview:loadingviewlib:1.0'
+
+    //基于 mmap 的高性能通用 key-value 组件 https://github.com/Tencent/MMKV/blob/master/readme_cn.md
+    api 'com.tencent:mmkv-static:1.2.10'
+
+    //组件化改造的框架 https://github.com/alibaba/ARouter/blob/master/README_CN.md
+    api "com.alibaba:arouter-api:1.5.0"
+    kapt "com.alibaba:arouter-compiler:1.2.2"
+    kapt 'androidx.annotation:annotation:1.1.0'
+
+    //依赖注入库 https://github.com/google/dagger 此时放弃
+//    api 'com.google.dagger:dagger:2.24'
+//    api 'com.google.dagger:dagger-android:2.24'
+//    api 'com.google.dagger:dagger-android-support:2.24'
+//    kapt 'com.google.dagger:dagger-compiler:2.24'
+//    kapt 'com.google.dagger:dagger-android-processor:2.24'
+    //依赖注入库 Koin for Android
+//    api 'org.koin:koin-android:2.0.1'
+//    api 'org.koin:koin-androidx-scope:2.0.1'
+//    api 'org.koin:koin-androidx-viewmodel:2.0.1'
+
+    //刷新加载库 https://github.com/scwang90/SmartRefreshLayout
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.1'      //核心必须依赖
+    api 'com.scwang.smart:refresh-header-classics:2.0.1'    //经典刷新头
+//    api  'com.scwang.smart:refresh-header-radar:2.0.1'       //雷达刷新头
+//    api  'com.scwang.smart:refresh-header-falsify:2.0.1'     //虚拟刷新头
+//    api 'com.scwang.smart:refresh-header-material:2.0.1'    //谷歌刷新头
+//    api  'com.scwang.smart:refresh-header-two-level:2.0.1'   //二级刷新头
+//    api  'com.scwang.smart:refresh-footer-ball:2.0.1'        //球脉冲加载
+//    api 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
+
+    //阴影 https://github.com/lihangleo2/ShadowLayout
+    api 'com.github.lihangleo2:ShadowLayout:3.1.2'
+
+    //动画 https://github.com/florent37/ViewAnimator
+//    api 'com.github.florent37:viewanimator:1.1.0'
+//    api 'com.nineoldandroids:library:2.4.0'
+//    api 'com.google.firebase:firebase-appindexing:19.1.0'
+
+    //banner 采用上面 https://github.com/saiwu-bigkoo/Android-ConvenientBanner
+    api 'com.bigkoo:convenientbanner:2.1.5'
+
+    //greendao https://github.com/greenrobot/greenDAO
+//    api 'org.greenrobot:greendao:3.2.2'
+    //room 数据库
+//    api 'androidx.room:room-runtime:2.2.5'
+//    api 'androidx.room:room-ktx:2.2.5'
+//    api 'androidx.room:room-rxjava2:2.2.5'
+//    kapt 'androidx.room:room-compiler:2.2.5'
+//    annotationProcessor 'androidx.room:room-compiler:2.2.5'
+//    androidTestImplementation 'androidx.room:room-testing:2.2.5'
+
+    //圆形图片 https://github.com/hdodenhof/CircleImageView
+    api 'de.hdodenhof:circleimageview:3.1.0'
+    //TabLayout https://github.com/H07000223/FlycoTabLayout
+    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    //阿里云 oss
+    api 'com.aliyun.dpa:oss-android-sdk:2.9.4'
+
 }

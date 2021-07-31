@@ -1,7 +1,7 @@
 package com.thirtydays.baselibdev.net
 
+import com.seabreeze.robot.base.framework.mvvm.BaseRepository
 import com.thirtydays.baselibdev.net.api.impl.MainImpl
-import com.thirtydays.baselib.vm.BaseRepository
 import io.reactivex.Flowable
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

@@ -11,15 +11,21 @@
         android:id="@+id/mc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:text="@string/hello"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:text="打开test页面"
         android:layout_marginTop="100dp"
         android:id="@+id/openPage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/changeLa"
+        android:text="切换语言"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 </LinearLayout>

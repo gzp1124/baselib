@@ -4,4 +4,6 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class TestBean(var name:String) : Parcelable
+data class TestBean(
+    var name: String
+) : Parcelable
