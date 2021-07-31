@@ -64,7 +64,7 @@ dependencies {
 
     api fileTree(dir: 'libs', include: ['*.jar'])
 
-    api project(path: ':fragmentation_core')
+    api project(project.path.replace(project.name, '') + ':fragmentation_core')
 
     //协程 MVVM
     //ViewModel
