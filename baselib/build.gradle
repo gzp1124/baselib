@@ -116,8 +116,8 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
-    //适配 https://github.com/jackmoore/autosize
-    api 'me.jessyan:autosize:1.2.1'
+    //今日头条屏幕适配 https://github.com/JessYanCoding/AndroidAutoSize
+    api 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
 
     //rxlifecycle https://github.com/trello/RxLifecycle
     api 'com.trello.rxlifecycle3:rxlifecycle:3.1.0'

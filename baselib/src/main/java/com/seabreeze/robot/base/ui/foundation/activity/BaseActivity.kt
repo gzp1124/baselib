@@ -1,15 +1,20 @@
 package com.seabreeze.robot.base.ui.foundation.activity
 
+import android.content.res.Configuration
+import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.launcher.ARouter
 import com.permissionx.guolindev.PermissionCollection
 import com.permissionx.guolindev.PermissionX
+import com.seabreeze.robot.base.Settings
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.ext.foundation.onError
 import com.seabreeze.robot.base.ext.tool.toast
 import com.seabreeze.robot.base.ui.fragment.ProgressDialogFragment
+import me.jessyan.autosize.AutoSizeCompat
+import me.jessyan.autosize.AutoSizeConfig
 
 /**
  * <pre>
@@ -72,5 +77,23 @@ abstract class BaseActivity : InternationalizationActivity() {
 //            .setText(msg)
 //            .show()
         runOnUiThread { toast { msg } }
+    }
+
+    override fun getResources(): Resources {
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            var rw: Float
+            var rh: Float
+            if (super.getResources().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                rw = Settings.app_landscape_screen_width
+                rh = Settings.app_landscape_screen_height
+            } else {
+                rw = Settings.app_portrait_screen_width
+                rh = Settings.app_portrait_screen_height
+            }
+            AutoSizeConfig.getInstance().designWidthInDp = rw.toInt()
+            AutoSizeConfig.getInstance().designHeightInDp = rh.toInt()
+            AutoSizeCompat.autoConvertDensity(super.getResources(), rw, true)
+        }
+        return super.getResources()
     }
 }

@@ -28,7 +28,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.TestActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>
+        <activity android:name=".ui.TestActivity"/>
     </application>
 
 </manifest>

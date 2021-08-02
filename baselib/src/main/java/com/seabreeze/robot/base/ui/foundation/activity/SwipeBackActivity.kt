@@ -11,6 +11,7 @@ import com.gyf.immersionbar.ImmersionBar
 import com.seabreeze.robot.base.R
 import com.seabreeze.robot.base.common.AppManager
 import com.seabreeze.robot.base.Settings
+import com.seabreeze.robot.base.Settings.app_force_use_portrait
 import com.seabreeze.robot.base.ext.find
 import com.seabreeze.robot.base.ext.tool.getStatusBarHeight
 import com.seabreeze.robot.base.ext.tool.setScreenPortrait
@@ -29,7 +30,7 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
         //根类记录 Activity
         AppManager.addActivity(this)
         //横竖屏
-        setScreenPortrait()
+        if (app_force_use_portrait) setScreenPortrait()
         //滑动返回
         initSwipeBackFinish()
         //屏幕设置

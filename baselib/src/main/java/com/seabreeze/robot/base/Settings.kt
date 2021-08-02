@@ -11,6 +11,16 @@ import com.seabreeze.robot.base.ext.foundation.Mmkv
  * </pre>
  */
 object Settings {
+    // 强制使用竖屏
+    var app_force_use_portrait : Boolean = false
+    // 配合 AutoSize 适配的参数，单位都是dp
+    var app_landscape_screen_width : Float = 1194f
+    var app_landscape_screen_height : Float = 834f
+    // 如果强制使用竖屏，只需要设置下面两个竖屏的宽高即可
+    var app_portrait_screen_width : Float = 375f
+    var app_portrait_screen_height : Float = 812f
+
+
     // 请求url
     var BASE_URL:String = "http://101.200.207.61:9650/"
 

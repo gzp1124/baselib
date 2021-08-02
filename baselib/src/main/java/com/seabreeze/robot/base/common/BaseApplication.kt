@@ -16,9 +16,12 @@ import com.orhanobut.logger.PrettyFormatStrategy
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.seabreeze.robot.base.BuildConfig
+import com.seabreeze.robot.base.Settings
+import com.seabreeze.robot.base.Settings.app_force_use_portrait
 import com.seabreeze.robot.base.Settings.language_status
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.ext.initWebViewDataDirectory
+import com.seabreeze.robot.base.ext.tool.isLandscape
 import com.seabreeze.robot.base.net.RetrofitFactory
 import com.seabreeze.robot.base.net.ok.OkHttpManager
 import com.seabreeze.robot.base.widget.loadpage.CustomLoadMoreView
@@ -91,8 +94,15 @@ abstract class BaseApplication : MultiDexApplication() {
         ARouter.init(this)
 
         // 适配
+        if (!app_force_use_portrait && isLandscape) {
+            AutoSizeConfig.getInstance().designWidthInDp = Settings.app_landscape_screen_width.toInt()
+            AutoSizeConfig.getInstance().designHeightInDp = Settings.app_landscape_screen_height.toInt()
+        }else{
+            AutoSizeConfig.getInstance().designWidthInDp = Settings.app_portrait_screen_width.toInt()
+            AutoSizeConfig.getInstance().designHeightInDp = Settings.app_portrait_screen_height.toInt()
+        }
+        AutoSizeConfig.getInstance().isCustomFragment = true
         AutoSize.initCompatMultiProcess(this)
-        AutoSizeConfig.getInstance()
 
         // 滑动返回
         BGASwipeBackHelper.init(this,null)
