@@ -18,18 +18,20 @@ import java.lang.reflect.ParameterizedType
  * Time: 2020/3/24 16:35
  * Des: Mvvm 必须使用协程
  */
-abstract class BaseVmActivity<out ViewModel : BaseViewModel, DataBinding : ViewDataBinding>(
+abstract class BaseVmActivity<ViewModel : BaseViewModel, DataBinding : ViewDataBinding>(
     @LayoutRes
     private val layoutId: Int
 ) : BaseActivity(), IViewModel<ViewModel> {
 
     lateinit var mDataBinding: DataBinding
 
-    final override val mViewModel: ViewModel
+    override lateinit var mViewModel: ViewModel
 
     init {
         mViewModel = findViewModelClass().newInstance()
     }
+
+    open fun createViewModel() {}
 
     private fun findViewModelClass(): Class<ViewModel> {
         var thisClass: Class<*> = this.javaClass
@@ -50,6 +52,7 @@ abstract class BaseVmActivity<out ViewModel : BaseViewModel, DataBinding : ViewD
         mDataBinding = DataBindingUtil.setContentView(this, layoutId)
         mDataBinding.lifecycleOwner = this
 
+        createViewModel()
         onInitDataBinding()
 
         initViewModelActions()

@@ -8,6 +8,9 @@
         <variable
             name="viewModel"
             type="com.thirtydays.baselibdev.vm.MainViewModel" />
+        <variable
+            name="two"
+            type="com.thirtydays.baselibdev.vm.TwoViewModel" />
     </data>
 
     <LinearLayout
@@ -20,7 +23,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="100dp"
-            android:text="横屏来了" />
+            android:text="@{viewModel.testContent}" />
+        <TextView
+            android:textColor="#f00"
+            android:text="@{two.testContent}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <FrameLayout
             android:id="@+id/frameLin"

@@ -6,6 +6,9 @@
     <data>
 
         <variable
+            name="two"
+            type="com.thirtydays.baselibdev.vm.TwoViewModel" />
+        <variable
             name="viewModel"
             type="com.thirtydays.baselibdev.vm.MainViewModel" />
     </data>
@@ -14,6 +17,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
+        <TextView
+            android:textColor="#f00"
+            android:text="@{two.testContent}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <Button
             android:id="@+id/qiehuan"

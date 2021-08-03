@@ -7,6 +7,9 @@ import com.seabreeze.robot.base.ext.coroutine.launchUI
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.model.CoroutineState
 
+class NoViewModel:BaseViewModel(){
+}
+
 abstract class BaseViewModel : ViewModel() {
     /**
      * 协程状态管理

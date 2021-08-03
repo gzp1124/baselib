@@ -34,7 +34,11 @@ abstract class BaseVmFragment<out ViewModel : BaseViewModel, DataBinding : ViewD
     final override val mViewModel: ViewModel
 
     init {
-        mViewModel = findViewModelClass().newInstance()
+        mViewModel = createViewModel()
+    }
+
+    protected fun createViewModel(): ViewModel{
+        return findViewModelClass().newInstance()
     }
 
     private fun findViewModelClass(): Class<ViewModel> {
