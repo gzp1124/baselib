@@ -11,6 +11,8 @@ import com.permissionx.guolindev.PermissionX
 import com.seabreeze.robot.base.Settings
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.ext.foundation.onError
+import com.seabreeze.robot.base.ext.tool.screenHeight
+import com.seabreeze.robot.base.ext.tool.screenWidth
 import com.seabreeze.robot.base.ext.tool.toast
 import com.seabreeze.robot.base.ui.fragment.ProgressDialogFragment
 import me.jessyan.autosize.AutoSizeCompat
@@ -35,6 +37,9 @@ abstract class BaseActivity : InternationalizationActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AutoSizeConfig.getInstance().screenHeight = screenHeight
+        AutoSizeConfig.getInstance().screenWidth = screenWidth
+
         //ARouter注册
         ARouter.getInstance().inject(this)
 
@@ -44,6 +49,12 @@ abstract class BaseActivity : InternationalizationActivity() {
     override fun onDestroy() {
         dismissProgressDialog()
         super.onDestroy()
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        AutoSizeConfig.getInstance().screenHeight = screenHeight
+        AutoSizeConfig.getInstance().screenWidth = screenWidth
     }
 
     /**

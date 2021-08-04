@@ -22,6 +22,8 @@ import com.seabreeze.robot.base.Settings.language_status
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.ext.initWebViewDataDirectory
 import com.seabreeze.robot.base.ext.tool.isLandscape
+import com.seabreeze.robot.base.ext.tool.screenHeight
+import com.seabreeze.robot.base.ext.tool.screenWidth
 import com.seabreeze.robot.base.net.RetrofitFactory
 import com.seabreeze.robot.base.net.ok.OkHttpManager
 import com.seabreeze.robot.base.widget.loadpage.CustomLoadMoreView
