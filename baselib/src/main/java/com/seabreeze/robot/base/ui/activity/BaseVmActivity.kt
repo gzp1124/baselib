@@ -38,6 +38,10 @@ abstract class BaseVmActivity<DataBinding : ViewDataBinding>(
 
     abstract fun onInitDataBinding()
 
+    /**
+     * 监听请求状态和错误响应
+     * 不请求不监听
+     */
     private fun initViewModelActions(mViewModel:BaseViewModel) {
         mViewModel.run {
             observe(error){

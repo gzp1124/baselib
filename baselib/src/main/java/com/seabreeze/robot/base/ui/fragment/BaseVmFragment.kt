@@ -47,6 +47,10 @@ abstract class BaseVmFragment<DataBinding : ViewDataBinding>(
         onInitDataBinding()
     }
 
+    /**
+     * 监听请求状态和错误响应
+     * 不请求不监听
+     */
     fun initViewModelActions(mViewModel:BaseViewModel) {
         observe(mViewModel.error) {
             it.onError()
