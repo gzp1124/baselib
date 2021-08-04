@@ -113,7 +113,7 @@ abstract class BaseApplication : MultiDexApplication() {
         CrashReport.initCrashReport(this, "3dd9e06f7e", BuildConfig.DEBUG)
 
         language_status.let {
-            LanguageHelper.switchLanguage(this, it, isForce = true)
+            LanguageHelper.setLanguage(this, it,isForce = true)
         }
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->

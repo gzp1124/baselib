@@ -23,7 +23,7 @@ abstract class InternationalizationActivity : SwipeBackActivity() {
     override fun attachBaseContext(newBase: Context) {
         //语言国际化
         val context = Settings.language_status.let {
-            LanguageHelper.switchLanguage(newBase, it, isForce = true)
+            LanguageHelper.setLanguage(newBase, it, isForce = true)
         }
         super.attachBaseContext(context)
     }

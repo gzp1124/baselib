@@ -11,6 +11,10 @@ import com.thirtydays.baselibdev.databinding.ActivityMainBinding
 import com.thirtydays.baselibdev.router.RouterPath
 import com.thirtydays.baselibdev.vm.MainViewModel
 import com.thirtydays.baselibdev.vm.TwoViewModel
+import android.content.Intent
+import com.seabreeze.robot.base.common.AppManager
+import com.seabreeze.robot.base.common.LanguageHelper
+
 
 @Route(path = RouterPath.AppCenter.PATH_APP_MAIN)
 class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main), MainClick {
@@ -33,7 +37,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
         ARouter.getInstance().build("/test/test").navigation()
     }
 
-    override fun changeLang() {
-        toast("切换语言")
+    override fun changeLang(lang:String) {
+        LanguageHelper.switchLanguage(this, lang, clz = MainActivity::class.java)
     }
 }

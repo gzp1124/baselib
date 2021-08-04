@@ -1,9 +1,16 @@
 package com.seabreeze.robot.base.common
 
+import android.app.Activity
+import android.app.Application
 import android.content.Context
+import android.content.Intent
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
+import android.util.Log
 import androidx.annotation.StringDef
+import androidx.appcompat.view.ContextThemeWrapper
+import com.seabreeze.robot.base.R
 import com.seabreeze.robot.base.Settings
 import java.util.*
 
@@ -47,27 +54,30 @@ object LanguageHelper {
     private val LOCALE_TYPE_JAPANESE = Locale.JAPANESE
     private val LOCALE_TYPE_SIMPLIFIED_CHINESE = Locale.SIMPLIFIED_CHINESE
 
-    fun switchLanguage(
-        context: Context,
-        @LanguageStatus language: String,
-        isForce: Boolean = false,
-        isSeniorForce: Boolean = false
-    ): Context {
-        return if (isSeniorForce) {
-
-            languageCompat(language, context)
-        } else {
-            if (isForce) {
-                languageCompat(language, context)
-            } else {
-                if (Settings.language_status == language) {
-                    context
-                } else {
-                    languageCompat(language, context)
-                }
-            }
+    /**
+     * 设置语言
+     */
+    fun setLanguage(context: Context, @LanguageStatus language: String, isForce: Boolean = false): Context {
+        if (!isForce && Settings.language_status == language) {
+            return context
         }
+        return languageCompat(language, context)
+    }
 
+    /**
+     * 切换语言
+     */
+    fun switchLanguage(context: Context, @LanguageStatus language: String, clz: Class<out Activity>? = null) {
+        if (Settings.language_status == language) {
+            return
+        }
+        Settings.language_status = language
+        clz?.let {
+            AppManager.finishAllActivity()
+            context.startActivity(
+                Intent(context, it).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            )
+        }
     }
 
     private fun languageCompat(language: String, context: Context): Context {
@@ -86,17 +96,49 @@ object LanguageHelper {
     }
 
     private fun languageCompat(context: Context, locale: Locale): Context {
-        val resources = context.resources ?: return context
-        val config = resources.configuration ?: return context
-        config.setLocale(locale)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return context.createConfigurationContext(config)
-        } else {
-            val dm = resources.displayMetrics ?: return context
-            @Suppress("DEPRECATION")
-            resources.updateConfiguration(config, dm)
-            return context
+        var ctx = context
+        Locale.setDefault(locale)
+
+        //在非application切换语言同时切换掉applicant
+        if (ctx !is Application) {
+            val appContext = ctx.applicationContext
+            updateConfiguration(appContext, locale, Settings.language_status)
         }
+        ctx = updateConfiguration(context, locale, Settings.language_status)
+        val configuration = context.resources.configuration
+        //兼容appcompat 1.2.0后切换语言失效问题
+        return object : ContextThemeWrapper(ctx, R.style.AppBaseTheme) {
+            override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+                overrideConfiguration?.setTo(configuration)
+                super.applyOverrideConfiguration(overrideConfiguration)
+            }
+        }
+//        val resources = context.resources ?: return context
+//        val config = resources.configuration ?: return context
+//        config.setLocale(locale)
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+//            return context.createConfigurationContext(config)
+//        } else {
+//            val dm = resources.displayMetrics ?: return context
+//            @Suppress("DEPRECATION")
+//            resources.updateConfiguration(config, dm)
+//            return context
+//        }
+    }
+
+    private fun updateConfiguration(context: Context, locale: Locale, language: String): Context {
+        var ctx = context
+        val resources = ctx.resources
+        val configuration = resources.configuration
+        val displayMetrics = resources.displayMetrics
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            configuration.setLocale(locale)
+            ctx = ctx.createConfigurationContext(configuration)
+        } else {
+            configuration.locale = locale
+        }
+        resources.updateConfiguration(configuration, displayMetrics)
+        return ctx
     }
 
     private fun systemLanguage(): Locale {

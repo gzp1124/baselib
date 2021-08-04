@@ -36,8 +36,13 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:onClick="@{()->click.changeLang()}"
-            android:text="切换语言"
+            android:onClick='@{()->click.changeLang("zh")}'
+            android:text="@string/change_cn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <Button
+            android:onClick='@{()->click.changeLang("en")}'
+            android:text="@string/change_en"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
