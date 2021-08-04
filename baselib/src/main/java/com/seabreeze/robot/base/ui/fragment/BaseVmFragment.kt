@@ -1,6 +1,7 @@
 package com.seabreeze.robot.base.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,10 +11,9 @@ import androidx.databinding.ViewDataBinding
 import com.seabreeze.robot.base.ext.coroutine.observe
 import com.seabreeze.robot.base.ext.foundation.onError
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
-import com.seabreeze.robot.base.framework.mvvm.IViewModel
+import com.seabreeze.robot.base.framework.mvvm.scope.injectViewModel
 import com.seabreeze.robot.base.model.CoroutineState
 import com.seabreeze.robot.base.ui.foundation.fragment.BaseFragment
-import java.lang.reflect.ParameterizedType
 
 /**
  * <pre>
@@ -24,35 +24,12 @@ import java.lang.reflect.ParameterizedType
  * @description : Mvvm封装类
  * </pre>
  */
-abstract class BaseVmFragment<out ViewModel : BaseViewModel, DataBinding : ViewDataBinding>(
+abstract class BaseVmFragment<DataBinding : ViewDataBinding>(
     @LayoutRes
     private val layoutId: Int
-) : BaseFragment(), IViewModel<ViewModel> {
+) : BaseFragment() {
 
     lateinit var mDataBinding: DataBinding
-
-    final override val mViewModel: ViewModel
-
-    init {
-        mViewModel = createViewModel()
-    }
-
-    protected fun createViewModel(): ViewModel{
-        return findViewModelClass().newInstance()
-    }
-
-    private fun findViewModelClass(): Class<ViewModel> {
-        var thisClass: Class<*> = this.javaClass
-        while (true) {
-            (thisClass.genericSuperclass as? ParameterizedType)?.actualTypeArguments?.firstOrNull()
-                ?.let {
-                    return it as Class<ViewModel>
-                }
-                ?: run {
-                    thisClass = thisClass.superclass ?: throw IllegalArgumentException()
-                }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,16 +38,16 @@ abstract class BaseVmFragment<out ViewModel : BaseViewModel, DataBinding : ViewD
     ): View? {
         mDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
         mDataBinding.lifecycleOwner = viewLifecycleOwner
+        injectViewModel()
         return mDataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onInitDataBinding()
-        initViewModelActions()
     }
 
-    private fun initViewModelActions() {
+    fun initViewModelActions(mViewModel:BaseViewModel) {
         observe(mViewModel.error) {
             it.onError()
         }
@@ -90,5 +67,4 @@ abstract class BaseVmFragment<out ViewModel : BaseViewModel, DataBinding : ViewD
     }
 
     abstract fun onInitDataBinding()
-
 }

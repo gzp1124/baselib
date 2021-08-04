@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="dd"
+            type="com.thirtydays.baselibdev.vm.MainViewModel" />
     </data>
 
     <LinearLayout
@@ -17,7 +19,7 @@
             android:id="@+id/mc"
             android:layout_width="187.5dp"
             android:layout_height="54dp"
-            android:text="@string/hello"
+            android:text="@{dd.testContent}"
             android:background="#f00"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"

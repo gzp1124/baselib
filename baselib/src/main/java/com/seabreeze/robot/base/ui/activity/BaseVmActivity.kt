@@ -7,10 +7,9 @@ import androidx.databinding.ViewDataBinding
 import com.seabreeze.robot.base.ext.coroutine.observe
 import com.seabreeze.robot.base.ext.foundation.onError
 import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
-import com.seabreeze.robot.base.framework.mvvm.IViewModel
+import com.seabreeze.robot.base.framework.mvvm.scope.injectViewModel
 import com.seabreeze.robot.base.model.CoroutineState
 import com.seabreeze.robot.base.ui.foundation.activity.BaseActivity
-import java.lang.reflect.ParameterizedType
 
 
 /**
@@ -18,33 +17,12 @@ import java.lang.reflect.ParameterizedType
  * Time: 2020/3/24 16:35
  * Des: Mvvm 必须使用协程
  */
-abstract class BaseVmActivity<ViewModel : BaseViewModel, DataBinding : ViewDataBinding>(
+abstract class BaseVmActivity<DataBinding : ViewDataBinding>(
     @LayoutRes
     private val layoutId: Int
-) : BaseActivity(), IViewModel<ViewModel> {
+) : BaseActivity() {
 
     lateinit var mDataBinding: DataBinding
-
-    override lateinit var mViewModel: ViewModel
-
-    init {
-        mViewModel = findViewModelClass().newInstance()
-    }
-
-    open fun createViewModel() {}
-
-    private fun findViewModelClass(): Class<ViewModel> {
-        var thisClass: Class<*> = this.javaClass
-        while (true) {
-            (thisClass.genericSuperclass as? ParameterizedType)?.actualTypeArguments?.firstOrNull()
-                ?.let {
-                    return it as Class<ViewModel>
-                }
-                ?: run {
-                    thisClass = thisClass.superclass ?: throw IllegalArgumentException()
-                }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,29 +30,30 @@ abstract class BaseVmActivity<ViewModel : BaseViewModel, DataBinding : ViewDataB
         mDataBinding = DataBindingUtil.setContentView(this, layoutId)
         mDataBinding.lifecycleOwner = this
 
-        createViewModel()
+        injectViewModel()
         onInitDataBinding()
 
-        initViewModelActions()
         initData()
     }
 
     abstract fun onInitDataBinding()
 
-    private fun initViewModelActions() {
-        observe(mViewModel.error) {
-            it.onError()
-        }
-        observe(mViewModel.statusLiveData) {
-            when (it) {
-                is CoroutineState.Loading -> {
-                    showProgressDialog()
-                }
-                is CoroutineState.Finish -> {
-                    dismissProgressDialog()
-                }
-                is CoroutineState.Error -> {
-                    dismissProgressDialog()
+    private fun initViewModelActions(mViewModel:BaseViewModel) {
+        mViewModel.run {
+            observe(error){
+                it.onError()
+            }
+            observe(statusLiveData){
+                when (it) {
+                    is CoroutineState.Loading -> {
+                        showProgressDialog()
+                    }
+                    is CoroutineState.Finish -> {
+                        dismissProgressDialog()
+                    }
+                    is CoroutineState.Error -> {
+                        dismissProgressDialog()
+                    }
                 }
             }
         }

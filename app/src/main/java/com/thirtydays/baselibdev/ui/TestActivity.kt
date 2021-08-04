@@ -23,7 +23,7 @@ import com.thirtydays.baselibdev.vm.TwoViewModel
 
 
 @Route(path = "/test/test")
-class TestActivity: BaseVmActivity<MainViewModel, ActivityTestBinding>(R.layout.activity_test) {
+class TestActivity: BaseVmActivity<ActivityTestBinding>(R.layout.activity_test) {
 
     var testFragment: TestFragment
     var testFragment2: Test2Fragment
@@ -32,14 +32,8 @@ class TestActivity: BaseVmActivity<MainViewModel, ActivityTestBinding>(R.layout.
         testFragment2 = Test2Fragment()
     }
 
-    @VMScope("test")
+    @VMScope("MainActivity")
     lateinit var twoViewModel: TwoViewModel
-
-    override fun createViewModel(){
-        mViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        injectViewModel()
-//        twoViewModel = ViewModelProvider(this).get(TwoViewModel::class.java)
-    }
 
     @Autowired @JvmField var testBean:TestBean? = null
     @Autowired @JvmField var test: String? = null
@@ -47,9 +41,8 @@ class TestActivity: BaseVmActivity<MainViewModel, ActivityTestBinding>(R.layout.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportFragmentManager.beginTransaction().replace(R.id.frameLin,if (type==1)testFragment else testFragment2).commitAllowingStateLoss()
+        supportFragmentManager.beginTransaction().replace(R.id.frameLin,testFragment).commitAllowingStateLoss()
 
-        Log.e("gzp1124",test+"viewmodel = "+mViewModel)
         testBean?.let {
             Log.e("gzp1124","对象过来了"+testBean?.name)
         }
@@ -62,9 +55,6 @@ class TestActivity: BaseVmActivity<MainViewModel, ActivityTestBinding>(R.layout.
     }
 
     override fun onInitDataBinding() {
-        mDataBinding.viewModel = mViewModel
         mDataBinding.two = twoViewModel
-        mViewModel.getTime()
-//        twoViewModel.getTime()
     }
 }

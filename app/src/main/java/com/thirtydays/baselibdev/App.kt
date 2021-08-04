@@ -1,5 +1,6 @@
 package com.thirtydays.baselibdev
 
+import android.util.Log
 import com.seabreeze.robot.base.common.BaseApplication
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.ext.tool.postEvent
@@ -11,6 +12,7 @@ import retrofit2.HttpException
 class App: BaseApplication() {
 
     override fun onNetError(err: BaseThrowable) {
+        Log.e("gzp112411","发现了异常"+err.localizedMessage)
         when {
             err.isExternal() -> {
                 val externalThrowable = this as BaseThrowable.ExternalThrowable
