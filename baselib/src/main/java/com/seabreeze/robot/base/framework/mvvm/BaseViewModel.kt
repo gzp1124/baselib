@@ -19,7 +19,7 @@ abstract class BaseViewModel : ViewModel() {
     }
     val error = MutableLiveData<BaseThrowable>()
 
-    fun launch(show: Boolean = false, block: Block) =
+    fun launch(show: Boolean = true, block: Block) =
         launchUI {
             try {
                 if (show) statusLiveData.postValue(CoroutineState.Loading)

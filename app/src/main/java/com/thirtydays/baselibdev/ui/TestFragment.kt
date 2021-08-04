@@ -17,6 +17,7 @@ class TestFragment: BaseVmFragment<FragmentTestBinding>(R.layout.fragment_test) 
 
     override fun onInitDataBinding() {
         mDataBinding.viewModel = mViewModel
+        initViewModelActions(mViewModel)
 //        mViewModel.testContent.observe(this){
 //
 //        }
