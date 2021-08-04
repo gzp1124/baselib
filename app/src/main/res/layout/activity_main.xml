@@ -5,7 +5,10 @@
 
     <data>
         <variable
-            name="dd"
+            name="click"
+            type="com.thirtydays.baselibdev.click.MainClick" />
+        <variable
+            name="viewModel"
             type="com.thirtydays.baselibdev.vm.MainViewModel" />
     </data>
 
@@ -16,10 +19,9 @@
         tools:context=".ui.MainActivity">
 
         <TextView
-            android:id="@+id/mc"
             android:layout_width="187.5dp"
             android:layout_height="54dp"
-            android:text="@{dd.testContent}"
+            android:text="@{viewModel.testContent}"
             android:background="#f00"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -29,12 +31,12 @@
         <Button
             android:text="打开test页面"
             android:layout_marginTop="100dp"
-            android:id="@+id/openPage"
+            android:onClick="@{()->click.openTestPage()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/changeLa"
+            android:onClick="@{()->click.changeLang()}"
             android:text="切换语言"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
