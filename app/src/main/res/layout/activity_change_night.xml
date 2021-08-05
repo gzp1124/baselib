@@ -28,5 +28,10 @@
             android:text="跟随系统"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <TextView
+            android:textColor="@color/myTextColor"
+            android:text="测试文字在 深色模式下的颜色\n亮色模式红色\n深色模式绿色"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </layout>
