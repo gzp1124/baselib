@@ -82,5 +82,4 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
             .navigationBarDarkIcon(true) //导航栏图标是深色，不写默认为亮色
             .init()
     }
-
 }

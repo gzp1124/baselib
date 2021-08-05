@@ -100,15 +100,17 @@ abstract class BaseApplication : MultiDexApplication() {
         ARouter.init(this)
 
         // 适配
-        if (!app_force_use_portrait && isLandscape) {
-            AutoSizeConfig.getInstance().designWidthInDp = Settings.app_landscape_screen_width.toInt()
-            AutoSizeConfig.getInstance().designHeightInDp = Settings.app_landscape_screen_height.toInt()
-        }else{
-            AutoSizeConfig.getInstance().designWidthInDp = Settings.app_portrait_screen_width.toInt()
-            AutoSizeConfig.getInstance().designHeightInDp = Settings.app_portrait_screen_height.toInt()
+        if (Settings.useAutoSize) {
+            if (!app_force_use_portrait && isLandscape) {
+                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_landscape_screen_width.toInt()
+                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_landscape_screen_height.toInt()
+            } else {
+                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_portrait_screen_width.toInt()
+                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_portrait_screen_height.toInt()
+            }
+            AutoSizeConfig.getInstance().isCustomFragment = true
+            AutoSize.initCompatMultiProcess(this)
         }
-        AutoSizeConfig.getInstance().isCustomFragment = true
-        AutoSize.initCompatMultiProcess(this)
 
         // 滑动返回
         BGASwipeBackHelper.init(this,null)

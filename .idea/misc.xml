@@ -5,8 +5,11 @@
       <map>
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.13125" />
         <entry key="app/src/main/res/layout-land/activity_test.xml" value="0.19166666666666668" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.2520833333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.4779270633397313" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_test.xml" value="0.2520833333333333" />
+        <entry key="baselib/src/main/res/layout/activity_common.xml" value="0.2115036231884058" />
+        <entry key="baselib/src/main/res/layout/toolbar.xml" value="0.2115036231884058" />
       </map>
     </option>
   </component>

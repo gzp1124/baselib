@@ -20,11 +20,6 @@ object Settings {
     // 如果强制使用竖屏，只需要设置下面两个竖屏的宽高即可
     var app_portrait_screen_width : Float = 375f
     var app_portrait_screen_height : Float = 812f
-
-
-    // 请求url
-    var BASE_URL:String = "http://101.200.207.61:9650/"
-
     // 多语言
     var language_status: String by Mmkv("LANGUAGE_STATUS", LANGUAGE_SYSTEM)
     // 项目主题
@@ -32,12 +27,21 @@ object Settings {
     // 深色主题
     var dark_model: Int by Mmkv("PROJECT_DARK_MODEL", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
+
+    // 使用滑动返回
+    var useSwipeBack: Boolean = true
+    // 使用AutoSize进行布局适配
+    var useAutoSize: Boolean = true
+
+
+    // 请求url
+    var BASE_URL:String = "http://101.200.207.61:9650/"
+
+
     // 请求网络的token key
     var appTokenHeadKey: String = "token"
 
     // 登录后保存的用户标识
     var app_token: String by Mmkv("app_token_save","")
 
-    // 使用滑动返回
-    var useSwipeBack: Boolean = true
 }

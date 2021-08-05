@@ -45,6 +45,12 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:onClick="@{()->click.openDuLiFragment()}"
+                android:text="打开独立Fragment" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:onClick='@{()->click.openSwitchLangPage()}'
                 android:text="打开切换夜间模式页面" />
 

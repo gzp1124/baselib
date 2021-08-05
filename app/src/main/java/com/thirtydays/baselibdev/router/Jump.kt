@@ -2,6 +2,7 @@ package com.thirtydays.baselibdev.router
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import com.alibaba.android.arouter.facade.Postcard
 import com.alibaba.android.arouter.facade.annotation.Interceptor
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
@@ -18,6 +19,20 @@ import com.thirtydays.baselibdev.router.RouterPath.UserCenter.*
  * Des:
  */
 const val MAIN_TOKEN_INVALID = "main_token_invalid"
+
+private fun startFragment(fragmentPath:String,bundle:Bundle? = null){
+    ARouter.getInstance()
+        .build("/common/common")
+        .withBundle("fragmentBundle",bundle)
+        .withString("fragmentPath",fragmentPath)
+        .navigation()
+}
+
+fun startDuLi(){
+    val bundle = Bundle()
+    bundle.putString("testDD","我触底反弹了")
+    startFragment("/test/duli",bundle)
+}
 
 fun startMain(tokenInvalid: Boolean = false) {
     ARouter.getInstance()
