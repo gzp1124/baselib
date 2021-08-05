@@ -17,7 +17,7 @@ abstract class InternationalizationActivity : SwipeBackActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //主题适配
-        setTheme(Settings.project_theme)
+//        setTheme(Settings.project_theme)
         //深色模式
         changDarkMode(Settings.dark_model)
         super.onCreate(savedInstanceState)

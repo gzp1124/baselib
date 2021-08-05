@@ -38,6 +38,10 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
         ARouter.getInstance().build("/change/lang").navigation()
     }
 
+    override fun openChangeThemePage() {
+        ARouter.getInstance().build("/change/theme").navigation()
+    }
+
     override fun changeLang(lang:String) {
         LanguageHelper.switchLanguage(this, lang, clz = MainActivity::class.java)
     }

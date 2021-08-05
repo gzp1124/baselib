@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="click"
+            type="com.thirtydays.baselibdev.click.ChangeThemeClick" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="?attr/testBgColor"
+        android:padding="40dp"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+        <Button
+            android:text="默认主题 - 白色背景"
+            android:onClick="@{()->click.changeTheme(0)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:text="红色主题"
+            android:onClick="@{()->click.changeTheme(1)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:text="绿色主题"
+            android:onClick="@{()->click.changeTheme(2)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:text="蓝色主题"
+            android:onClick="@{()->click.changeTheme(3)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</layout>
