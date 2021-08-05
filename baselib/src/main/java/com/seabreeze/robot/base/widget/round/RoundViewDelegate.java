@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.seabreeze.robot.base.R;
+import com.seabreeze.robot.base.common.AppContext;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 /**
  * <pre>
@@ -115,12 +118,12 @@ public class RoundViewDelegate {
     }
 
     public void setCornerRadius(int cornerRadius) {
-        this.cornerRadius = dp2px(cornerRadius);
+        this.cornerRadius = AutoSizeUtils.dp2px(AppContext.INSTANCE,cornerRadius);
         setBgSelector();
     }
 
     public void setStrokeWidth(float strokeWidth) {
-        this.strokeWidth = dp2px(strokeWidth);
+        this.strokeWidth = AutoSizeUtils.dp2px(AppContext.INSTANCE,strokeWidth);
         setBgSelector();
     }
 
@@ -219,16 +222,6 @@ public class RoundViewDelegate {
 
     public int getCornerRadius_BR() {
         return cornerRadius_BR;
-    }
-
-    protected int dp2px(float dp) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dp * scale + 0.5f);
-    }
-
-    protected int sp2px(float sp) {
-        final float scale = this.context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (sp * scale + 0.5f);
     }
 
     private void setDrawable(GradientDrawable gd, int backgroundStartColor, int backgroundEndColor, int strokeColor) {

@@ -24,6 +24,8 @@ import com.seabreeze.robot.base.R;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import static com.seabreeze.robot.base.ext.tool.DensityUtil.dp2px;
+
 /**
  * <pre>
  * @user : milanxiaotiejiang
@@ -325,14 +327,6 @@ public class VerificationCodeEditText extends AppCompatEditText implements
      */
     private int getColor(@ColorRes int color) {
         return ContextCompat.getColor(getContext(), color);
-    }
-
-    /**
-     * dp转px
-     */
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getResources().getDisplayMetrics());
     }
 
     /**

@@ -74,19 +74,6 @@ fun getResTextArray(@ArrayRes arrayId: Int): Array<CharSequence> =
 fun getResDimenPx(@DimenRes dimenRes: Int) =
     AppContext.resources.getDimensionPixelSize(dimenRes)
 
-/**
- * 获取dimens中单位为dp的资源
- */
-@JvmName("getDimenDp")
-fun getResDimenDp(@DimenRes dimenRes: Int) =
-    px2dp(AppContext.resources.getDimensionPixelSize(dimenRes))
-
-/**
- * 获取dimens中单位为Sp的资源
- */
-@JvmName("getDimenSp")
-fun getResDimenSp(@DimenRes dimenRes: Int) =
-    px2sp(AppContext.resources.getDimensionPixelSize(dimenRes))
 
 
 fun ViewGroup.getItemView(@LayoutRes layoutResId: Int): View {

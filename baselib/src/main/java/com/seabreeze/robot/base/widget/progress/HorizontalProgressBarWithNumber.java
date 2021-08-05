@@ -9,6 +9,9 @@ import android.util.TypedValue;
 import android.widget.ProgressBar;
 
 import com.seabreeze.robot.base.R;
+import com.seabreeze.robot.base.common.AppContext;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 /**
  * <pre>
@@ -211,8 +214,7 @@ public class HorizontalProgressBarWithNumber extends ProgressBar {
      * @param dpVal
      */
     protected int dp2px(int dpVal) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dpVal, getResources().getDisplayMetrics());
+        return AutoSizeUtils.dp2px(AppContext.INSTANCE,dpVal);
     }
 
     /**
@@ -222,8 +224,7 @@ public class HorizontalProgressBarWithNumber extends ProgressBar {
      * @return
      */
     protected int sp2px(int spVal) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP,
-                spVal, getResources().getDisplayMetrics());
+        return AutoSizeUtils.sp2px(AppContext.INSTANCE,spVal);
 
     }
 

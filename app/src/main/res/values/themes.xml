@@ -1,6 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <style name="TestTheme" parent="AppBaseTheme">
         <item name="testBgColor">#ffffff</item>
+        <item name="android:fontFamily">@font/notosanshk</item>
     </style>
     <style name="TestTheme.Green" parent="AppBaseTheme">
         <item name="testBgColor">#00ff00</item>

@@ -21,6 +21,7 @@ import androidx.core.view.ViewCompat;
 import androidx.customview.widget.ViewDragHelper;
 
 import com.seabreeze.robot.base.R;
+import com.seabreeze.robot.base.common.AppContext;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -29,6 +30,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import me.jessyan.autosize.utils.AutoSizeUtils;
 
 /**
  * <pre>
@@ -1536,7 +1539,7 @@ public class SwipeLayout extends FrameLayout {
     }
 
     private int dp2px(float dp) {
-        return (int) (dp * getContext().getResources().getDisplayMetrics().density + 0.5f);
+        return AutoSizeUtils.sp2px(AppContext.INSTANCE,dp);
     }
 
 

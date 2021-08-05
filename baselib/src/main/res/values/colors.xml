@@ -8,5 +8,6 @@
     <color name="dark_orange">#FF8F5D</color>
     <color name="default_track_color">#f3e5dd</color>
 
+    <color name="text_color">#000000</color>
     <color name="picture_color_light_grey">#999999</color>
 </resources>
