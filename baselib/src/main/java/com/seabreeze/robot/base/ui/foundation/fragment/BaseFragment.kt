@@ -3,6 +3,10 @@ package com.seabreeze.robot.base.ui.foundation.fragment
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.View
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
+import androidx.lifecycle.LifecycleOwner
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.SimpleImmersionOwner
 import com.permissionx.guolindev.PermissionCollection
@@ -39,6 +43,24 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
         dismissProgressDialog()
         super.onDestroy()
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        activity?.lifecycle?.addObserver(object : LifecycleEventObserver {
+            override fun onStateChanged(source: LifecycleOwner, event: Lifecycle.Event) {
+                when(event){
+                    Lifecycle.Event.ON_DESTROY -> onActivityDestroy()
+                    Lifecycle.Event.ON_RESUME -> onActivityResume()
+                    Lifecycle.Event.ON_PAUSE -> onActivityPause()
+                }
+            }
+        })
+    }
+
+    open fun onActivityResume(){}
+    open fun onActivityPause(){}
+    open fun onActivityDestroy(){}
 
     /**
      * 显示加载(转圈)对话框
