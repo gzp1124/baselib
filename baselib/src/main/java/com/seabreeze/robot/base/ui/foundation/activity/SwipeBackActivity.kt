@@ -5,15 +5,18 @@ import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.elvishew.xlog.XLog
 import com.gyf.immersionbar.ImmersionBar
 import com.seabreeze.robot.base.R
-import com.seabreeze.robot.base.common.AppManager
 import com.seabreeze.robot.base.Settings
 import com.seabreeze.robot.base.Settings.app_force_use_portrait
+import com.seabreeze.robot.base.common.AppManager
+import com.seabreeze.robot.base.common.BaseApplication
 import com.seabreeze.robot.base.ext.find
 import com.seabreeze.robot.base.ext.tool.getStatusBarHeight
+import com.seabreeze.robot.base.ext.tool.isDarkMode
 import com.seabreeze.robot.base.ext.tool.setScreenPortrait
 
 /**
@@ -103,28 +106,26 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
 
         //status Bar 沉浸式状态栏相关设置
         if (isImmersionBar()) {
-            setImmersionBar()
+            BaseApplication.darkMode.observe(this) {
+                setImmersionBar()
+            }
         }
     }
+
+    val darkMode: MutableLiveData<Int> = MutableLiveData(Settings.dark_model)
 
     protected open fun booHideBottom() = false
 
     protected open fun isImmersionBar() = true
 
     protected open fun setImmersionBar() {
+        val isDark = isDarkMode()
         ImmersionBar.with(this)
             .keyboardEnable(true)
             .titleBarMarginTop(R.id.toolbar)
-            .statusBarDarkFont(true)
-            .navigationBarColor(android.R.color.white) //导航栏颜色，不写默认黑色
-            .navigationBarDarkIcon(true) //导航栏图标是深色，不写默认为亮色
-            .init()
-    }
-
-    protected open fun immersionNavigationBar() {
-        ImmersionBar.with(this)
-            .navigationBarColor(android.R.color.white) //导航栏颜色，不写默认黑色
-            .navigationBarDarkIcon(true) //导航栏图标是深色，不写默认为亮色
+            .statusBarDarkFont(!isDark)
+            .navigationBarColor(if (isDark)android.R.color.background_dark else android.R.color.background_light) //导航栏颜色，不写默认黑色
+            .navigationBarDarkIcon(!isDark) //导航栏图标是深色，不写默认为亮色
             .init()
     }
 

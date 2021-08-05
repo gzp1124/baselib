@@ -4,7 +4,11 @@ package com.seabreeze.robot.base.ext.tool
 
 import android.content.Context
 import android.content.pm.PackageManager
+import android.content.res.Configuration
 import android.graphics.drawable.Drawable
+import androidx.appcompat.app.AppCompatDelegate
+import com.seabreeze.robot.base.Settings
+import com.seabreeze.robot.base.common.BaseApplication
 import java.io.File
 
 /**
@@ -81,5 +85,28 @@ fun Context.getAppIcon(packageName: String = this.packageName): Drawable? {
         }
     } catch (e: PackageManager.NameNotFoundException) {
         null
+    }
+}
+
+/**
+ * 是否深色模式
+ */
+fun Context.isDarkMode(): Boolean {
+    val config = resources.configuration
+    val uiMode = config.uiMode and Configuration.UI_MODE_NIGHT_MASK
+    return uiMode == Configuration.UI_MODE_NIGHT_YES
+}
+
+/**
+ * 切换深色模式
+ */
+fun Context.changDarkMode(mode:Int){
+    Settings.dark_model = mode
+    if (Settings.dark_model == resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)return
+    BaseApplication.darkMode.postValue(mode)
+    when(mode){
+        1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+        2 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 }

@@ -1,5 +1,6 @@
 package com.seabreeze.robot.base
 
+import androidx.appcompat.app.AppCompatDelegate
 import com.seabreeze.robot.base.common.LanguageHelper.LANGUAGE_SYSTEM
 import com.seabreeze.robot.base.ext.foundation.Mmkv
 
@@ -28,6 +29,8 @@ object Settings {
     var language_status: String by Mmkv("LANGUAGE_STATUS", LANGUAGE_SYSTEM)
     // 项目主题
     var project_theme: Int by Mmkv("PROJECT_THEME", R.style.AppBaseTheme)
+    // 深色主题
+    var dark_model: Int by Mmkv("PROJECT_DARK_MODEL", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
 
     // 请求网络的token key
     var appTokenHeadKey: String = "token"

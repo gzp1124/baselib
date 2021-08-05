@@ -3,6 +3,7 @@ package com.seabreeze.robot.base.common
 import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
+import androidx.lifecycle.MutableLiveData
 import androidx.multidex.MultiDexApplication
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.alibaba.android.arouter.launcher.ARouter
@@ -22,8 +23,6 @@ import com.seabreeze.robot.base.Settings.language_status
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.ext.initWebViewDataDirectory
 import com.seabreeze.robot.base.ext.tool.isLandscape
-import com.seabreeze.robot.base.ext.tool.screenHeight
-import com.seabreeze.robot.base.ext.tool.screenWidth
 import com.seabreeze.robot.base.net.RetrofitFactory
 import com.seabreeze.robot.base.net.ok.OkHttpManager
 import com.seabreeze.robot.base.widget.loadpage.CustomLoadMoreView
@@ -55,6 +54,11 @@ abstract class BaseApplication : MultiDexApplication() {
     abstract fun onNetError(err: BaseThrowable)
 
     companion object {
+
+        // 深色模式
+        val darkMode: MutableLiveData<Int> by lazy{
+            MutableLiveData(Settings.dark_model)
+        }
 
         val okHttpClient: OkHttpClient by lazy {
             OkHttpManager.INSTANCE.initOkHttpClient(INSTANCE)

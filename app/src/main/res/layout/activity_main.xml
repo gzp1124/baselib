@@ -4,46 +4,61 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="click"
             type="com.thirtydays.baselibdev.click.MainClick" />
+
         <variable
             name="viewModel"
             type="com.thirtydays.baselibdev.vm.MainViewModel" />
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <androidx.core.widget.NestedScrollView
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ui.MainActivity">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_width="187.5dp"
-            android:layout_height="54dp"
-            android:text="@{viewModel.testContent}"
-            android:background="#f00"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".ui.MainActivity">
 
-        <Button
-            android:text="打开test页面"
-            android:layout_marginTop="100dp"
-            android:onClick="@{()->click.openTestPage()}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="187.5dp"
+                android:layout_height="54dp"
+                android:background="#f00"
+                android:text="@{viewModel.testContent}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:onClick='@{()->click.changeLang("zh")}'
-            android:text="@string/change_cn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <Button
-            android:onClick='@{()->click.changeLang("en")}'
-            android:text="@string/change_en"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="100dp"
+                android:onClick="@{()->click.openTestPage()}"
+                android:text="打开test页面" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick='@{()->click.openSwitchLangPage()}'
+                android:text="打开切换夜间模式页面" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick='@{()->click.changeLang("zh")}'
+                android:text="@string/change_cn" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick='@{()->click.changeLang("en")}'
+                android:text="@string/change_en" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
