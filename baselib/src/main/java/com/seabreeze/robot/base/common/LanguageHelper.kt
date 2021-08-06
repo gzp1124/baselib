@@ -1,15 +1,13 @@
 package com.seabreeze.robot.base.common
 
-import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Build
-import android.util.Log
 import androidx.annotation.StringDef
 import androidx.appcompat.view.ContextThemeWrapper
+import com.blankj.utilcode.util.LanguageUtils
 import com.seabreeze.robot.base.R
 import com.seabreeze.robot.base.Settings
 import java.util.*
@@ -67,17 +65,12 @@ object LanguageHelper {
     /**
      * 切换语言
      */
-    fun switchLanguage(context: Context, @LanguageStatus language: String, clz: Class<out Activity>? = null) {
+    fun switchLanguage(@LanguageStatus language: String) {
         if (Settings.language_status == language) {
             return
         }
         Settings.language_status = language
-        clz?.let {
-            AppManager.finishAllActivity()
-            context.startActivity(
-                Intent(context, it).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            )
-        }
+        LanguageUtils.applyLanguage(getLocal())
     }
 
     private fun languageCompat(language: String, context: Context): Context {
@@ -113,17 +106,6 @@ object LanguageHelper {
                 super.applyOverrideConfiguration(overrideConfiguration)
             }
         }
-//        val resources = context.resources ?: return context
-//        val config = resources.configuration ?: return context
-//        config.setLocale(locale)
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            return context.createConfigurationContext(config)
-//        } else {
-//            val dm = resources.displayMetrics ?: return context
-//            @Suppress("DEPRECATION")
-//            resources.updateConfiguration(config, dm)
-//            return context
-//        }
     }
 
     private fun updateConfiguration(context: Context, locale: Locale, language: String): Context {

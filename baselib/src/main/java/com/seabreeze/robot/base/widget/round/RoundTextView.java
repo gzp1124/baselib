@@ -27,6 +27,7 @@ public class RoundTextView extends AppCompatTextView {
 
     public RoundTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        setIncludeFontPadding(false);
         delegate = new RoundViewDelegate(this, context, attrs);
     }
 
