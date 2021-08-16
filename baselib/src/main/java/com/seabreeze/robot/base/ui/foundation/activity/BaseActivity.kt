@@ -1,19 +1,20 @@
 package com.seabreeze.robot.base.ui.foundation.activity
 
+import android.app.Activity
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import com.alibaba.android.arouter.launcher.ARouter
+import com.bigkoo.convenientbanner.utils.ScreenUtil
 import com.permissionx.guolindev.PermissionCollection
 import com.permissionx.guolindev.PermissionX
 import com.seabreeze.robot.base.Settings
 import com.seabreeze.robot.base.ext.foundation.BaseThrowable
 import com.seabreeze.robot.base.ext.foundation.onError
-import com.seabreeze.robot.base.ext.tool.screenHeight
-import com.seabreeze.robot.base.ext.tool.screenWidth
-import com.seabreeze.robot.base.ext.tool.toast
+import com.seabreeze.robot.base.ext.tool.*
 import com.seabreeze.robot.base.ui.fragment.ProgressDialogFragment
 import me.jessyan.autosize.AutoSizeCompat
 import me.jessyan.autosize.AutoSizeConfig
@@ -31,19 +32,32 @@ abstract class BaseActivity : InternationalizationActivity() {
 
     protected open val mMainHandler = Handler(Looper.getMainLooper())
 
-    protected open lateinit var mPermission: PermissionCollection
+    protected open lateinit var mPermission: com.permissionx.guolindev.PermissionCollection
 
     private lateinit var progressDialogFragment: ProgressDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        AutoSizeConfig.getInstance().screenHeight = screenHeight
-        AutoSizeConfig.getInstance().screenWidth = screenWidth
-
         //ARouter注册
         ARouter.getInstance().inject(this)
 
         mPermission = PermissionX.init(this)
+
+        /*if (isFullScreen){
+            AutoSizeConfig.getInstance().onAdaptListener = object : onAdaptListener {
+                override fun onAdaptBefore(target: Any, activity: Activity) {
+                    //ScreenUtils.getScreenSize(activity) 的参数一定要不要传 Application!!!
+                    AutoSizeConfig.getInstance().screenWidth =
+                        ScreenUtils.getScreenSize(activity).get(0)
+                    AutoSizeConfig.getInstance().screenHeight =
+                        ScreenUtils.getScreenSize(activity).get(1)
+                }
+
+                override fun onAdaptAfter(target: Any, activity: Activity) {}
+            }
+        }*/
+        AutoSizeConfig.getInstance().screenHeight = screenHeight
+        AutoSizeConfig.getInstance().screenWidth = screenWidth
     }
 
     override fun onDestroy() {
