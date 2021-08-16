@@ -1,11 +1,11 @@
 package com.thirtydays.baselibdev
 
 import android.util.Log
-import com.seabreeze.robot.base.common.BaseApplication
-import com.seabreeze.robot.base.ext.foundation.BaseThrowable
-import com.seabreeze.robot.base.ext.tool.postEvent
-import com.seabreeze.robot.base.ext.tool.toast
-import com.seabreeze.robot.base.model.TokenInvalidEvent
+import com.aligit.base.common.BaseApplication
+import com.aligit.base.ext.foundation.BaseThrowable
+import com.aligit.base.ext.tool.postEvent
+import com.aligit.base.ext.tool.toast
+import com.aligit.base.model.TokenInvalidEvent
 import com.thirtydays.baselibdev.router.startMain
 import retrofit2.HttpException
 

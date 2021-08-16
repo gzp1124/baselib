@@ -7,12 +7,12 @@ import com.alibaba.android.arouter.facade.annotation.Interceptor
 import com.alibaba.android.arouter.facade.callback.InterceptorCallback
 import com.alibaba.android.arouter.facade.template.IInterceptor
 import com.alibaba.android.arouter.launcher.ARouter
-import com.seabreeze.robot.base.R
+import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.router.RouterPath.AppCenter.PATH_APP_MAIN
 
 
 /**
- * User: milan
+ * author : gzp1124
  * Time: 2020/4/8 13:39
  * Des:
  */

@@ -1,8 +1,8 @@
 package com.thirtydays.baselibdev.ui
 
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.seabreeze.robot.base.framework.mvvm.scope.VMScope
-import com.seabreeze.robot.base.ui.fragment.BaseVmFragment
+import com.aligit.base.framework.mvvm.scope.VMScope
+import com.aligit.base.ui.fragment.BaseVmFragment
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTestBinding
 import com.thirtydays.baselibdev.vm.MainViewModel

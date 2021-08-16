@@ -1,6 +1,6 @@
 package com.thirtydays.baselibdev.net
 
-import com.seabreeze.robot.base.framework.mvvm.BaseRepository
+import com.aligit.base.framework.mvvm.BaseRepository
 import com.thirtydays.baselibdev.net.api.impl.MainImpl
 import io.reactivex.Flowable
 import kotlinx.coroutines.Dispatchers

@@ -3,7 +3,7 @@ package com.thirtydays.baselibdev.ui
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.seabreeze.robot.base.ui.activity.BaseVmActivity
+import com.aligit.base.ui.activity.BaseVmActivity
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.ActivityFontBinding
 
@@ -13,7 +13,7 @@ import com.thirtydays.baselibdev.databinding.ActivityFontBinding
  *      在代码中使用 如下
  */
 @Route(path = "/test/font")
-class FontActivity:BaseVmActivity<ActivityFontBinding>(R.layout.activity_font) {
+class FontActivity: BaseVmActivity<ActivityFontBinding>(R.layout.activity_font) {
     override fun onInitDataBinding() {
 
     }

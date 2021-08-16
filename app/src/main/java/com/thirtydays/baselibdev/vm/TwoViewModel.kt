@@ -1,7 +1,7 @@
 package com.thirtydays.baselibdev.vm
 
 import androidx.lifecycle.MutableLiveData
-import com.seabreeze.robot.base.framework.mvvm.BaseViewModel
+import com.aligit.base.framework.mvvm.BaseViewModel
 import com.thirtydays.baselibdev.net.MainRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
