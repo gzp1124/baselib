@@ -274,3 +274,24 @@ dependencies {
     // AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     api 'com.blankj:utilcodex:1.30.6'
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.aligit'
+                artifactId = 'baselib'
+                version = '1.0'
+            }
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId = 'com.aligit'
+                artifactId = 'baselib-debug'
+                version = '1.0'
+            }
+        }
+    }
+}
