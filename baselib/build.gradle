@@ -275,24 +275,24 @@ dependencies {
     api 'com.blankj:utilcodex:1.30.6'
 }
 
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-
-                groupId = 'com.example.MyLibrary'
-                artifactId = 'final'
-                version = '1.0'
-            }
-            debug(MavenPublication) {
-                from components.debug
-
-                groupId = 'com.example.MyLibrary'
-                artifactId = 'final-debug'
-                version = '1.0'
-            }
-        }
-    }
-}
+//
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//
+//                groupId = 'com.example.MyLibrary'
+//                artifactId = 'final'
+//                version = '1.0'
+//            }
+//            debug(MavenPublication) {
+//                from components.debug
+//
+//                groupId = 'com.example.MyLibrary'
+//                artifactId = 'final-debug'
+//                version = '1.0'
+//            }
+//        }
+//    }
+//}
