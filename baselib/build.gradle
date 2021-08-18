@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
+apply plugin: 'maven-publish'
+
 android {
     compileSdkVersion compile_sdk_version
     buildToolsVersion build_tools_version
@@ -271,4 +273,26 @@ dependencies {
 
     // AndroidUtilCode https://github.com/Blankj/AndroidUtilCode
     api 'com.blankj:utilcodex:1.30.6'
+}
+
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.example.MyLibrary'
+                artifactId = 'final'
+                version = '1.0'
+            }
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId = 'com.example.MyLibrary'
+                artifactId = 'final-debug'
+                version = '1.0'
+            }
+        }
+    }
 }
