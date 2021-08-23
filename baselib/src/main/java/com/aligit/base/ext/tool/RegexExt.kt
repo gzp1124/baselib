@@ -17,7 +17,7 @@ private fun String.checkWithRegex(pattern: String): Boolean {
 
 /**校验内地手机号码**/
 val String.isMobile: Boolean
-    get() = checkWithRegex("^((13[0-9])|(14[5,7])|(15[0-3,5-9])|(16[6])|(17[0,1,3,5-8])|(18[0-9])|(19[8,9]))\\d{8}$")
+    get() = checkWithRegex("^(1[3-9])\\d{9}$")
 
 /**校验电子邮箱**/
 val String.isEmail: Boolean

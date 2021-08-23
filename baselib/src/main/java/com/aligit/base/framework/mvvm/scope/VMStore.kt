@@ -3,21 +3,28 @@ package com.aligit.base.framework.mvvm.scope
 
 import android.text.TextUtils
 import androidx.activity.ComponentActivity
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
+import com.aligit.base.ext.coroutine.observe
+import com.aligit.base.ext.foundation.onError
 import com.aligit.base.framework.mvvm.BaseViewModel
+import com.aligit.base.model.CoroutineState
+import com.aligit.base.ui.activity.BaseVmActivity
+import com.aligit.base.ui.foundation.activity.BaseActivity
+import com.aligit.base.ui.foundation.fragment.BaseFragment
 
 private val vMStores = HashMap<String, VMStore>()
 
 //作用域对应的商店
 //反射注入view model
-fun Fragment.injectViewModel() {
+fun BaseFragment.injectViewModel() {
     //根据作用域创建商店
     this::class.java.declaredFields.forEach { field ->
         field.getAnnotation(VMScope::class.java)?.also { scope ->
             //获取作用域
             var element = scope.scopeName
-            if (TextUtils.isEmpty(element)){
+            if (TextUtils.isEmpty(element)) {
                 element = this::class.java.simpleName
             }
             var store: VMStore
@@ -33,19 +40,22 @@ fun Fragment.injectViewModel() {
             val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
 
+            //viewModel 状态监听
+            initViewModelActions(vm)
+
             //给view model赋值
             field.set(this, vm)
         }
     }
 }
 
-fun ComponentActivity.injectViewModel() {
+fun BaseActivity.injectViewModel() {
     //根据作用域创建商店
     this::class.java.declaredFields.forEach { field ->
         field.getAnnotation(VMScope::class.java)?.also { scope ->
             //获取作用域
             var element = scope.scopeName
-            if (TextUtils.isEmpty(element)){
+            if (TextUtils.isEmpty(element)) {
                 element = this::class.java.simpleName
             }
             var store: VMStore
@@ -58,8 +68,11 @@ fun ComponentActivity.injectViewModel() {
                 vMStores[element] = store
             }
             store.bindHost(this)
-            val clazz = field.type as Class<ViewModel>
+            val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
+
+            //viewModel 状态监听
+            initViewModelActions(vm)
 
             //给view model赋值
             field.set(this, vm)

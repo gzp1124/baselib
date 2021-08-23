@@ -1,6 +1,7 @@
 package com.aligit.base.ui.fragment
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -43,20 +44,21 @@ class ProgressDialogFragment : DialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val tvMessage = view.findViewById<TextView>(R.id.tvMessage)
-        tvMessage.text = mMessage ?: getString(R.string.loading)
+        if (TextUtils.isEmpty(mMessage)) this.mMessage = getString(R.string.loading)
+        tvMessage.text = mMessage
     }
 
     override fun onStart() {
         super.onStart()
-        dialog!!.apply {
-            window!!.apply {
-                val windowParams = attributes
-                windowParams.dimAmount = 0.0f //将Window周边设置透明为0.7
-                setCanceledOnTouchOutside(false) //点击周边不隐藏对话框
-                attributes = windowParams
-                setGravity(Gravity.TOP)
-            }
-        }
+//        dialog!!.apply {
+//            window!!.apply {
+//                val windowParams = attributes
+//                windowParams.dimAmount = 0.0f //将Window周边设置透明为0.7
+//                setCanceledOnTouchOutside(false) //点击周边不隐藏对话框
+//                attributes = windowParams
+//                setGravity(Gravity.TOP)
+//            }
+//        }
     }
 
     fun show(

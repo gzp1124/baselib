@@ -8,9 +8,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.aligit.base.R
+import com.aligit.base.ext.coroutine.observe
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.onError
 import com.aligit.base.ext.tool.toast
+import com.aligit.base.framework.mvvm.BaseViewModel
+import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.fragment.ProgressDialogFragment
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.SimpleImmersionOwner
@@ -103,5 +106,30 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
             .navigationBarColor(android.R.color.white) //导航栏颜色，不写默认黑色
             .navigationBarDarkIcon(true) //导航栏图标是深色，不写默认为亮色
             .init()
+    }
+
+
+    /**
+     * 监听请求状态和错误响应
+     */
+    fun initViewModelActions(mViewModel: BaseViewModel) {
+        mViewModel.run {
+            observe(error){
+                it.onError()
+            }
+            observe(statusLiveData){
+                when (it) {
+                    is CoroutineState.Loading -> {
+                        showProgressDialog(statusInfoStr)
+                    }
+                    is CoroutineState.Finish -> {
+                        dismissProgressDialog()
+                    }
+                    is CoroutineState.Error -> {
+                        dismissProgressDialog()
+                    }
+                }
+            }
+        }
     }
 }

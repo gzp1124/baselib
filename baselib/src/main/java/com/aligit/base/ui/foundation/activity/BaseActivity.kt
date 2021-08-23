@@ -7,11 +7,14 @@ import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.Settings
+import com.aligit.base.ext.coroutine.observe
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.onError
 import com.aligit.base.ext.tool.screenHeight
 import com.aligit.base.ext.tool.screenWidth
 import com.aligit.base.ext.tool.toast
+import com.aligit.base.framework.mvvm.BaseViewModel
+import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.fragment.ProgressDialogFragment
 import com.permissionx.guolindev.PermissionX
 import me.jessyan.autosize.AutoSizeCompat
@@ -118,5 +121,26 @@ abstract class BaseActivity : InternationalizationActivity() {
             AutoSizeCompat.autoConvertDensity(super.getResources(), rw, true)
         }
         return super.getResources()
+    }
+
+    fun initViewModelActions(mViewModel: BaseViewModel) {
+        mViewModel.run {
+            observe(error){
+                it.onError()
+            }
+            observe(statusLiveData){
+                when (it) {
+                    is CoroutineState.Loading -> {
+                        showProgressDialog(statusInfoStr)
+                    }
+                    is CoroutineState.Finish -> {
+                        dismissProgressDialog()
+                    }
+                    is CoroutineState.Error -> {
+                        dismissProgressDialog()
+                    }
+                }
+            }
+        }
     }
 }

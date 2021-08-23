@@ -7,10 +7,13 @@ import com.aligit.base.ext.coroutine.launchUI
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.model.CoroutineState
 
-class NoViewModel:BaseViewModel(){
+class NoViewModel : BaseViewModel() {
 }
 
 abstract class BaseViewModel : ViewModel() {
+    //loading 框中的提示语
+    var statusInfoStr = ""
+
     /**
      * 协程状态管理
      */
@@ -19,14 +22,20 @@ abstract class BaseViewModel : ViewModel() {
     }
     val error = MutableLiveData<BaseThrowable>()
 
-    fun launch(show: Boolean = true, block: Block) =
+    /**
+     * @param show 是否展示 loading 框
+     * @param statusInfoStr loading 框中的提示语
+     * @param block 请求体
+     */
+    fun launch(showLoading: Boolean = true, loadingInfoStr: String = "", block: Block) =
         launchUI {
             try {
-                if (show) statusLiveData.postValue(CoroutineState.Loading)
+                this@BaseViewModel.statusInfoStr = loadingInfoStr
+                if (showLoading) statusLiveData.postValue(CoroutineState.Loading)
                 block()
-                if (show) statusLiveData.postValue(CoroutineState.Finish)
+                if (showLoading) statusLiveData.postValue(CoroutineState.Finish)
             } catch (e: Exception) {
-                if (show) statusLiveData.postValue(CoroutineState.Error)
+                if (showLoading) statusLiveData.postValue(CoroutineState.Error)
                 error.postValue(BaseThrowable.ExternalThrowable(e))
             }
         }
