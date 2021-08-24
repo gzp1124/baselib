@@ -7,4 +7,5 @@ interface MainClick {
     fun openChangeThemePage()
     fun openFontPage()
     fun changeLang(lang:String)
+    fun openList()
 }

@@ -18,7 +18,7 @@ import com.thirtydays.baselibdev.router.RouterPath.AppCenter.PATH_APP_MAIN
  */
 const val MAIN_TOKEN_INVALID = "main_token_invalid"
 
-private fun startFragment(fragmentPath:String,bundle:Bundle? = null){
+fun startFragment(fragmentPath:String,bundle:Bundle? = null){
     ARouter.getInstance()
         .build("/common/common")
         .withBundle("fragmentBundle",bundle)

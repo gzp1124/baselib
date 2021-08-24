@@ -50,6 +50,7 @@ class ProgressDialogFragment : DialogFragment() {
 
     override fun onStart() {
         super.onStart()
+        showing = false
 //        dialog!!.apply {
 //            window!!.apply {
 //                val windowParams = attributes
@@ -61,11 +62,15 @@ class ProgressDialogFragment : DialogFragment() {
 //        }
     }
 
+    var showing = false
+
     fun show(
         fragmentManager: FragmentManager,
         message: String?,
         isCancelable: Boolean = false
     ) {
+        if (showing)return
+        showing = true
         this.mMessage = message
         this.isCancelable = isCancelable
         try {

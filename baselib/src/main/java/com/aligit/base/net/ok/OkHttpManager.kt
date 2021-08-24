@@ -49,7 +49,7 @@ class OkHttpManager private constructor() {
         interceptor.level = HttpLoggingInterceptor.Level.BODY
 
         //缓存
-        val cacheFile = File(Environment.getDownloadCacheDirectory(), "okHttp")
+        val cacheFile = File(Environment.getDownloadCacheDirectory(), Settings.fileSavePath.httpCachePath)
         val cache = Cache(cacheFile, 1024 * 1024 * 100) //100Mb
 
         //url切换 ，业务APP去进行拦截

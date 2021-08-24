@@ -14,7 +14,7 @@ import com.aligit.base.Settings.language_status
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.initWebViewDataDirectory
 import com.aligit.base.ext.tool.isLandscape
-import com.aligit.base.net.RetrofitFactory
+import com.aligit.base.net.retrofit.RetrofitFactory
 import com.aligit.base.net.ok.OkHttpManager
 import com.aligit.base.widget.loadpage.CustomLoadMoreView
 import com.chad.library.adapter.base.module.LoadMoreModuleConfig
