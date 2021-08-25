@@ -46,7 +46,10 @@ abstract class BaseViewModel : ViewModel() {
 
     //=======================
     //刷新触发器，如果不是共享的 ViewModel，那么在界面初始化完后会自动设置该值
-    //如果 ViewModel 的修饰符 @VMScope 没有在括号中指定 Vm scope 的 key 值
+    //如果 ViewModel 的修饰符 @VMScope 没有在括号中指定 Vm scope 的 key 值，则认为非共享 ViewModel ，则进入页面就修改该值
+    //如果 ViewModel 的修饰符 @VMScope("userModel") 中指定了 key 则认为是共享 ViewModel ，进入页面默认不进行请求。
+    //如果要进行请求，修改 refreshTrigger 的值，或者修改 page 的值，则会触发 requestData 或 requestListData （分别对应普通接口和列表接口）
+    //只控制普通请求，列表请求使用 page 进行控制
     val refreshTrigger = MutableLiveData<Boolean>()
 
     //===分页加载
@@ -55,14 +58,22 @@ abstract class BaseViewModel : ViewModel() {
     val moreLoading = MutableLiveData<Boolean>()
     val hasMore = MutableLiveData<Boolean>()
 
-    open fun loadMore() {
+    // 列表数据加载更多
+    fun loadMore() {
         page.value = (page.value ?: Settings.pageStartIndex) + 1
         moreLoading.value = true
     }
 
-    open fun refresh() {
+    // 刷新列表数据
+    fun refresh() {
         page.value = Settings.pageStartIndex
         refreshing.value = true
+    }
+
+    // 重新加载页面数据
+    fun reload(){
+        refresh()
+        refreshTrigger.postValue(true)
     }
 
     /**

@@ -36,6 +36,7 @@ fun BaseFragment.injectViewModel() {
             val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
             if (!haveSetEle) {
+                // 触发默认数据的加载
                 vm.refreshTrigger.postValue(true)
                 vm.page.postValue(Settings.pageStartIndex)
             }
@@ -73,6 +74,7 @@ fun BaseActivity.injectViewModel() {
             val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
             if (!haveSetEle) {
+                // 触发默认数据的加载
                 vm.refreshTrigger.postValue(true)
                 vm.page.postValue(Settings.pageStartIndex)
             }

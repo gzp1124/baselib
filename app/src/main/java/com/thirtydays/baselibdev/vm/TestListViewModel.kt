@@ -51,5 +51,4 @@ class TestListViewModel : BaseViewModel() {
 
     val xieyi = requestData({mApi.getVer("http://apidoc.30days-tech.com/mock/263/kelake/app/v1/account/version")}){ it }
 
-
 }
