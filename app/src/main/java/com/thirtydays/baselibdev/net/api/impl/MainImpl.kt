@@ -1,6 +1,6 @@
 package com.thirtydays.baselibdev.net.api.impl
 
-import com.aligit.base.net.BaseImpl
+import com.aligit.base.net.retrofit.BaseImpl
 import com.thirtydays.baselibdev.net.api.MainApi
 import com.thirtydays.baselibdev.net.service.MainService
 import io.reactivex.Flowable

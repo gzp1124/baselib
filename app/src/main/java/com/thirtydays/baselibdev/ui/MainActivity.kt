@@ -10,6 +10,7 @@ import com.thirtydays.baselibdev.click.MainClick
 import com.thirtydays.baselibdev.databinding.ActivityMainBinding
 import com.thirtydays.baselibdev.router.RouterPath
 import com.thirtydays.baselibdev.router.startDuLi
+import com.thirtydays.baselibdev.router.startFragment
 import com.thirtydays.baselibdev.vm.MainViewModel
 import com.thirtydays.baselibdev.vm.TwoViewModel
 
@@ -54,5 +55,9 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
 
     override fun changeLang(lang:String) {
         LanguageHelper.switchLanguage(lang)
+    }
+
+    override fun openList() {
+        startFragment("/test/list")
     }
 }

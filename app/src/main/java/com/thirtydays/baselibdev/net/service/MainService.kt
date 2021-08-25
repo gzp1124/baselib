@@ -1,5 +1,6 @@
 package com.thirtydays.baselibdev.net.service
 
+import androidx.lifecycle.LiveData
 import io.reactivex.Flowable
 import okhttp3.ResponseBody
 import retrofit2.http.GET
@@ -11,4 +12,5 @@ interface MainService {
     @Streaming
     @GET
     fun getTime(@Url fileUrl: String): Flowable<ResponseBody>
+
 }

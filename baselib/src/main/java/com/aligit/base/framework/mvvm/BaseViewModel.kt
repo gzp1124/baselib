@@ -2,6 +2,7 @@ package com.aligit.base.framework.mvvm
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.aligit.base.Settings
 import com.aligit.base.ext.coroutine.Block
 import com.aligit.base.ext.coroutine.launchUI
 import com.aligit.base.ext.foundation.BaseThrowable
@@ -40,4 +41,25 @@ abstract class BaseViewModel : ViewModel() {
             }
         }
 
+//=======================
+//===分页加载
+    val page = MutableLiveData<Int>()
+    val refreshing = MutableLiveData<Boolean>()
+    val moreLoading = MutableLiveData<Boolean>()
+    val hasMore = MutableLiveData<Boolean>()
+    val autoRefresh = MutableLiveData<Boolean>()//SmartRefreshLayout自动刷新标记
+
+    open fun loadMore() {
+        page.value = (page.value ?: Settings.pageStartIndex) + 1
+        moreLoading.value = true
+    }
+
+    open fun refresh() {
+        page.value = Settings.pageStartIndex
+        refreshing.value = true
+    }
+
+    fun autoRefresh() {
+        autoRefresh.value = true
+    }
 }

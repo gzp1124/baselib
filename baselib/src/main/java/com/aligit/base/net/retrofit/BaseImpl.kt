@@ -1,4 +1,4 @@
-package com.aligit.base.net
+package com.aligit.base.net.retrofit
 
 import com.aligit.base.common.BaseApplication.Companion.retrofitFactory
 import java.lang.reflect.ParameterizedType

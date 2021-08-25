@@ -20,7 +20,7 @@ class MainRepository : BaseRepository() {
     suspend fun getTime(): Flowable<ResponseBody> {
         return withContext(Dispatchers.IO) {
             Thread.sleep(1000)
-            mainImpl.getTime("http://quan.suning.com/getSysTime.do")
+            mainImpl.getTime("http://www.baidu.com")
         }
     }
 }
