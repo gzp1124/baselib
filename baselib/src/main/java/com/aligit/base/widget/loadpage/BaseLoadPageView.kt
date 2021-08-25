@@ -11,7 +11,7 @@ import android.view.View
  * </pre>
  */
 enum class LoadPageStatus {
-    Loading, Fail, Empty, NoNet
+    Nromal, Loading, Fail, Empty, NoNet
 }
 
 abstract class BasePageViewForStatus {
@@ -46,9 +46,10 @@ abstract class BasePageViewForStatus {
      * @param status BaseViewHolder
      * @param loadPageStatus loadPageStatus
      */
-    open fun convert(status: LoadPageViewForStatus, loadPageStatus: LoadPageStatus) {
+    open fun convert(status: LoadPageViewForStatus,needHideViews: MutableList<View>, loadPageStatus: LoadPageStatus) {
+        status.isVisible(true)
+        needHideViews.forEach { it.isVisible(false) }
         when (loadPageStatus) {
-
             LoadPageStatus.Loading -> {
                 getLoadingView(status).isVisible(true)
                 getLoadFailView(status).isVisible(false)
@@ -72,6 +73,14 @@ abstract class BasePageViewForStatus {
                 getLoadFailView(status).isVisible(false)
                 getLoadEmptyView(status).isVisible(false)
                 getLoadNoNetView(status).isVisible(true)
+            }
+            else -> {
+                getLoadingView(status).isVisible(false)
+                getLoadFailView(status).isVisible(false)
+                getLoadEmptyView(status).isVisible(false)
+                getLoadNoNetView(status).isVisible(false)
+                status.isVisible(false)
+                needHideViews.forEach { it.isVisible(true) }
             }
         }
     }

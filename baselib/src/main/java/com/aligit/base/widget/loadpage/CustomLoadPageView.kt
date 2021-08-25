@@ -3,6 +3,7 @@ package com.aligit.base.widget.loadpage
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import com.aligit.base.R
 import com.aligit.base.ext.find
@@ -30,10 +31,10 @@ class SimplePageViewForStatus : BasePageViewForStatus() {
 }
 
 class LoadPageViewForStatus @JvmOverloads constructor(
-    context: Context?,
+    context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr) {
+) : FrameLayout(context, attrs, defStyleAttr) {
 
     var failView: View
     var noNetView: View
@@ -41,7 +42,7 @@ class LoadPageViewForStatus @JvmOverloads constructor(
     var loadingView: View
 
     init {
-        val itemView = getItemView(R.layout.quick_view_load_more)
+        val itemView = getItemView(R.layout.base_state_page_view)
         failView = itemView.find(R.id.load_more_load_fail_view)
         noNetView = itemView.find(R.id.load_more_load_no_net_view)
         emptyView = itemView.find(R.id.load_more_load_empty_view)

@@ -15,16 +15,13 @@ class TestListFragment:BaseVmFragment<FragmentTestListBinding>(R.layout.fragment
     @VMScope lateinit var viewModel: TestListViewModel
     val adapter = TestDataBindingAdapter()
 
-    override fun requestData() {
-        mDataBinding.smartRefreshLayout.autoRefresh()
-    }
+    override fun requestData() { }
 
     override fun onInitDataBinding() {
         mDataBinding.vm = viewModel
 
         initRecyclerView()
     }
-
 
     private fun initRecyclerView() {
         mDataBinding.recyclerView.also {

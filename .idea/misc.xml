@@ -12,6 +12,8 @@
         <entry key="app/src/main/res/layout/fragment_test_list.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/item_test_list.xml" value="0.17753623188405798" />
         <entry key="baselib/src/main/res/layout/activity_common.xml" value="0.2115036231884058" />
+        <entry key="baselib/src/main/res/layout/base_state_page_view.xml" value="0.12259371833839919" />
+        <entry key="baselib/src/main/res/layout/quick_view_load_more.xml" value="0.22871376811594202" />
         <entry key="baselib/src/main/res/layout/toolbar.xml" value="0.2115036231884058" />
       </map>
     </option>
