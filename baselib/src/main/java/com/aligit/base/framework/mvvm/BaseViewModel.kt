@@ -68,21 +68,23 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 普通接口请求
      * @param reqBolck 请求网络获取数据的方法体
+     * @param showLoading 显示加载中的 loading
      * @param watchTag 监听该字段，自动请求接口
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
      */
     fun <R, Y, T : IResponse<Y>> requestData(
         reqBolck: () -> LiveData<T>,
+        showLoading: Boolean = true,
         watchTag: MutableLiveData<*> = refreshTrigger,
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(watchTag) {
-                statusLiveData.postValue(CoroutineState.Loading)
+                if (showLoading) statusLiveData.postValue(CoroutineState.Loading)
                 reqBolck()
             }
         ) {
-            statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Error else CoroutineState.Finish)
+            if (showLoading) statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Error else CoroutineState.Finish)
             parseBolck(it.resultData1)
         }
     }
@@ -90,19 +92,21 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 列表页面请求，监听 page 自动请求列表接口
      * @param reqBolck 网络请求的方法体
+     * @param showLoading 显示加载中的 loading
      * @param parseBolck 处理响应的数据
      */
     fun <R, Y, T : IResponse<Y>> requestListData(
         reqBolck: () -> LiveData<T>,
+        showLoading: Boolean = true,
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(page) {
-                statusLiveData.postValue(CoroutineState.Loading)
+                if (showLoading) statusLiveData.postValue(CoroutineState.Loading)
                 reqBolck()
             }
         ) {
-            statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Finish else CoroutineState.Error)
+            if (showLoading) statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Finish else CoroutineState.Error)
             refreshing.value = false
             moreLoading.value = false
             hasMore.value = it.hasMoreData()
