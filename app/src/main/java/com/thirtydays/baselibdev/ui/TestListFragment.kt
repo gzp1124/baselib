@@ -2,7 +2,6 @@ package com.thirtydays.baselibdev.ui
 
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.aligit.base.Settings
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.fragment.BaseVmFragment
 import com.thirtydays.baselibdev.R
@@ -17,7 +16,7 @@ class TestListFragment:BaseVmFragment<FragmentTestListBinding>(R.layout.fragment
     val adapter = TestDataBindingAdapter()
 
     override fun requestData() {
-        viewModel.page.postValue(Settings.pageStartIndex)
+        mDataBinding.smartRefreshLayout.autoRefresh()
     }
 
     override fun onInitDataBinding() {
