@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import com.alibaba.android.arouter.launcher.ARouter
+import com.aligit.base.R
 import com.aligit.base.Settings
 import com.aligit.base.ext.coroutine.observe
 import com.aligit.base.ext.foundation.BaseThrowable
@@ -15,7 +16,9 @@ import com.aligit.base.ext.tool.screenWidth
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
-import com.aligit.base.ui.fragment.ProgressDialogFragment
+import com.lxj.xpopup.XPopup
+import com.lxj.xpopup.core.BasePopupView
+import com.lxj.xpopup.impl.LoadingPopupView
 import com.permissionx.guolindev.PermissionX
 import me.jessyan.autosize.AutoSizeCompat
 import me.jessyan.autosize.AutoSizeConfig
@@ -34,8 +37,6 @@ abstract class BaseActivity : InternationalizationActivity() {
     protected open val mMainHandler = Handler(Looper.getMainLooper())
 
     protected open lateinit var mPermission: com.permissionx.guolindev.PermissionCollection
-
-    private lateinit var progressDialogFragment: ProgressDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,7 +63,7 @@ abstract class BaseActivity : InternationalizationActivity() {
     }
 
     override fun onDestroy() {
-        dismissProgressDialog()
+        hideLoading()
         super.onDestroy()
     }
 
@@ -72,29 +73,29 @@ abstract class BaseActivity : InternationalizationActivity() {
         AutoSizeConfig.getInstance().screenWidth = screenWidth
     }
 
-    /**
-     * 显示加载(转圈)对话框
-     */
-    open fun showProgressDialog(message: String? = null) {
-        if (!this::progressDialogFragment.isInitialized) {
-            progressDialogFragment = ProgressDialogFragment.newInstance()
-        }
-        if (!progressDialogFragment.isAdded) {
-            progressDialogFragment.show(supportFragmentManager, message, false)
+    //共用 loading View
+    protected val loadingView: BasePopupView by lazy {
+        initLoadingView()
+    }
+
+    open fun initLoadingView(): BasePopupView {
+        //初始加载框
+        return XPopup.Builder(this).asLoading(getString(R.string.loading))
+    }
+
+    open fun showLoading(tip: String? = getString(R.string.loading)) {
+        if (!loadingView.isShow) {
+            (loadingView as? LoadingPopupView)?.setTitle(tip)
+            loadingView.show()
         }
     }
 
-    /**
-     * 隐藏加载(转圈)对话框
-     */
-    open fun dismissProgressDialog() {
-        if (this::progressDialogFragment.isInitialized && progressDialogFragment.isVisible) {
-            progressDialogFragment.dismissAllowingStateLoss()
-        }
+    open fun hideLoading() {
+//        if (loadingView.isShow) loadingView.dismiss()
     }
 
     open fun onError(throwable: BaseThrowable) {
-        dismissProgressDialog()
+        hideLoading()
         throwable.onError()
     }
 
@@ -125,19 +126,19 @@ abstract class BaseActivity : InternationalizationActivity() {
 
     fun initViewModelActions(mViewModel: BaseViewModel) {
         mViewModel.run {
-            observe(error){
+            observe(error) {
                 it.onError()
             }
-            observe(statusLiveData){
+            observe(statusLiveData) {
                 when (it) {
                     is CoroutineState.Loading -> {
-                        showProgressDialog(statusInfoStr)
+                        showLoading(it.loadingTips)
                     }
                     is CoroutineState.Finish -> {
-                        dismissProgressDialog()
+                        hideLoading()
                     }
                     is CoroutineState.Error -> {
-                        dismissProgressDialog()
+                        hideLoading()
                     }
                 }
             }

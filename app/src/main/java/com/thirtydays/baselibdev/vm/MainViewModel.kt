@@ -26,5 +26,7 @@ class MainViewModel : BaseViewModel() {
 
     val testContent = requestData({
         TestApi.get().getVer("http://apidoc.30days-tech.com/mock/263/kelake/app/v1/account/version")
-    }) { it }
+    }) {
+        it
+    }
 }

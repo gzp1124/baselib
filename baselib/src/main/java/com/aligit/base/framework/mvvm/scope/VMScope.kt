@@ -8,6 +8,8 @@ package com.aligit.base.framework.mvvm.scope
  *  比如：AActivity 和 BActivity 的 scopeName 相同
  *  那么 A打开B页面的时候，B页面的ViewModel不会重新创建，而是会复用 A页面的
  *  这样就实现了多页面共享ViewModel
+ *
+ *  @param scopeName ViewModel 的作用域控制，scopeName 相同则使用同一个 viewModel 对象
  */
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FIELD)

@@ -14,7 +14,7 @@ import com.aligit.base.ext.foundation.onError
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
-import com.aligit.base.ui.fragment.ProgressDialogFragment
+import com.aligit.base.ui.foundation.activity.BaseActivity
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.SimpleImmersionOwner
 import com.permissionx.guolindev.PermissionCollection
@@ -34,8 +34,6 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
 
     protected open lateinit var mPermission: PermissionCollection
 
-    private lateinit var progressDialogFragment: ProgressDialogFragment
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,7 +41,7 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
     }
 
     override fun onDestroy() {
-        dismissProgressDialog()
+        hideLoading()
         super.onDestroy()
     }
 
@@ -65,29 +63,16 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
     open fun onActivityPause(){}
     open fun onActivityDestroy(){}
 
-    /**
-     * 显示加载(转圈)对话框
-     */
-    open fun showProgressDialog(message: String? = null) {
-        if (!this::progressDialogFragment.isInitialized) {
-            progressDialogFragment = ProgressDialogFragment.newInstance()
-        }
-        if (!progressDialogFragment.isAdded) {
-            progressDialogFragment.show(childFragmentManager, message, false)
-        }
+    open fun showLoading(tip: String? = getString(R.string.loading)) {
+        (activity as? BaseActivity)?.showLoading(tip)
     }
 
-    /**
-     * 隐藏加载(转圈)对话框
-     */
-    open fun dismissProgressDialog() {
-        if (this::progressDialogFragment.isInitialized && progressDialogFragment.isVisible) {
-            progressDialogFragment.dismissAllowingStateLoss()
-        }
+    open fun hideLoading() {
+        (activity as? BaseActivity)?.hideLoading()
     }
 
     open fun onError(throwable: BaseThrowable) {
-        dismissProgressDialog()
+        hideLoading()
         throwable.onError()
     }
 
@@ -120,13 +105,13 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
             observe(statusLiveData){
                 when (it) {
                     is CoroutineState.Loading -> {
-                        showProgressDialog(statusInfoStr)
+                        showLoading(it.loadingTips)
                     }
                     is CoroutineState.Finish -> {
-                        dismissProgressDialog()
+                        hideLoading()
                     }
                     is CoroutineState.Error -> {
-                        dismissProgressDialog()
+                        hideLoading()
                     }
                 }
             }

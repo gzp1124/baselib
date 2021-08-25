@@ -1,6 +1,7 @@
 package com.thirtydays.baselibdev.vm
 
 import com.aligit.base.framework.mvvm.BaseViewModel
+import com.aligit.base.widget.loadpage.LoadPageStatus
 import com.thirtydays.baselibdev.net.testlivedataapi.TestApi
 import kotlin.random.Random
 
@@ -49,6 +50,11 @@ class TestListViewModel : BaseViewModel() {
         list
     }
 
-    val xieyi = requestData({mApi.getVer("http://apidoc.30days-tech.com/mock/263/kelake/app/v1/account/version")}){ it }
+    val xieyi = requestData({
+        loadPageLiveData.postValue(LoadPageStatus.Loading)
+        mApi.getVer("http://apidoc.30days-tech.com/mock/263/kelake/app/v1/account/version")
+    }){
+        it
+    }
 
 }

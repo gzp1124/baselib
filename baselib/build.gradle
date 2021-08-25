@@ -208,12 +208,6 @@ dependencies {
     //开发定位使用 https://github.com/orhanobut/logger
     api 'com.orhanobut:logger:2.2.0'
 
-    //material风格弹窗
-    api 'com.afollestad.material-dialogs:core:3.3.0'
-    api 'com.afollestad.material-dialogs:input:3.3.0'
-    api 'com.afollestad.material-dialogs:lifecycle:3.3.0'
-    api 'com.ldoublem.loadingview:loadingviewlib:1.0'
-
     //基于 mmap 的高性能通用 key-value 组件 https://github.com/Tencent/MMKV/blob/master/readme_cn.md
     api 'com.tencent:mmkv-static:1.2.10'
 
@@ -221,6 +215,9 @@ dependencies {
     api "com.alibaba:arouter-api:1.5.0"
     kapt "com.alibaba:arouter-compiler:1.2.2"
     kapt 'androidx.annotation:annotation:1.1.0'
+
+    // 弹窗框架 https://github.com/li-xiaojun/XPopup
+    api 'com.github.li-xiaojun:XPopup:2.5.10'
 
     //依赖注入库 https://github.com/google/dagger 此时放弃
 //    api 'com.google.dagger:dagger:2.24'

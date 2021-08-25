@@ -1,6 +1,6 @@
 package com.aligit.base.widget.loadpage
 
-import android.app.Activity
+import android.content.Context
 import android.view.View
 
 /**
@@ -18,7 +18,7 @@ abstract class BasePageViewForStatus {
     /**
      * 根布局
      */
-    abstract fun getRootView(activity: Activity): View
+    abstract fun getRootView(context: Context): View
 
     /**
      * 布局中的 加载更多视图

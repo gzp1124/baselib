@@ -4,11 +4,7 @@ import android.os.Bundle
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.aligit.base.ext.coroutine.observe
-import com.aligit.base.ext.foundation.onError
-import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.framework.mvvm.scope.injectViewModel
-import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.activity.BaseActivity
 
 

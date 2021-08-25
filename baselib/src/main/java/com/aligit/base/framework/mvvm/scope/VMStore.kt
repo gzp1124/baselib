@@ -12,7 +12,8 @@ private val vMStores = HashMap<String, VMStore>()
 
 //作用域对应的商店
 //反射注入view model
-fun BaseFragment.injectViewModel() {
+fun BaseFragment.injectViewModel(): List<BaseViewModel> {
+    val vms = arrayListOf<BaseViewModel>()
     //根据作用域创建商店
     this::class.java.declaredFields.forEach { field ->
         field.getAnnotation(VMScope::class.java)?.also { scope ->
@@ -46,11 +47,15 @@ fun BaseFragment.injectViewModel() {
 
             //给view model赋值
             field.set(this, vm)
+
+            vms.add(vm)
         }
     }
+    return vms
 }
 
-fun BaseActivity.injectViewModel() {
+fun BaseActivity.injectViewModel(): List<BaseViewModel> {
+    val vms = arrayListOf<BaseViewModel>()
     //根据作用域创建商店
     this::class.java.declaredFields.forEach { field ->
         field.getAnnotation(VMScope::class.java)?.also { scope ->
@@ -84,8 +89,11 @@ fun BaseActivity.injectViewModel() {
 
             //给view model赋值
             field.set(this, vm)
+
+            vms.add(vm)
         }
     }
+    return vms
 }
 
 //自定义商店

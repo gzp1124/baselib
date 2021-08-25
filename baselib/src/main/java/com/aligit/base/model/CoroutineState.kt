@@ -2,7 +2,8 @@ package com.aligit.base.model
 
 import com.aligit.base.framework.mvvm.BaseViewState
 
-sealed class CoroutineState : BaseViewState {
+sealed class CoroutineState(var loadingTips: String? = "") : BaseViewState {
+
     object Loading : CoroutineState()
     object Finish : CoroutineState()
     object Error : CoroutineState()

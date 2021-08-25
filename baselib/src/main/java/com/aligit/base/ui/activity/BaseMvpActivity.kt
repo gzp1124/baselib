@@ -1,20 +1,10 @@
 package com.aligit.base.ui.activity
 
 import android.os.Bundle
-import android.view.View
-import android.widget.TextView
 import androidx.viewbinding.ViewBinding
-import com.afollestad.materialdialogs.MaterialDialog
-import com.afollestad.materialdialogs.ModalDialog
-import com.afollestad.materialdialogs.customview.customView
-import com.afollestad.materialdialogs.lifecycle.lifecycleOwner
-import com.aligit.base.R
-import com.aligit.base.ext.find
-import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.framework.mvp.BasePresenter
 import com.aligit.base.framework.mvp.view.BaseView
 import com.aligit.base.ui.foundation.activity.RxAppCompatActivity
-import com.ldoublem.loadingviewlib.view.LVCircularSmile
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -45,30 +35,13 @@ abstract class BaseMvpActivity<out Presenter : BasePresenter<BaseView<Presenter>
         }
     }
 
-    //此处自定义弹框，以示如何实现
-    private lateinit var mLoadingDialog: MaterialDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         mPresenter.lifecycleProvider = this
 
-        initCustomDialog()
-
         initData()
-    }
-
-    private lateinit var loadView: View
-    private lateinit var lvCircularSmile: LVCircularSmile
-    private lateinit var loadTip: TextView
-
-    private fun initCustomDialog() {
-        //初始加载框
-        loadView = layoutInflater.inflate(R.layout.loading, null)
-        lvCircularSmile = loadView.find(R.id.lVCircularSmile)
-        loadTip = loadView.find(R.id.loadTip)
-        mLoadingDialog = MaterialDialog(this, ModalDialog)
-            .customView(view = loadView, dialogWrapContent = true)
     }
 
     override fun onDestroy() {
@@ -77,31 +50,4 @@ abstract class BaseMvpActivity<out Presenter : BasePresenter<BaseView<Presenter>
     }
 
     protected abstract fun initData()
-
-    override fun showToast(msg: String) {
-        super.showToast(msg)
-    }
-
-    override fun showLoading(color: Int, tip: String, title: String) {
-        if (!mLoadingDialog.isShowing) {
-            mLoadingDialog.show {
-                title(text = title)
-                lifecycleOwner(this@BaseMvpActivity)
-                loadTip.text = tip
-                lvCircularSmile.setViewColor(color)
-                lvCircularSmile.startAnim()
-            }
-        }
-    }
-
-    override fun hideLoading() {
-        lvCircularSmile.stopAnim()
-        if (mLoadingDialog.isShowing) {
-            mLoadingDialog.dismiss()
-        }
-    }
-
-    override fun onError(throwable: BaseThrowable) {
-        super.onError(throwable)
-    }
 }

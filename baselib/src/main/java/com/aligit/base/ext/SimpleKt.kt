@@ -25,8 +25,8 @@ inline fun <reified T> SimpleActivity.launchRequest(
     crossinline success: (T) -> Unit,
     crossinline fail: (BaseThrowable) -> Unit = { onError(it) },
     flowControl: Boolean = false,
-    crossinline start: () -> Unit = { showProgressDialog() },
-    crossinline end: () -> Unit = { dismissProgressDialog() },
+    crossinline start: () -> Unit = { showLoading() },
+    crossinline end: () -> Unit = { hideLoading() },
 ) {
     if (flowControl) start()
     lifecycleScope.launch {
@@ -52,8 +52,8 @@ inline fun <reified T> SimpleActivity.launchRequestIo(
     crossinline success: (T) -> Unit,
     crossinline fail: (BaseThrowable) -> Unit = { onError(it) },
     flowControl: Boolean = false,
-    crossinline start: () -> Unit = { showProgressDialog() },
-    crossinline end: () -> Unit = { dismissProgressDialog() },
+    crossinline start: () -> Unit = { showLoading() },
+    crossinline end: () -> Unit = { hideLoading() },
 ) {
     if (flowControl) start()
     lifecycleScope.launch {
@@ -82,8 +82,8 @@ inline fun <reified T> SimpleFragment.launchRequest(
     crossinline success: (T) -> Unit,
     crossinline fail: (BaseThrowable) -> Unit = { onError(it) },
     flowControl: Boolean = false,
-    crossinline start: () -> Unit = { showProgressDialog() },
-    crossinline end: () -> Unit = { dismissProgressDialog() },
+    crossinline start: () -> Unit = { showLoading() },
+    crossinline end: () -> Unit = { hideLoading() },
 ) {
     if (flowControl) start()
     lifecycleScope.launch {
@@ -109,8 +109,8 @@ inline fun <reified T> SimpleFragment.launchRequestIo(
     crossinline success: (T) -> Unit,
     crossinline fail: (BaseThrowable) -> Unit = { onError(it) },
     flowControl: Boolean = false,
-    crossinline start: () -> Unit = { showProgressDialog() },
-    crossinline end: () -> Unit = { dismissProgressDialog() },
+    crossinline start: () -> Unit = { showLoading() },
+    crossinline end: () -> Unit = { hideLoading() },
 ) {
     if (flowControl) start()
     lifecycleScope.launch {

@@ -10,14 +10,12 @@ import com.aligit.base.ext.coroutine.launchUI
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.net.livedata_api.IResponse
+import com.aligit.base.widget.loadpage.LoadPageStatus
 
 class NoViewModel : BaseViewModel() {
 }
 
 abstract class BaseViewModel : ViewModel() {
-    //loading 框中的提示语
-    var statusInfoStr = ""
-
     /**
      * 协程状态管理
      */
@@ -28,14 +26,13 @@ abstract class BaseViewModel : ViewModel() {
 
     /**
      * @param show 是否展示 loading 框
-     * @param statusInfoStr loading 框中的提示语
      * @param block 请求体
      */
-    fun launch(showLoading: Boolean = true, loadingInfoStr: String = "", block: Block) =
+    fun launch(showLoading: Boolean = true, block: Block) =
         launchUI {
             try {
-                this@BaseViewModel.statusInfoStr = loadingInfoStr
-                if (showLoading) statusLiveData.postValue(CoroutineState.Loading)
+                val loading = CoroutineState.Loading
+                if (showLoading) statusLiveData.postValue(loading)
                 block()
                 if (showLoading) statusLiveData.postValue(CoroutineState.Finish)
             } catch (e: Exception) {
@@ -43,6 +40,15 @@ abstract class BaseViewModel : ViewModel() {
                 error.postValue(BaseThrowable.ExternalThrowable(e))
             }
         }
+
+    //=======================
+    // 页面状态管理
+    /**
+     * 页面状态：刷新加载布局常用封装
+     */
+    val loadPageLiveData: MutableLiveData<LoadPageStatus> by lazy {
+        MutableLiveData<LoadPageStatus>()
+    }
 
     //=======================
     //刷新触发器，如果不是共享的 ViewModel，那么在界面初始化完后会自动设置该值
@@ -80,18 +86,24 @@ abstract class BaseViewModel : ViewModel() {
      * 普通接口请求
      * @param reqBolck 请求网络获取数据的方法体
      * @param showLoading 显示加载中的 loading
+     * @param loadingTips 加载中的提示语
      * @param watchTag 监听该字段，自动请求接口
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
      */
     fun <R, Y, T : IResponse<Y>> requestData(
         reqBolck: () -> LiveData<T>,
         showLoading: Boolean = true,
+        loadingTips: String? = "",
         watchTag: MutableLiveData<*> = refreshTrigger,
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(watchTag) {
-                if (showLoading) statusLiveData.postValue(CoroutineState.Loading)
+                if (showLoading) {
+                    val loading = CoroutineState.Loading
+                    loading.loadingTips = loadingTips
+                    statusLiveData.postValue(loading)
+                }
                 reqBolck()
             }
         ) {
@@ -104,16 +116,22 @@ abstract class BaseViewModel : ViewModel() {
      * 列表页面请求，监听 page 自动请求列表接口
      * @param reqBolck 网络请求的方法体
      * @param showLoading 显示加载中的 loading
+     * @param loadingTips 加载中的提示语
      * @param parseBolck 处理响应的数据
      */
     fun <R, Y, T : IResponse<Y>> requestListData(
         reqBolck: () -> LiveData<T>,
         showLoading: Boolean = true,
+        loadingTips: String? = "",
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(page) {
-                if (showLoading) statusLiveData.postValue(CoroutineState.Loading)
+                if (showLoading) {
+                    val loading = CoroutineState.Loading
+                    loading.loadingTips = loadingTips
+                    statusLiveData.postValue(loading)
+                }
                 reqBolck()
             }
         ) {

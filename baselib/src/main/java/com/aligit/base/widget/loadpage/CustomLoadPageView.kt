@@ -1,6 +1,5 @@
 package com.aligit.base.widget.loadpage
 
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -17,8 +16,8 @@ import com.aligit.base.ext.tool.getItemView
  * </pre>
  */
 class SimplePageViewForStatus : BasePageViewForStatus() {
-    override fun getRootView(activity: Activity): LoadPageViewForStatus =
-        LoadPageViewForStatus(activity)
+    override fun getRootView(context: Context): LoadPageViewForStatus =
+        LoadPageViewForStatus(context)
 
     override fun getLoadingView(status: LoadPageViewForStatus) = status.loadingView
 

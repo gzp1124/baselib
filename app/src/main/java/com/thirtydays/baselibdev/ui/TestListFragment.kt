@@ -25,6 +25,7 @@ class TestListFragment:BaseVmFragment<FragmentTestListBinding>(R.layout.fragment
         initRecyclerView()
     }
 
+
     private fun initRecyclerView() {
         mDataBinding.recyclerView.also {
             it.adapter = adapter
@@ -33,5 +34,6 @@ class TestListFragment:BaseVmFragment<FragmentTestListBinding>(R.layout.fragment
         viewModel.dataList.observe(this){
             adapter.setList(it)
         }
+
     }
 }
