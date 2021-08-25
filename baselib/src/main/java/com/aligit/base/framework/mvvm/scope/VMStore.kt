@@ -3,6 +3,7 @@ package com.aligit.base.framework.mvvm.scope
 
 import android.text.TextUtils
 import androidx.lifecycle.*
+import com.aligit.base.Settings
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.ui.foundation.activity.BaseActivity
 import com.aligit.base.ui.foundation.fragment.BaseFragment
@@ -34,7 +35,10 @@ fun BaseFragment.injectViewModel() {
             store.bindHost(this)
             val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
-            if (!haveSetEle) vm.refreshTrigger.postValue(true)
+            if (!haveSetEle) {
+                vm.refreshTrigger.postValue(true)
+                vm.page.postValue(Settings.pageStartIndex)
+            }
 
             //viewModel 状态监听
             initViewModelActions(vm)
@@ -68,7 +72,10 @@ fun BaseActivity.injectViewModel() {
             store.bindHost(this)
             val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
-            if (!haveSetEle) vm.refreshTrigger.postValue(true)
+            if (!haveSetEle) {
+                vm.refreshTrigger.postValue(true)
+                vm.page.postValue(Settings.pageStartIndex)
+            }
 
             //viewModel 状态监听
             initViewModelActions(vm)
