@@ -1,16 +1,15 @@
 package com.thirtydays.baselibdev.vm
 
-import androidx.lifecycle.MutableLiveData
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.thirtydays.baselibdev.net.MainRepository
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.thirtydays.baselibdev.net.testlivedataapi.TestApi
 
-class MainViewModel: BaseViewModel() {
+class MainViewModel : BaseViewModel() {
 
     private val mRepository: MainRepository = MainRepository()
 
-    val testContent :MutableLiveData<String> by lazy {
+    // 使用 retrofit 的写法
+    /*val testContent :MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
     fun getTime(){
@@ -22,5 +21,10 @@ class MainViewModel: BaseViewModel() {
                     testContent.value = it.string()
                 }
         }
-    }
+    }*/
+
+
+    val testContent = requestData({
+        TestApi.get().getVer("http://apidoc.30days-tech.com/mock/263/kelake/app/v1/account/version")
+    }) { it }
 }

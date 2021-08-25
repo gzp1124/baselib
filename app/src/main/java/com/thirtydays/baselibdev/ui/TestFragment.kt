@@ -11,7 +11,7 @@ class TestFragment: BaseVmFragment<FragmentTestBinding>(R.layout.fragment_test) 
     @VMScope("TestFragment") lateinit var mViewModel: MainViewModel
 
     override fun requestData() {
-        mViewModel.getTime()
+//        mViewModel.getTime()
     }
 
     override fun onInitDataBinding() {

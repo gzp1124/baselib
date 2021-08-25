@@ -15,7 +15,7 @@ class Test2Fragment: BaseVmFragment<FragmentTestBinding>(R.layout.fragment_test)
     }
 
     override fun requestData() {
-        mViewModel.getTime()
+//        mViewModel.getTime()
         mDataBinding.mContent.setTextColor(Color.parseColor("#ff0000"))
     }
 

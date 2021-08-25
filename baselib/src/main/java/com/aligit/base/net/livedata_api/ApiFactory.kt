@@ -6,7 +6,8 @@ import com.aligit.base.common.AppContext
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-import okhttp3.*
+import okhttp3.Cache
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -17,7 +18,7 @@ object ApiFactory {
     inline fun <reified T> create(
         baseUrl: String,
         saveCookie: Boolean,
-        noinline creator: (Int, String, Any?) -> Any
+        noinline creator: (Boolean,Int, String, Any?) -> Any
     ): T {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()

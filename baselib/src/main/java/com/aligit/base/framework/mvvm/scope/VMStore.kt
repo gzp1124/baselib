@@ -2,15 +2,8 @@ package com.aligit.base.framework.mvvm.scope
 
 
 import android.text.TextUtils
-import androidx.activity.ComponentActivity
-import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.*
-import com.aligit.base.ext.coroutine.observe
-import com.aligit.base.ext.foundation.onError
 import com.aligit.base.framework.mvvm.BaseViewModel
-import com.aligit.base.model.CoroutineState
-import com.aligit.base.ui.activity.BaseVmActivity
 import com.aligit.base.ui.foundation.activity.BaseActivity
 import com.aligit.base.ui.foundation.fragment.BaseFragment
 
@@ -24,7 +17,9 @@ fun BaseFragment.injectViewModel() {
         field.getAnnotation(VMScope::class.java)?.also { scope ->
             //获取作用域
             var element = scope.scopeName
+            var haveSetEle = true
             if (TextUtils.isEmpty(element)) {
+                haveSetEle = false
                 element = this::class.java.simpleName
             }
             var store: VMStore
@@ -39,6 +34,7 @@ fun BaseFragment.injectViewModel() {
             store.bindHost(this)
             val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
+            if (!haveSetEle) vm.refreshTrigger.postValue(true)
 
             //viewModel 状态监听
             initViewModelActions(vm)
@@ -55,7 +51,9 @@ fun BaseActivity.injectViewModel() {
         field.getAnnotation(VMScope::class.java)?.also { scope ->
             //获取作用域
             var element = scope.scopeName
+            var haveSetEle = true
             if (TextUtils.isEmpty(element)) {
+                haveSetEle = false
                 element = this::class.java.simpleName
             }
             var store: VMStore
@@ -70,6 +68,7 @@ fun BaseActivity.injectViewModel() {
             store.bindHost(this)
             val clazz = field.type as Class<BaseViewModel>
             val vm = ViewModelProvider(store, VMFactory()).get(clazz)
+            if (!haveSetEle) vm.refreshTrigger.postValue(true)
 
             //viewModel 状态监听
             initViewModelActions(vm)

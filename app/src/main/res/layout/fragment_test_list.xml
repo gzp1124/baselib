@@ -12,15 +12,22 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+        <TextView
+            android:text="@{vm.xieyi.downloadUrl}"
+            android:layout_marginTop="50dp"
+            android:textSize="20sp"
+            android:textColor="#f00"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/smartRefreshLayout"
             android:layout_width="match_parent"
+            android:layout_weight="1"
             app:bindOnLoadMoreListener="@{()->vm.loadMore()}"
             app:bindOnRefreshListener="@{()->vm.refresh()}"
             app:bindMoreLoading="@{vm.moreLoading}"
             app:bindRefreshing="@{vm.refreshing}"
             app:bindHasMore="@{vm.hasMore}"
-            app:bindAutoRefresh="@{vm.autoRefresh}"
             android:layout_height="match_parent">
 
             <com.scwang.smart.refresh.header.ClassicsHeader

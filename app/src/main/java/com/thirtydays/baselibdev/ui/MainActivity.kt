@@ -29,7 +29,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
     }
 
     override fun initData() {
-        mainViewModel.getTime()
+//        mainViewModel.getTime()
         twoViewModel.getTime()
     }
 

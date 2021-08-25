@@ -1,12 +1,15 @@
 package com.aligit.base.framework.mvvm
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.aligit.base.Settings
 import com.aligit.base.ext.coroutine.Block
 import com.aligit.base.ext.coroutine.launchUI
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.model.CoroutineState
+import com.aligit.base.net.livedata_api.IResponse
 
 class NoViewModel : BaseViewModel() {
 }
@@ -41,13 +44,16 @@ abstract class BaseViewModel : ViewModel() {
             }
         }
 
-//=======================
-//===分页加载
+    //=======================
+    //刷新触发器，如果不是共享的 ViewModel，那么在界面初始化完后会自动设置该值
+    //如果 ViewModel 的修饰符 @VMScope 没有在括号中指定 Vm scope 的 key 值
+    val refreshTrigger = MutableLiveData<Boolean>()
+
+    //===分页加载
     val page = MutableLiveData<Int>()
     val refreshing = MutableLiveData<Boolean>()
     val moreLoading = MutableLiveData<Boolean>()
     val hasMore = MutableLiveData<Boolean>()
-    val autoRefresh = MutableLiveData<Boolean>()//SmartRefreshLayout自动刷新标记
 
     open fun loadMore() {
         page.value = (page.value ?: Settings.pageStartIndex) + 1
@@ -59,7 +65,48 @@ abstract class BaseViewModel : ViewModel() {
         refreshing.value = true
     }
 
-    fun autoRefresh() {
-        autoRefresh.value = true
+    /**
+     * 普通接口请求
+     * @param reqBolck 请求网络获取数据的方法体
+     * @param watchTag 监听该字段，自动请求接口
+     * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
+     */
+    fun <R, Y, T : IResponse<Y>> requestData(
+        reqBolck: () -> LiveData<T>,
+        watchTag: MutableLiveData<*> = refreshTrigger,
+        parseBolck: (Y?) -> R
+    ): LiveData<R> {
+        return Transformations.map(
+            Transformations.switchMap(watchTag) {
+                statusLiveData.postValue(CoroutineState.Loading)
+                reqBolck()
+            }
+        ) {
+            statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Error else CoroutineState.Finish)
+            parseBolck(it.resultData1)
+        }
+    }
+
+    /**
+     * 列表页面请求，监听 page 自动请求列表接口
+     * @param reqBolck 网络请求的方法体
+     * @param parseBolck 处理响应的数据
+     */
+    fun <R, Y, T : IResponse<Y>> requestListData(
+        reqBolck: () -> LiveData<T>,
+        parseBolck: (Y?) -> R
+    ): LiveData<R> {
+        return Transformations.map(
+            Transformations.switchMap(page) {
+                statusLiveData.postValue(CoroutineState.Loading)
+                reqBolck()
+            }
+        ) {
+            statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Finish else CoroutineState.Error)
+            refreshing.value = false
+            moreLoading.value = false
+            hasMore.value = it.hasMoreData()
+            parseBolck(it.resultData1)
+        }
     }
 }
