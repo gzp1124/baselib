@@ -7,7 +7,7 @@ import java.lang.reflect.Type
 import retrofit2.CallAdapter.Factory
 import java.lang.reflect.ParameterizedType
 
-class LiveDataCallAdapterFactory(var creator: (Boolean,Int, String, Any?) -> Any) :
+class LiveDataCallAdapterFactory<T>(var creator: (Boolean,Int, String, T?) -> Any) :
     Factory() {
 
 
@@ -28,6 +28,6 @@ class LiveDataCallAdapterFactory(var creator: (Boolean,Int, String, Any?) -> Any
         if (observableType !is ParameterizedType) {
             throw IllegalArgumentException("resource must be parameterized")
         }
-        return LiveDataCallAdapter<Any>(observableType,creator)
+        return LiveDataCallAdapter<T>(observableType,creator)
     }
 }

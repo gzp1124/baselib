@@ -108,7 +108,7 @@ abstract class BaseViewModel : ViewModel() {
             }
         ) {
             if (showLoading) statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Error else CoroutineState.Finish)
-            parseBolck(it.resultData1)
+            parseBolck(it.resultData)
         }
     }
 
@@ -139,7 +139,7 @@ abstract class BaseViewModel : ViewModel() {
             refreshing.value = false
             moreLoading.value = false
             hasMore.value = it.hasMoreData()
-            parseBolck(it.resultData1)
+            parseBolck(it.resultData)
         }
     }
 }
