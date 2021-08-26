@@ -1,9 +1,7 @@
 package com.aligit.base.ui.foundation.activity
 
-import android.content.Context
 import android.os.Bundle
 import com.aligit.base.Settings
-import com.aligit.base.common.LanguageHelper
 import com.aligit.base.ext.tool.changDarkMode
 
 /**
@@ -23,12 +21,12 @@ abstract class InternationalizationActivity : SwipeBackActivity() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun attachBaseContext(newBase: Context) {
-        //语言国际化
-        val context = Settings.language_status.let {
-            LanguageHelper.setLanguage(newBase, it, isForce = true)
-        }
-        super.attachBaseContext(context)
-    }
+//    override fun attachBaseContext(newBase: Context) {
+//        //语言国际化
+//        val context = Settings.language_status.let {
+//            LanguageHelper.setLanguage(newBase, it, isForce = true)
+//        }
+//        super.attachBaseContext(context)
+//    }
 
 }

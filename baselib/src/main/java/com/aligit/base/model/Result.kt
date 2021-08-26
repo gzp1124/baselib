@@ -1,5 +1,20 @@
 package com.aligit.base.model
 
+import com.aligit.base.net.livedata_api.IResponse
+
+
+class BaseResponse<T>(
+    override val errorMessage: String?,
+    override val errorCode: Int,
+    override val resultStatus: Boolean?,
+    override val resultData: T?
+) : IResponse<T> {
+
+    override fun hasMoreData(): Boolean {
+        return true
+    }
+}
+
 data class BaseResult<T>(
     val resultStatus: Boolean,
     val errorCode: String,

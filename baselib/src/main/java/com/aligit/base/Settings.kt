@@ -1,8 +1,8 @@
 package com.aligit.base
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.aligit.base.common.LanguageHelper.LANGUAGE_SYSTEM
 import com.aligit.base.ext.foundation.Mmkv
+import java.util.*
 
 /**
  * <pre>
@@ -23,8 +23,8 @@ object Settings {
     var app_portrait_screen_width: Float = 375f
     var app_portrait_screen_height: Float = 812f
 
-    // 多语言
-    var language_status: String by Mmkv("LANGUAGE_STATUS", LANGUAGE_SYSTEM)
+    // 多语言，默认简体中文
+    var language_status: Locale by Mmkv("LANGUAGE_STATUS", Locale.SIMPLIFIED_CHINESE, Locale::class.java)
 
     // 项目主题
     var project_theme: Int by Mmkv("PROJECT_THEME", R.style.AppBaseTheme)

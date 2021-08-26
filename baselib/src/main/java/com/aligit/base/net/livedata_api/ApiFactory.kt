@@ -18,7 +18,7 @@ object ApiFactory {
     inline fun <reified T> create(
         baseUrl: String,
         saveCookie: Boolean,
-        noinline creator: (Boolean,Int, String, Any?) -> Any
+        noinline creator: (Boolean,Int, String, T?) -> Any
     ): T {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()

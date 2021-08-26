@@ -1,5 +1,6 @@
 package com.thirtydays.baselibdev.ui
 
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.framework.mvvm.scope.VMScope
@@ -15,12 +16,19 @@ class TestListFragment:BaseVmFragment<FragmentTestListBinding>(R.layout.fragment
     @VMScope lateinit var viewModel: TestListViewModel
     val adapter = TestDataBindingAdapter()
 
+
     override fun requestData() { }
 
     override fun onInitDataBinding() {
         mDataBinding.vm = viewModel
 
         initRecyclerView()
+
+
+
+        Log.e("gzp112411","时间："+System.currentTimeMillis())
+        Log.e("gzp112411","渠道的结果是："+MainActivity.test.ll.size)
+        Log.e("gzp112411","时间--："+System.currentTimeMillis())
     }
 
     private fun initRecyclerView() {

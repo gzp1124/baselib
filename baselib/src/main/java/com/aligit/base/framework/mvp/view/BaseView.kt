@@ -12,14 +12,13 @@ import com.aligit.base.framework.mvp.IPresenter
  */
 interface IView<out Presenter : IPresenter<IView<Presenter>>> {
     val mPresenter: Presenter
-
-    fun showToast(msg: String)
-
-    fun showLoading(color: Int = Color.BLUE, tip: String = " 正在加载中 ... ", title: String = "请等待")
-
-    fun hideLoading()
-
-    fun onError(throwable: BaseThrowable)
+//    fun showToast(msg: String)
+//
+//    fun showLoading(tip: String)
+//
+//    fun hideLoading()
+//
+//    fun onError(throwable: BaseThrowable)
 }
 
 interface BaseView<out Presenter : BasePresenter<BaseView<Presenter>>> : IView<Presenter>

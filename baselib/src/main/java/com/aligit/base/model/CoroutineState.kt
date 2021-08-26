@@ -2,6 +2,9 @@ package com.aligit.base.model
 
 import com.aligit.base.framework.mvvm.BaseViewState
 
+/**
+ * 网络请求的状态
+ */
 sealed class CoroutineState(var loadingTips: String? = "") : BaseViewState {
 
     object Loading : CoroutineState()

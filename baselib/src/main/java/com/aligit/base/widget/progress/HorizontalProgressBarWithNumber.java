@@ -16,7 +16,7 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  * <pre>
  * author : gzp1124
  * time   : 2020/6/17
- * desc   :
+ * desc   : 鸿洋水平数字Progressbar
  * </pre>
  */
 public class HorizontalProgressBarWithNumber extends ProgressBar {
