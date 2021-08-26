@@ -8,4 +8,5 @@ interface MainClick {
     fun openFontPage()
     fun changeLang(lang:String)
     fun openList()
+    fun testErrorData()
 }

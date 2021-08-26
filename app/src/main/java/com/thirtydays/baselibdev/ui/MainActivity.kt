@@ -12,12 +12,15 @@ import com.thirtydays.baselibdev.router.RouterPath
 import com.thirtydays.baselibdev.router.startDuLi
 import com.thirtydays.baselibdev.router.startFragment
 import com.thirtydays.baselibdev.vm.MainViewModel
+import com.thirtydays.baselibdev.vm.TestViewModel
 import com.thirtydays.baselibdev.vm.TwoViewModel
 
 
 @Route(path = RouterPath.AppCenter.PATH_APP_MAIN)
 class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main), MainClick {
 
+
+    @VMScope("TestErrorData") lateinit var testViewModel: TestViewModel
 
     @VMScope
     lateinit var twoViewModel: TwoViewModel
@@ -59,5 +62,10 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
 
     override fun openList() {
         startFragment("/test/list")
+    }
+
+    //测试数据倒灌
+    override fun testErrorData() {
+        startFragment("/test/errordata")
     }
 }

@@ -9,6 +9,7 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.17086765952826444" />
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_test.xml" value="0.2520833333333333" />
+        <entry key="app/src/main/res/layout/fragment_test_error_data.xml" value="0.12259371833839919" />
         <entry key="app/src/main/res/layout/fragment_test_list.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/item_test_list.xml" value="0.17753623188405798" />
         <entry key="baselib/src/main/res/layout/activity_common.xml" value="0.2115036231884058" />
