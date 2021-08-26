@@ -87,4 +87,8 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
     override fun testErrorData() {
         startFragment("/test/errordata")
     }
+
+    override fun normalRequest() {
+        startFragment("/test/normal_request")
+    }
 }

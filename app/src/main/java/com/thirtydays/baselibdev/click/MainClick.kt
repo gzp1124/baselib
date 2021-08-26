@@ -11,4 +11,5 @@ interface MainClick {
     fun changeLang(lang: LanguageStatus)
     fun openList()
     fun testErrorData()
+    fun normalRequest()
 }

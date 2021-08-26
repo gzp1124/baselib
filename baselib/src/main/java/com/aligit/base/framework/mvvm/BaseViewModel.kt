@@ -1,7 +1,6 @@
 package com.aligit.base.framework.mvvm
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.aligit.base.Settings
@@ -11,6 +10,7 @@ import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.net.livedata_api.IResponse
 import com.aligit.base.widget.loadpage.LoadPageStatus
+import com.kunminx.architecture.ui.callback.UnPeekLiveData
 
 class NoViewModel : BaseViewModel() {
 }
@@ -19,10 +19,10 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 协程状态管理
      */
-    val statusLiveData: MutableLiveData<CoroutineState> by lazy {
-        MutableLiveData<CoroutineState>()
+    val statusLiveData: UnPeekLiveData<CoroutineState> by lazy {
+        UnPeekLiveData<CoroutineState>()
     }
-    val error = MutableLiveData<BaseThrowable>()
+    val error = UnPeekLiveData<BaseThrowable>()
 
     /**
      * @param show 是否展示 loading 框
@@ -46,8 +46,8 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 页面状态：刷新加载布局常用封装
      */
-    val loadPageLiveData: MutableLiveData<LoadPageStatus> by lazy {
-        MutableLiveData<LoadPageStatus>()
+    val loadPageLiveData: UnPeekLiveData<LoadPageStatus> by lazy {
+        UnPeekLiveData<LoadPageStatus>()
     }
 
     //=======================
@@ -56,13 +56,13 @@ abstract class BaseViewModel : ViewModel() {
     //如果 ViewModel 的修饰符 @VMScope("userModel") 中指定了 key 则认为是共享 ViewModel ，进入页面默认不进行请求。
     //如果要进行请求，修改 refreshTrigger 的值，或者修改 page 的值，则会触发 requestData 或 requestListData （分别对应普通接口和列表接口）
     //只控制普通请求，列表请求使用 page 进行控制
-    val refreshTrigger = MutableLiveData<Boolean>()
+    val refreshTrigger = UnPeekLiveData<Boolean>()
 
     //===分页加载
-    val page = MutableLiveData<Int>()
-    val refreshing = MutableLiveData<Boolean>()
-    val moreLoading = MutableLiveData<Boolean>()
-    val hasMore = MutableLiveData<Boolean>()
+    val page = UnPeekLiveData<Int>()
+    val refreshing = UnPeekLiveData<Boolean>()
+    val moreLoading = UnPeekLiveData<Boolean>()
+    val hasMore = UnPeekLiveData<Boolean>()
 
     // 列表数据加载更多
     fun loadMore() {
@@ -89,12 +89,17 @@ abstract class BaseViewModel : ViewModel() {
      * @param loadingTips 加载中的提示语
      * @param watchTag 监听该字段，自动请求接口
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
+     *
+     * 泛型说明
+     *      R: 通过 parseBolck 方法将接口返回的原始类型 Y 处理为 R 类型，Y 和 R 可以是同一类型，可以是不同类型
+     *      Y: 实际的业务数据，去掉 IResponse 后，原始接口返回的类型
+     *      T: IResponse<R>，接口返回的包裹业务数据的
      */
-    fun <R, Y, T : IResponse<Y>> requestData(
+    fun <R, Y,  T : IResponse<Y>> requestData(
         reqBolck: () -> LiveData<T>,
         showLoading: Boolean = true,
         loadingTips: String? = "",
-        watchTag: MutableLiveData<*> = refreshTrigger,
+        watchTag: UnPeekLiveData<out Any> = refreshTrigger,
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(
