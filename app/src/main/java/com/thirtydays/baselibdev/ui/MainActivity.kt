@@ -3,6 +3,8 @@ package com.thirtydays.baselibdev.ui
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.common.LanguageHelper
+import com.aligit.base.common.LanguageStatus
+import com.aligit.base.ext.foundation.Mmkv
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.activity.BaseVmActivity
 import com.thirtydays.baselibdev.R
@@ -23,6 +25,15 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
     lateinit var twoViewModel: TwoViewModel
     @VMScope lateinit var mainViewModel: MainViewModel
 
+    companion object{
+        var test by Mmkv("save",B(),B::class.java)
+    }
+
+    class B {
+        var s:String = "123"
+        var ll:MutableList<String> = arrayListOf()
+    }
+
     override fun onInitDataBinding() {
         mDataBinding.viewModel = mainViewModel
         mDataBinding.click = this
@@ -31,6 +42,14 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
     override fun initData() {
 //        mainViewModel.getTime()
         twoViewModel.getTime()
+    }
+
+    val b = B()
+    override fun onResume() {
+        super.onResume()
+        b.s = "从这里设置的"
+        b.ll.add("11")
+        test = b
     }
 
     override fun openTestPage() {
@@ -53,7 +72,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
         ARouter.getInstance().build("/test/font").navigation()
     }
 
-    override fun changeLang(lang:String) {
+    override fun changeLang(lang: LanguageStatus) {
         LanguageHelper.switchLanguage(lang)
     }
 

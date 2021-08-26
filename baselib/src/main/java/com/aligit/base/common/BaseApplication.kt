@@ -10,12 +10,11 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.BuildConfig
 import com.aligit.base.Settings
 import com.aligit.base.Settings.app_force_use_portrait
-import com.aligit.base.Settings.language_status
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.initWebViewDataDirectory
 import com.aligit.base.ext.tool.isLandscape
-import com.aligit.base.net.retrofit.RetrofitFactory
 import com.aligit.base.net.ok.OkHttpManager
+import com.aligit.base.net.retrofit.RetrofitFactory
 import com.aligit.base.widget.loadpage.CustomLoadMoreView
 import com.chad.library.adapter.base.module.LoadMoreModuleConfig
 import com.elvishew.xlog.LogConfiguration
@@ -90,7 +89,6 @@ abstract class BaseApplication : MultiDexApplication() {
         Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
 
         val rootDir: String = MMKV.initialize(this)
-        XLog.i(rootDir)
 
         //ARouter初始化
         if (BuildConfig.DEBUG) {
@@ -118,14 +116,14 @@ abstract class BaseApplication : MultiDexApplication() {
         //腾讯
         CrashReport.initCrashReport(this, "3dd9e06f7e", BuildConfig.DEBUG)
 
-        language_status.let {
-            LanguageHelper.setLanguage(this, it,isForce = true)
-        }
+        //多语言切换
+        LanguageHelper.switchLanguage()
 
         SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
             ClassicsHeader(context)
         }
         LoadMoreModuleConfig.defLoadMoreView = CustomLoadMoreView()
+
     }
 
 }

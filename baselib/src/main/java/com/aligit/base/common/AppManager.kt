@@ -25,17 +25,16 @@ object AppManager {
      */
     @JvmStatic
     fun addActivity(activity: Activity) {
-        com.aligit.base.common.AppManager.curTag =
-            com.aligit.base.common.AppManager.getObjectTag(activity)
-        com.aligit.base.common.AppManager.activitySet[com.aligit.base.common.AppManager.curTag] = activity
+        curTag = getObjectTag(activity)
+        activitySet[curTag] = activity
     }
 
     /**
      * Activity出栈
      */
     @JvmStatic
-    fun removeActivity(activity: Activity) = com.aligit.base.common.AppManager.activitySet.remove(
-        com.aligit.base.common.AppManager.getObjectTag(activity)
+    fun removeActivity(activity: Activity) = activitySet.remove(
+        getObjectTag(activity)
     )
 
     /**
@@ -43,9 +42,9 @@ object AppManager {
      */
     fun removeActivity(vararg clazz: Class<*>) {
         clazz.forEach { clz ->
-            com.aligit.base.common.AppManager.activitySet.forEach {
+            activitySet.forEach {
                 if (it.value.javaClass == clz) {
-                    com.aligit.base.common.AppManager.removeActivity(it.value)
+                    removeActivity(it.value)
                 }
             }
         }
@@ -60,7 +59,7 @@ object AppManager {
         if (!activity.isDestroyed) {
             activity.finish()
         }
-        return com.aligit.base.common.AppManager.removeActivity(activity)
+        return removeActivity(activity)
     }
 
     /**
@@ -68,12 +67,12 @@ object AppManager {
      */
     @JvmStatic
     fun finishActivity(vararg clazz: Class<*>) {
-        val keys = com.aligit.base.common.AppManager.activitySet.keys
+        val keys = activitySet.keys
         clazz.forEach { clz ->
             keys.forEach {
-                val activity = com.aligit.base.common.AppManager.activitySet[it]
+                val activity = activitySet[it]
                 if (activity != null && activity.javaClass == clz) {
-                    com.aligit.base.common.AppManager.finishActivity(activity)
+                    finishActivity(activity)
                 }
             }
         }
@@ -86,12 +85,12 @@ object AppManager {
      */
     @JvmStatic
     fun finishExceptActivity(vararg clazz: Class<*>) {
-        val keys = com.aligit.base.common.AppManager.activitySet.keys
+        val keys = activitySet.keys
         clazz.forEach { clz ->
             keys.forEach {
-                val activity = com.aligit.base.common.AppManager.activitySet[it]
+                val activity = activitySet[it]
                 if (activity != null && activity.javaClass != clz) {
-                    com.aligit.base.common.AppManager.finishActivity(activity)
+                    finishActivity(activity)
                 }
             }
         }
@@ -103,19 +102,19 @@ object AppManager {
      */
     @JvmStatic
     fun currentActivity(): Activity? =
-        if (com.aligit.base.common.AppManager.activitySet.isNotEmpty()) com.aligit.base.common.AppManager.activitySet[com.aligit.base.common.AppManager.curTag] else null
+        if (activitySet.isNotEmpty()) activitySet[curTag] else null
 
     /**
      * 清理栈中所有的Activity
      */
     @JvmStatic
     fun finishAllActivity() {
-        com.aligit.base.common.AppManager.activitySet.forEach {
+        activitySet.forEach {
             if (!it.value.isDestroyed) {
                 it.value.finish()
             }
         }
-        com.aligit.base.common.AppManager.activitySet.clear()
+        activitySet.clear()
     }
 
     /**
@@ -123,7 +122,7 @@ object AppManager {
      */
     @JvmStatic
     fun exitApp(context: Context) {
-        com.aligit.base.common.AppManager.finishAllActivity()
+        finishAllActivity()
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         activityManager.killBackgroundProcesses(context.packageName)
         exitProcess(0)
