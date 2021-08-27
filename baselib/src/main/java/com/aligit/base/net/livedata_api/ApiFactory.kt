@@ -11,22 +11,19 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 object ApiFactory {
-    inline fun <reified T> create(
-        baseUrl: String,
-        saveCookie: Boolean,
-        noinline creator: (Boolean,Int, String, T?) -> Any
-    ): T {
+    fun makeClientBuilder(saveCookie: Boolean): OkHttpClient.Builder {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()
             .cache(Cache(file, 1024 * 1024 * 100))
             .connectTimeout(Settings.request.connectTimeout, TimeUnit.MINUTES)
             .readTimeout(Settings.request.readTimeout, TimeUnit.MINUTES)
             .writeTimeout(Settings.request.writeTimeout, TimeUnit.MINUTES)
-        if (saveCookie){
+        if (saveCookie) {
             val cookieJar = PersistentCookieJar(
                 SetCookieCache(),
                 SharedPrefsCookiePersistor(AppContext)
@@ -38,13 +35,37 @@ object ApiFactory {
             loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
             clientBuilder.addInterceptor(loggingInterceptor)
         }
+        return clientBuilder
+    }
 
+    inline fun <reified T> createString(
+        baseUrl: String,
+        saveCookie: Boolean,
+        noinline creator: (Boolean, Int, String, String?) -> Any
+    ): T {
+        val clientBuilder = makeClientBuilder(saveCookie)
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(clientBuilder.build())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory(creator))
+            .addCallAdapterFactory(LiveDataCallAdapterFactory<T,String>(creator))
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
+            .create(T::class.java)
+    }
+
+    inline fun <reified T> create(
+        baseUrl: String,
+        saveCookie: Boolean,
+        noinline creator: (Boolean, Int, String, T?) -> Any
+    ): T {
+        val clientBuilder = makeClientBuilder(saveCookie)
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(clientBuilder.build())
+            .addCallAdapterFactory(LiveDataCallAdapterFactory<T,T>(creator))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(T::class.java)
     }
+
 }
