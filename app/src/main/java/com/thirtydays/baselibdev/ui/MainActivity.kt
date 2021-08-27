@@ -1,5 +1,7 @@
 package com.thirtydays.baselibdev.ui
 
+import android.os.Bundle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.common.LanguageHelper
@@ -8,11 +10,11 @@ import com.aligit.base.ext.foundation.Mmkv
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.activity.BaseVmActivity
 import com.thirtydays.baselibdev.R
+import com.thirtydays.baselibdev.adapter.MainAdapter
 import com.thirtydays.baselibdev.click.MainClick
 import com.thirtydays.baselibdev.databinding.ActivityMainBinding
+import com.thirtydays.baselibdev.net.bean.MainBean
 import com.thirtydays.baselibdev.router.RouterPath
-import com.thirtydays.baselibdev.router.startDuLi
-import com.thirtydays.baselibdev.router.startFragment
 import com.thirtydays.baselibdev.vm.MainViewModel
 import com.thirtydays.baselibdev.vm.TestViewModel
 import com.thirtydays.baselibdev.vm.TwoViewModel
@@ -22,20 +24,25 @@ import com.thirtydays.baselibdev.vm.TwoViewModel
 class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main), MainClick {
 
 
+    // 这里的 testViewModel 用于测试数据倒灌，不要删除
     @VMScope("TestErrorData") lateinit var testViewModel: TestViewModel
 
-    @VMScope
-    lateinit var twoViewModel: TwoViewModel
+//    @VMScope lateinit var twoViewModel: TwoViewModel
     @VMScope lateinit var mainViewModel: MainViewModel
+    val adapter = MainAdapter()
 
-    companion object{
-        var test by Mmkv("save",B(),B::class.java)
-    }
 
-    class B {
-        var s:String = "123"
-        var ll:MutableList<String> = arrayListOf()
-    }
+    val pages = arrayListOf(
+        MainBean("打开test页面","/test/test",false),
+        MainBean("打开独立Fragment","/test/duli",true),
+        MainBean("打开切换夜间模式页面","/change/lang",false),
+        MainBean("打开切换主题页面","/change/theme",false),
+        MainBean("字体的使用","/test/font",false),
+        MainBean("列表示例","/test/list",true),
+        MainBean("测试数据倒灌","/test/errordata",true),
+        MainBean("测试各种请求网络","/test/normal_request",true),
+        MainBean("使用Flow代替LiveData","/test/flow",true)
+    )
 
     override fun onInitDataBinding() {
         mDataBinding.viewModel = mainViewModel
@@ -44,51 +51,15 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
 
     override fun initData() {
 //        mainViewModel.getTime()
-        twoViewModel.getTime()
-    }
-
-    val b = B()
-    override fun onResume() {
-        super.onResume()
-        b.s = "从这里设置的"
-        b.ll.add("11")
-        test = b
-    }
-
-    override fun openTestPage() {
-        ARouter.getInstance().build("/test/test").navigation()
-    }
-
-    override fun openDuLiFragment() {
-        startDuLi()
-    }
-
-    override fun openSwitchLangPage() {
-        ARouter.getInstance().build("/change/lang").navigation()
-    }
-
-    override fun openChangeThemePage() {
-        ARouter.getInstance().build("/change/theme").navigation()
-    }
-
-    override fun openFontPage() {
-        ARouter.getInstance().build("/test/font").navigation()
+//        twoViewModel.getTime()
+        mDataBinding.recyclerView?.also {
+            adapter.setList(pages)
+            it.adapter = adapter
+            it.layoutManager = LinearLayoutManager(this)
+        }
     }
 
     override fun changeLang(lang: LanguageStatus) {
         LanguageHelper.switchLanguage(lang)
-    }
-
-    override fun openList() {
-        startFragment("/test/list")
-    }
-
-    //测试数据倒灌
-    override fun testErrorData() {
-        startFragment("/test/errordata")
-    }
-
-    override fun normalRequest() {
-        startFragment("/test/normal_request")
     }
 }

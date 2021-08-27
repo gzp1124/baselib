@@ -24,7 +24,6 @@ class LiveDataCallAdapter<T>(
                     call.enqueue(object : Callback<T> {
                         override fun onFailure(call: Call<T>, t: Throwable) {
                             val value = creator(false,-1, t.message ?: "have error ${t.localizedMessage}", null) as T
-                            log("来这里报错了"+value)
                             postValue(value)
                         }
 
@@ -32,7 +31,6 @@ class LiveDataCallAdapter<T>(
                             call: Call<T>,
                             response: Response<T>
                         ) {
-                            log("来这里---"+value)
                             postValue(response.body())
                         }
                     })

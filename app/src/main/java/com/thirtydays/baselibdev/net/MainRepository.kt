@@ -7,6 +7,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.ResponseBody
 
+/**
+ * 已弃用
+ *
+ * 新的使用方式查看 TestResponse
+ */
 class MainRepository : BaseRepository() {
 
     init {

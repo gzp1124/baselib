@@ -9,4 +9,8 @@ object TestRepository {
         emit(TestApi.get().getFlowVer(REQUEST_URL))
     }
 
+    fun getStrData() = flow {
+        emit(TestApi.getStr().getFlowString(REQUEST_URL))
+    }
+
 }

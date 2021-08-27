@@ -14,15 +14,50 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:text="@{vm.testContent.downloadUrl}"
+            android:textSize="20sp"
+            android:textColor="#f00"
+            android:hint="这是页面加载时就自动请求"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="@{vm.normalData1}"
+            android:textSize="20sp"
+            android:textColor="#f00"
+            android:hint="通过修改 livedata 请求"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/changeLiveData"
+            android:text="使用修改 livedata 值的方式请求"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
             android:text="@{vm.normalData2}"
             android:textSize="20sp"
             android:textColor="#f00"
-            android:hint="这是Hint默认值"
+            android:hint="调用方法请求"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
         <Button
             android:id="@+id/openPageBtn"
-            android:text="修改 ViewModel 中的 UnPeekLiveData \n 来请求网络"
+            android:text="普通调用方法请求"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:text="@{vm.strData}"
+            android:textSize="20sp"
+            android:textColor="#f00"
+            android:hint="字符串方式请求"
+            android:maxLines="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/getStrReq"
+            android:text="结果以字符串方式返回"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 

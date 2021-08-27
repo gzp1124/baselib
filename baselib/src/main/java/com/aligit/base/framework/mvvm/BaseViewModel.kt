@@ -90,7 +90,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 普通方式请求普通接口，不使用 livedata
      */
-    fun <Y, T : IResponse<Y>> requestData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit){
+    fun <T> requestData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit){
         viewModelScope.launch {
             parseRequest(flow, showLoading).collect {
                 parseBolck(it)

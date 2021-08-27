@@ -12,87 +12,42 @@
         <variable
             name="viewModel"
             type="com.thirtydays.baselibdev.vm.MainViewModel" />
-        <import type="com.aligit.base.common.LanguageStatus"/>
+
+        <import type="com.aligit.base.common.LanguageStatus" />
     </data>
 
-    <androidx.core.widget.NestedScrollView
-        android:background="@color/white"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".ui.MainActivity">
 
-        <LinearLayout
+        <TextView
+            android:layout_width="187.5dp"
+            android:layout_height="54dp"
+            android:background="#f00"
+            android:layout_marginTop="30dp"
+            android:text="@{viewModel.testContent.downloadUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick='@{()->click.changeLang(LanguageStatus.LANGUAGE_SIMPLIFIED_CHINESE)}'
+            android:text="@string/change_cn" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick='@{()->click.changeLang(LanguageStatus.LANGUAGE_ENGLISH)}'
+            android:text="@string/change_en" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            tools:context=".ui.MainActivity">
-
-            <TextView
-                android:layout_width="187.5dp"
-                android:layout_height="54dp"
-                android:background="#f00"
-                android:text="@{viewModel.testContent.downloadUrl}"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="100dp"
-                android:onClick="@{()->click.openTestPage()}"
-                android:text="打开test页面" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="@{()->click.openDuLiFragment()}"
-                android:text="打开独立Fragment" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.openSwitchLangPage()}'
-                android:text="打开切换夜间模式页面" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.openChangeThemePage()}'
-                android:text="打开切换主题页面" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.openFontPage()}'
-                android:text="字体的使用" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.changeLang(LanguageStatus.LANGUAGE_SIMPLIFIED_CHINESE)}'
-                android:text="@string/change_cn" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.changeLang(LanguageStatus.LANGUAGE_ENGLISH)}'
-                android:text="@string/change_en" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.openList()}'
-                android:text="列表示例" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.testErrorData()}'
-                android:text="测试数据倒灌" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick='@{()->click.normalRequest()}'
-                android:text="测试正常点击按钮请求网络" />
-        </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+            android:layout_height="match_parent"/>
+    </LinearLayout>
 </layout>

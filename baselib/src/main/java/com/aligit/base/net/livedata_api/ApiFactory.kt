@@ -11,6 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -37,21 +38,25 @@ object ApiFactory {
         return clientBuilder
     }
 
-//    inline fun <reified T> createString(
-//        baseUrl: String,
-//        saveCookie: Boolean,
-//        noinline creator: (Boolean, Int, String, String?) -> Any
-//    ): T {
-//        val clientBuilder = makeClientBuilder(saveCookie)
-//        return Retrofit.Builder()
-//            .baseUrl(baseUrl)
-//            .client(clientBuilder.build())
-//            .addCallAdapterFactory(LiveDataCallAdapterFactory<T,String>(creator))
-//            .addConverterFactory(ScalarsConverterFactory.create())
-//            .build()
-//            .create(T::class.java)
-//    }
+    /**
+     * 响应结果直接以原始字符串形式返回，不用 gson 处理
+     */
+    inline fun <reified T> createString(
+        baseUrl: String,
+        saveCookie: Boolean,
+    ): T {
+        val clientBuilder = makeClientBuilder(saveCookie)
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(clientBuilder.build())
+            .addConverterFactory(ScalarsConverterFactory.create())
+            .build()
+            .create(T::class.java)
+    }
 
+    /**
+     * 响应结果对象使用 gson 处理成 JavaBean 对象
+     */
     inline fun <reified T> create(
         baseUrl: String,
         saveCookie: Boolean,

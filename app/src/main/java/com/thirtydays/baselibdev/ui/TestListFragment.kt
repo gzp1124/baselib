@@ -23,12 +23,6 @@ class TestListFragment:BaseVmFragment<FragmentTestListBinding>(R.layout.fragment
         mDataBinding.vm = viewModel
 
         initRecyclerView()
-
-
-
-        Log.e("gzp112411","时间："+System.currentTimeMillis())
-        Log.e("gzp112411","渠道的结果是："+MainActivity.test.ll.size)
-        Log.e("gzp112411","时间--："+System.currentTimeMillis())
     }
 
     private fun initRecyclerView() {
