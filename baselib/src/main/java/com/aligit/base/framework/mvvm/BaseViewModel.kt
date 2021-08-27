@@ -1,6 +1,5 @@
 package com.aligit.base.framework.mvvm
 
-import android.os.SystemClock
 import androidx.lifecycle.*
 import com.aligit.base.Settings
 import com.aligit.base.ext.foundation.BaseThrowable
@@ -24,8 +23,8 @@ abstract class BaseViewModel : ViewModel() {
     }
     val error = UnPeekLiveData<BaseThrowable>()
 
-    // 请求之前对 flow 进行统一处理
-    private fun <T> beforeRequest(
+    // 对 flow 进行统一处理
+    private fun <T> parseRequest(
         flow: Flow<T>,
         showLoading: Boolean = true,
         loadingTips: String? = "",
@@ -34,12 +33,12 @@ abstract class BaseViewModel : ViewModel() {
             .onStart {
                 val loading = CoroutineState.Loading
                 if (showLoading) statusLiveData.postValue(loading)
-                SystemClock.sleep(1000)
             }
             .onCompletion {
                 if (showLoading) statusLiveData.postValue(CoroutineState.Finish)
             }
             .catch { e ->
+                e.printStackTrace()
                 if (showLoading) statusLiveData.postValue(CoroutineState.Error)
                 error.postValue(BaseThrowable.ExternalThrowable(e))
             }
@@ -93,7 +92,7 @@ abstract class BaseViewModel : ViewModel() {
      */
     fun <Y, T : IResponse<Y>> requestData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit){
         viewModelScope.launch {
-            beforeRequest(flow, showLoading).collect {
+            parseRequest(flow, showLoading).collect {
                 parseBolck(it)
             }
         }
@@ -104,7 +103,7 @@ abstract class BaseViewModel : ViewModel() {
      */
     fun <Y, T : IResponse<Y>> requestListData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit) {
         viewModelScope.launch {
-            beforeRequest(flow, showLoading).collect {
+            parseRequest(flow, showLoading).collect {
                 refreshing.value = false
                 moreLoading.value = false
                 hasMore.value = it.hasMoreData()
@@ -135,7 +134,7 @@ abstract class BaseViewModel : ViewModel() {
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(watchTag) {
-                beforeRequest(reqBolck, showLoading, loadingTips).asLiveData()
+                parseRequest(reqBolck, showLoading, loadingTips).asLiveData()
             }
         ) {
             parseBolck(it.resultData)
@@ -157,7 +156,7 @@ abstract class BaseViewModel : ViewModel() {
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(page) {
-                beforeRequest(reqBolck, showLoading, loadingTips).asLiveData()
+                parseRequest(reqBolck, showLoading, loadingTips).asLiveData()
             }
         ) {
             refreshing.value = false

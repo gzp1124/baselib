@@ -2,12 +2,12 @@ package com.aligit.base.net.livedata_api
 
 import androidx.lifecycle.LiveData
 import retrofit2.CallAdapter
-import retrofit2.Retrofit
-import java.lang.reflect.Type
 import retrofit2.CallAdapter.Factory
+import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
+import java.lang.reflect.Type
 
-class LiveDataCallAdapterFactory<T,R>(var creator: (Boolean,Int, String, R?) -> Any) :
+class LiveDataCallAdapterFactory<T>(var creator: (Boolean,Int, String, T?) -> Any) :
     Factory() {
 
 
@@ -28,6 +28,6 @@ class LiveDataCallAdapterFactory<T,R>(var creator: (Boolean,Int, String, R?) -> 
         if (observableType !is ParameterizedType) {
             throw IllegalArgumentException("resource must be parameterized")
         }
-        return LiveDataCallAdapter<T,R>(observableType,creator)
+        return LiveDataCallAdapter<T>(observableType,creator)
     }
 }

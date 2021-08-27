@@ -11,7 +11,6 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
@@ -38,20 +37,20 @@ object ApiFactory {
         return clientBuilder
     }
 
-    inline fun <reified T> createString(
-        baseUrl: String,
-        saveCookie: Boolean,
-        noinline creator: (Boolean, Int, String, String?) -> Any
-    ): T {
-        val clientBuilder = makeClientBuilder(saveCookie)
-        return Retrofit.Builder()
-            .baseUrl(baseUrl)
-            .client(clientBuilder.build())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory<T,String>(creator))
-            .addConverterFactory(ScalarsConverterFactory.create())
-            .build()
-            .create(T::class.java)
-    }
+//    inline fun <reified T> createString(
+//        baseUrl: String,
+//        saveCookie: Boolean,
+//        noinline creator: (Boolean, Int, String, String?) -> Any
+//    ): T {
+//        val clientBuilder = makeClientBuilder(saveCookie)
+//        return Retrofit.Builder()
+//            .baseUrl(baseUrl)
+//            .client(clientBuilder.build())
+//            .addCallAdapterFactory(LiveDataCallAdapterFactory<T,String>(creator))
+//            .addConverterFactory(ScalarsConverterFactory.create())
+//            .build()
+//            .create(T::class.java)
+//    }
 
     inline fun <reified T> create(
         baseUrl: String,
@@ -62,7 +61,7 @@ object ApiFactory {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(clientBuilder.build())
-            .addCallAdapterFactory(LiveDataCallAdapterFactory<T,T>(creator))
+            .addCallAdapterFactory(LiveDataCallAdapterFactory<T>(creator))
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(T::class.java)

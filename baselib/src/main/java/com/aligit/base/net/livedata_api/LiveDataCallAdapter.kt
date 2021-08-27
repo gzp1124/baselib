@@ -10,9 +10,9 @@ import retrofit2.Response
 import java.lang.reflect.Type
 import java.util.concurrent.atomic.AtomicBoolean
 
-class LiveDataCallAdapter<T,R>(
+class LiveDataCallAdapter<T>(
     private val responseType: Type,
-    var creator: (Boolean, Int, String, R?) -> Any
+    var creator: (Boolean, Int, String, T?) -> Any
 ) :
     CallAdapter<T, LiveData<T>> {
     override fun adapt(call: Call<T>): LiveData<T> {
