@@ -28,6 +28,10 @@ interface TestApi {
     @GET
     fun getXieYi(@Url url: String): LiveData<TestResponse<String>>
 
+    // 直接返回 livedata 的请求方式，请求和 livedata 绑定太紧了，不太合适
     @GET
     fun getVer(@Url url:String):LiveData<TestResponse<VerBean>>
+
+    @GET
+    suspend fun getFlowVer(@Url url:String):TestResponse<VerBean>
 }

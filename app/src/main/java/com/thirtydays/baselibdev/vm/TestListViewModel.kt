@@ -3,6 +3,7 @@ package com.thirtydays.baselibdev.vm
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.widget.loadpage.LoadPageStatus
 import com.thirtydays.baselibdev.net.testlivedataapi.TestApi
+import com.thirtydays.baselibdev.net.testlivedataapi.TestRepository
 import kotlin.random.Random
 
 class TestListViewModel : BaseViewModel() {
@@ -42,7 +43,7 @@ class TestListViewModel : BaseViewModel() {
 //    }
 
     private val mApi = TestApi.get()
-    val dataList = requestListData({ mApi.getLiveDataTime("http://www.baidu.com") }) {
+    val dataList = requestListDataToLiveData(TestRepository.getFlowVer()) {
         val list = mutableListOf<String>()
         for (i in 1..Random.nextInt(10)) {
             list.add(" -- $i")
@@ -50,10 +51,12 @@ class TestListViewModel : BaseViewModel() {
         list
     }
 
-    val xieyi = requestData({
-        loadPageLiveData.postValue(LoadPageStatus.Loading)
-        mApi.getVer("http://apidoc.30days-tech.com/mock/263/kelake/app/v1/account/version")
-    }){
+    /**
+     * 使用
+    loadPageLiveData.postValue(LoadPageStatus.Loading) 来控制页面状态
+     */
+
+    val xieyi = requestDataToLiveData(TestRepository.getFlowVer()){
         loadPageLiveData.postValue(LoadPageStatus.Nromal)
         it
     }

@@ -14,7 +14,7 @@ import java.util.*
  * Time: 2019/9/10 15:11
  * Des:
  */
-fun Context.toast(value: String) = toast { value }
+fun toast(value: String) = toast { value }
 
 inline fun toast(value: () -> String) {
     val toast = ToastCompat.makeText(AppContext, value(), Toast.LENGTH_SHORT)
@@ -23,7 +23,7 @@ inline fun toast(value: () -> String) {
     toast.show()
 }
 
-fun Context.toast(value: String, delay: Long = 500) = toast({ value }, delay)
+fun toast(value: String, delay: Long = 500) = toast({ value }, delay)
 
 inline fun toast(value: () -> String, delay: Long) {
     val toast = Toast.makeText(AppContext, value(), Toast.LENGTH_SHORT)

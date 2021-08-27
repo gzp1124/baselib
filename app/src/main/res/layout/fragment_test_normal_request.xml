@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:text="@{vm.normalData1.downloadUrl}"
+            android:text="@{vm.normalData2}"
             android:textSize="20sp"
             android:textColor="#f00"
             android:hint="这是Hint默认值"

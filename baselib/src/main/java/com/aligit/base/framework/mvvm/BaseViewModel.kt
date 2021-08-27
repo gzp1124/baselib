@@ -1,16 +1,16 @@
 package com.aligit.base.framework.mvvm
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import android.os.SystemClock
+import androidx.lifecycle.*
 import com.aligit.base.Settings
-import com.aligit.base.ext.coroutine.Block
-import com.aligit.base.ext.coroutine.launchUI
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.net.livedata_api.IResponse
 import com.aligit.base.widget.loadpage.LoadPageStatus
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class NoViewModel : BaseViewModel() {
 }
@@ -24,22 +24,27 @@ abstract class BaseViewModel : ViewModel() {
     }
     val error = UnPeekLiveData<BaseThrowable>()
 
-    /**
-     * @param show 是否展示 loading 框
-     * @param block 请求体
-     */
-    fun launch(showLoading: Boolean = true, block: Block) =
-        launchUI {
-            try {
+    // 请求之前对 flow 进行统一处理
+    private fun <T> beforeRequest(
+        flow: Flow<T>,
+        showLoading: Boolean = true,
+        loadingTips: String? = "",
+    ): Flow<T> {
+        return flow
+            .onStart {
                 val loading = CoroutineState.Loading
                 if (showLoading) statusLiveData.postValue(loading)
-                block()
+                SystemClock.sleep(1000)
+            }
+            .onCompletion {
                 if (showLoading) statusLiveData.postValue(CoroutineState.Finish)
-            } catch (e: Exception) {
+            }
+            .catch { e ->
                 if (showLoading) statusLiveData.postValue(CoroutineState.Error)
                 error.postValue(BaseThrowable.ExternalThrowable(e))
             }
-        }
+            .flowOn(Dispatchers.IO)
+    }
 
     //=======================
     // 页面状态管理
@@ -77,9 +82,35 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     // 重新加载页面数据
-    fun reload(){
+    fun reload() {
         refresh()
         refreshTrigger.postValue(true)
+    }
+
+
+    /**
+     * 普通方式请求普通接口，不使用 livedata
+     */
+    fun <Y, T : IResponse<Y>> requestData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit) {
+        viewModelScope.launch {
+            beforeRequest(flow, showLoading).collect {
+                parseBolck(it)
+            }
+        }
+    }
+
+    /**
+     * 普通方式请求列表接口，不使用 livedata
+     */
+    fun <Y, T : IResponse<Y>> requestListData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit) {
+        viewModelScope.launch {
+            beforeRequest(flow, showLoading).collect {
+                refreshing.value = false
+                moreLoading.value = false
+                hasMore.value = it.hasMoreData()
+                parseBolck(it)
+            }
+        }
     }
 
     /**
@@ -95,8 +126,8 @@ abstract class BaseViewModel : ViewModel() {
      *      Y: 实际的业务数据，去掉 IResponse 后，原始接口返回的类型
      *      T: IResponse<R>，接口返回的包裹业务数据的
      */
-    fun <R, Y,  T : IResponse<Y>> requestData(
-        reqBolck: () -> LiveData<T>,
+    fun <R, Y, T : IResponse<Y>> requestDataToLiveData(
+        reqBolck: Flow<T>,
         showLoading: Boolean = true,
         loadingTips: String? = "",
         watchTag: UnPeekLiveData<out Any> = refreshTrigger,
@@ -104,15 +135,9 @@ abstract class BaseViewModel : ViewModel() {
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(watchTag) {
-                if (showLoading) {
-                    val loading = CoroutineState.Loading
-                    loading.loadingTips = loadingTips
-                    statusLiveData.postValue(loading)
-                }
-                reqBolck()
+                beforeRequest(reqBolck, showLoading, loadingTips).asLiveData()
             }
         ) {
-            if (showLoading) statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Error else CoroutineState.Finish)
             parseBolck(it.resultData)
         }
     }
@@ -124,23 +149,17 @@ abstract class BaseViewModel : ViewModel() {
      * @param loadingTips 加载中的提示语
      * @param parseBolck 处理响应的数据
      */
-    fun <R, Y, T : IResponse<Y>> requestListData(
-        reqBolck: () -> LiveData<T>,
+    fun <R, Y, T : IResponse<Y>> requestListDataToLiveData(
+        reqBolck: Flow<T>,
         showLoading: Boolean = true,
         loadingTips: String? = "",
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(page) {
-                if (showLoading) {
-                    val loading = CoroutineState.Loading
-                    loading.loadingTips = loadingTips
-                    statusLiveData.postValue(loading)
-                }
-                reqBolck()
+                beforeRequest(reqBolck, showLoading, loadingTips).asLiveData()
             }
         ) {
-            if (showLoading) statusLiveData.postValue(if (true == it.resultStatus) CoroutineState.Finish else CoroutineState.Error)
             refreshing.value = false
             moreLoading.value = false
             hasMore.value = it.hasMoreData()

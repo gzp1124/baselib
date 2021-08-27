@@ -19,7 +19,8 @@ class TestNormalRequestFragment:BaseVmFragment<FragmentTestNormalRequestBinding>
     override fun onInitDataBinding() {
         mDataBinding.vm = mainViewModel
         mDataBinding.openPageBtn.click {
-            mainViewModel.reqData.postValue("")
+//            mainViewModel.reqData.postValue("")
+            mainViewModel.requestData2()
         }
     }
 }
