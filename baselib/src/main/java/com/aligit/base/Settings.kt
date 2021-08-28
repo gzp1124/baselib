@@ -15,11 +15,14 @@ object Settings {
     // 强制使用竖屏
     var app_force_use_portrait: Boolean = false
 
-    // 配合 AutoSize 适配的参数，单位都是dp
+    // autosize 使用宽度进行适配
+    var autoSizeIsBaseOnWidth: Boolean = true
+
+    // 配合 AutoSize 适配的参数，设计图的尺寸，主要是要宽高比
     var app_landscape_screen_width: Float = 1194f
     var app_landscape_screen_height: Float = 834f
 
-    // 如果强制使用竖屏，只需要设置下面两个竖屏的宽高即可
+    // 如果强制使用竖屏，只需要设置下面两个竖屏的宽高即可，设计图的尺寸
     var app_portrait_screen_width: Float = 375f
     var app_portrait_screen_height: Float = 812f
 

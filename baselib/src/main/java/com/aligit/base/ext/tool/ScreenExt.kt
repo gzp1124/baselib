@@ -14,6 +14,7 @@ import android.provider.Settings
 import android.view.WindowManager
 import androidx.annotation.RequiresPermission
 import com.aligit.base.common.AppContext
+import com.blankj.utilcode.util.ScreenUtils
 
 /**
  * <pre>
@@ -25,25 +26,22 @@ import com.aligit.base.common.AppContext
 /**
  * 获取屏幕宽度
  */
-val screenWidth: Int
-    get() {
-        AppContext
-        val windowManager = AppContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val point = Point()
-        windowManager.defaultDisplay.getRealSize(point)
-        return point.x
-    }
+val screenWidth: Int = ScreenUtils.getScreenWidth()
 
 /**
  * 获取屏幕高度
  */
-val screenHeight: Int
-    get() {
-        val windowManager = AppContext.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        val point = Point()
-        windowManager.defaultDisplay.getRealSize(point)
-        return point.y
-    }
+val screenHeight: Int = ScreenUtils.getAppScreenHeight()
+
+/**
+ * APP的真实宽度
+ */
+val appWidth: Int = ScreenUtils.getAppScreenWidth()
+
+/**
+ * APP的真实高度，会减掉虚拟按键以及导航栏等
+ */
+val appHeight: Int = ScreenUtils.getAppScreenHeight()
 
 /**
  * 获取屏幕密度

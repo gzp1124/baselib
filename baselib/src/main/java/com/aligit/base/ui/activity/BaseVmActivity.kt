@@ -40,6 +40,7 @@ abstract class BaseVmActivity<DataBinding : ViewDataBinding>(
 
         mDataBinding = DataBindingUtil.setContentView(this, layoutId)
         mDataBinding.lifecycleOwner = this
+//        mDataBinding.root.fitsSystemWindows = true
 
         var vms = injectViewModel()
 

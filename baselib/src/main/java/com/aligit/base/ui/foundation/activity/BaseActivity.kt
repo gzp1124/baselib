@@ -11,8 +11,7 @@ import com.aligit.base.Settings
 import com.aligit.base.ext.coroutine.observe
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.onError
-import com.aligit.base.ext.tool.screenHeight
-import com.aligit.base.ext.tool.screenWidth
+import com.aligit.base.ext.tool.isLandscape
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
@@ -39,6 +38,7 @@ abstract class BaseActivity : InternationalizationActivity() {
     protected open lateinit var mPermission: com.permissionx.guolindev.PermissionCollection
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        updateAutoSizeBaseWidth()
         super.onCreate(savedInstanceState)
         //ARouter注册
         ARouter.getInstance().inject(this)
@@ -58,8 +58,6 @@ abstract class BaseActivity : InternationalizationActivity() {
                 override fun onAdaptAfter(target: Any, activity: Activity) {}
             }
         }*/
-        AutoSizeConfig.getInstance().screenHeight = screenHeight
-        AutoSizeConfig.getInstance().screenWidth = screenWidth
     }
 
     override fun onDestroy() {
@@ -67,10 +65,55 @@ abstract class BaseActivity : InternationalizationActivity() {
         super.onDestroy()
     }
 
+    /**
+     * 指定 autoSize 使用的布局宽度
+     * autoSizeBaseWidth 为 true 时以 该值 为基准进行适配
+     */
+    open fun autoSizeWidth():Float {
+        val w = if (isLandscape) {
+            Settings.app_landscape_screen_width
+        } else {
+            Settings.app_portrait_screen_width
+        }
+        return w
+    }
+
+    /**
+     * 指定 autoSize 使用的布局高度
+     * autoSizeBaseWidth 为 false 时以 该值 为基准进行适配
+     */
+    open fun autoSizeHeight():Float{
+        val h = if (isLandscape) {
+            Settings.app_landscape_screen_height
+        } else {
+            Settings.app_portrait_screen_height
+        }
+        return h
+    }
+
+    /**
+     * autosize 是否使用宽度为基准进行适配
+     * 返回 true 表示宽度为 autoSizeWidth 指定的宽度，高度进行等比例计算
+     * 返回 false 则相反
+     */
+    open fun autoSizeBaseWidth():Boolean = Settings.autoSizeIsBaseOnWidth
+
+    /**
+     * 更新布局适配的基本 宽/高 autosize 将进行自动适配
+     */
+    open fun updateAutoSizeBaseWidth(){
+        if (Looper.myLooper() == Looper.getMainLooper()) {
+            if (autoSizeBaseWidth()) {
+                AutoSizeCompat.autoConvertDensity(super.getResources(), autoSizeWidth(), true)
+            }else{
+                AutoSizeCompat.autoConvertDensity(super.getResources(), autoSizeHeight(), false)
+            }
+        }
+    }
+
     override fun onConfigurationChanged(newConfig: Configuration) {
         super.onConfigurationChanged(newConfig)
-        AutoSizeConfig.getInstance().screenHeight = screenHeight
-        AutoSizeConfig.getInstance().screenWidth = screenWidth
+        updateAutoSizeBaseWidth()
     }
 
     //共用 loading View
@@ -107,20 +150,7 @@ abstract class BaseActivity : InternationalizationActivity() {
     }
 
     override fun getResources(): Resources {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
-            var rw: Float
-            var rh: Float
-            if (super.getResources().configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-                rw = Settings.app_landscape_screen_width
-                rh = Settings.app_landscape_screen_height
-            } else {
-                rw = Settings.app_portrait_screen_width
-                rh = Settings.app_portrait_screen_height
-            }
-            AutoSizeConfig.getInstance().designWidthInDp = rw.toInt()
-            AutoSizeConfig.getInstance().designHeightInDp = rh.toInt()
-            AutoSizeCompat.autoConvertDensity(super.getResources(), rw, true)
-        }
+        updateAutoSizeBaseWidth()
         return super.getResources()
     }
 

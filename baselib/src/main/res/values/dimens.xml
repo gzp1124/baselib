@@ -1,0 +1,8 @@
+<resources>
+
+    <dimen name="land_screen_width">1194dp</dimen>
+    <dimen name="land_screen_height">834dp</dimen>
+    <dimen name="screen_width">375dp</dimen>
+    <dimen name="screen_height">812dp</dimen>
+
+</resources>

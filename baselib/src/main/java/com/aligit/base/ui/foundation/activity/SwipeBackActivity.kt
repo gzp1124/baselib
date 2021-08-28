@@ -113,9 +113,9 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
 
     val darkMode: MutableLiveData<Int> = MutableLiveData(Settings.dark_model)
 
-    protected open fun booHideBottom() = false
+    protected open fun booHideBottom() = true
 
-    protected open fun isImmersionBar() = true
+    protected open fun isImmersionBar() = false
 
     protected open fun setImmersionBar() {
         val isDark = isDarkMode()

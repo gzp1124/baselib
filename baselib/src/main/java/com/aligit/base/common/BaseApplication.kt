@@ -28,6 +28,7 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import me.jessyan.autosize.AutoSize
+import me.jessyan.autosize.AutoSizeCompat
 import me.jessyan.autosize.AutoSizeConfig
 import okhttp3.OkHttpClient
 
@@ -68,10 +69,18 @@ abstract class BaseApplication : MultiDexApplication() {
 
     private val TAG = "Base_gzp1124"
 
+    /**
+     * 更新全局的 Settings 文件
+     */
+    abstract fun updateSettings()
+
     override fun onCreate() {
         super.onCreate()
-
         INSTANCE = this
+        val rootDir: String = MMKV.initialize(this)
+
+        // 更新全局的 Settings 文件
+        updateSettings()
 
         //XLog
         val config = LogConfiguration.Builder()
@@ -88,7 +97,6 @@ abstract class BaseApplication : MultiDexApplication() {
             .build()
         Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
 
-        val rootDir: String = MMKV.initialize(this)
 
         //ARouter初始化
         if (BuildConfig.DEBUG) {
@@ -97,18 +105,8 @@ abstract class BaseApplication : MultiDexApplication() {
         }
         ARouter.init(this)
 
-        // 适配
-        if (Settings.useAutoSize) {
-            if (!app_force_use_portrait && isLandscape) {
-                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_landscape_screen_width.toInt()
-                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_landscape_screen_height.toInt()
-            } else {
-                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_portrait_screen_width.toInt()
-                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_portrait_screen_height.toInt()
-            }
-            AutoSizeConfig.getInstance().isCustomFragment = true
-            AutoSize.initCompatMultiProcess(this)
-        }
+        // 设置屏幕适配参数
+        setAutoSizeConfig()
 
         // 滑动返回
         BGASwipeBackHelper.init(this,null)
@@ -124,6 +122,22 @@ abstract class BaseApplication : MultiDexApplication() {
         }
         LoadMoreModuleConfig.defLoadMoreView = CustomLoadMoreView()
 
+    }
+
+    fun setAutoSizeConfig(){
+        // 适配
+        if (Settings.useAutoSize) {
+            if (!app_force_use_portrait && isLandscape) {
+                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_landscape_screen_width.toInt()
+                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_landscape_screen_height.toInt()
+            } else {
+                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_portrait_screen_width.toInt()
+                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_portrait_screen_height.toInt()
+            }
+            AutoSizeConfig.getInstance().isCustomFragment = true
+            AutoSizeConfig.getInstance().isBaseOnWidth = Settings.autoSizeIsBaseOnWidth
+            AutoSize.initCompatMultiProcess(this)
+        }
     }
 
 }
