@@ -17,9 +17,12 @@ abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.f
     fun canLoadMore():Boolean = true
     fun canRefresh():Boolean = true
 
+    lateinit var recyclerView:RecyclerView
+
     override fun onInitDataBinding() {
         mDataBinding.vm = setViewModel()
         mDataBinding.recyclerView.also {
+            recyclerView = it
             it.adapter = createAdater()
             it.layoutManager = setLayoutManager()
         }
