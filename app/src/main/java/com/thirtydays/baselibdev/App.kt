@@ -40,4 +40,7 @@ class App: BaseApplication() {
             }
         }
     }
+
+    override fun updateSettings() {
+    }
 }

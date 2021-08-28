@@ -1,7 +1,6 @@
 package com.aligit.base.ext.foundation
 
-import com.aligit.base.common.AppContext
-import com.aligit.base.common.BaseApplication
+import com.aligit.base.ext.tool.log
 
 
 /**
@@ -30,5 +29,8 @@ sealed class BaseThrowable(
 }
 
 fun BaseThrowable.onError() {
-    (AppContext.baseContext as BaseApplication).onNetError(this)
+//    (AppContext.baseContext as BaseApplication).onNetError(this)
+    log("========================================================")
+    printStackTrace()
+    log("error over ========================================================")
 }

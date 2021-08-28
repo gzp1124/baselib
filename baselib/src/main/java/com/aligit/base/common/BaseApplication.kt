@@ -15,22 +15,21 @@ import com.aligit.base.ext.initWebViewDataDirectory
 import com.aligit.base.ext.tool.isLandscape
 import com.aligit.base.net.ok.OkHttpManager
 import com.aligit.base.net.retrofit.RetrofitFactory
-import com.aligit.base.widget.loadpage.CustomLoadMoreView
-import com.chad.library.adapter.base.module.LoadMoreModuleConfig
 import com.elvishew.xlog.LogConfiguration
 import com.elvishew.xlog.XLog
 import com.elvishew.xlog.printer.AndroidPrinter
 import com.orhanobut.logger.AndroidLogAdapter
 import com.orhanobut.logger.Logger
 import com.orhanobut.logger.PrettyFormatStrategy
+import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import me.jessyan.autosize.AutoSize
-import me.jessyan.autosize.AutoSizeCompat
 import me.jessyan.autosize.AutoSizeConfig
 import okhttp3.OkHttpClient
+
 
 /**
  * author : gzp1124
@@ -117,11 +116,20 @@ abstract class BaseApplication : MultiDexApplication() {
         //多语言切换
         LanguageHelper.switchLanguage()
 
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, _ ->
-            ClassicsHeader(context)
-        }
-        LoadMoreModuleConfig.defLoadMoreView = CustomLoadMoreView()
+        // SmartRefreshLayout 设置全局的 head 和 foot
+        setSmartLayoutHeadFoot()
+    }
 
+    open fun setSmartLayoutHeadFoot(){
+        //设置全局的Header构建器
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator { context, layout ->
+//            layout.setPrimaryColorsId(R.color.darker_gray, R.color.white) //全局设置主题颜色
+            ClassicsHeader(context) //.setTimeFormat(new DynamicTimeFormat("更新于 %s"));//指定为经典Header，默认是 贝塞尔雷达Header
+        }
+        //设置全局的Footer构建器
+        SmartRefreshLayout.setDefaultRefreshFooterCreator { context, layout -> //指定为经典Footer，默认是 BallPulseFooter
+            ClassicsFooter(context).setDrawableSize(20f)
+        }
     }
 
     fun setAutoSizeConfig(){

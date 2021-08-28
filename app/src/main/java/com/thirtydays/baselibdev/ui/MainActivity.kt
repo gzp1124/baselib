@@ -1,12 +1,9 @@
 package com.thirtydays.baselibdev.ui
 
-import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
-import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.common.LanguageHelper
 import com.aligit.base.common.LanguageStatus
-import com.aligit.base.ext.foundation.Mmkv
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.activity.BaseVmActivity
 import com.thirtydays.baselibdev.R
@@ -17,7 +14,6 @@ import com.thirtydays.baselibdev.net.bean.MainBean
 import com.thirtydays.baselibdev.router.RouterPath
 import com.thirtydays.baselibdev.vm.MainViewModel
 import com.thirtydays.baselibdev.vm.TestViewModel
-import com.thirtydays.baselibdev.vm.TwoViewModel
 
 
 @Route(path = RouterPath.AppCenter.PATH_APP_MAIN)
@@ -39,6 +35,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
         MainBean("打开切换主题页面","/change/theme",false),
         MainBean("字体的使用","/test/font",false),
         MainBean("列表示例","/test/list",true),
+        MainBean("列表示例 - 使用 BaseListFragment","/test/list2",true),
         MainBean("测试数据倒灌","/test/errordata",true),
         MainBean("测试各种请求网络","/test/normal_request",true),
         MainBean("使用Flow代替LiveData","/test/flow",true)
