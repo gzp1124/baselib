@@ -41,6 +41,12 @@ android {
             keyPassword props['KEY_PASSWORD']
             storeFile file(props['KEYSTORE_FILE'])
             storePassword props['KEYSTORE_PASSWORD']
+            /*
+            keyAlias 'cn'
+            keyPassword 'aelstupad123'
+            storeFile file('./ael_stu_pad.jks')
+            storePassword 'aelstupad123'
+             */
         }
     }
     buildTypes {
