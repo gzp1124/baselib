@@ -24,8 +24,9 @@ abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.f
             it.layoutManager = setLayoutManager()
         }
         mDataBinding.smartRefreshLayout.also {
-            it.setEnableLoadMore(canLoadMore())
-            it.setEnableRefresh(canRefresh())
+            val haveVm = (mDataBinding.vm != null)
+            it.setEnableLoadMore(haveVm && canLoadMore())
+            it.setEnableRefresh(haveVm && canRefresh())
         }
     }
 }

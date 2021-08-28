@@ -24,6 +24,12 @@ import com.permissionx.guolindev.PermissionX
  * <pre>
  * author : gzp1124
  *
+ * 基类 Fragment
+ * 注意：
+ * 所有的 Fragment 都不要使用带有参数的构造方法
+ * 错误示例：class HomeworkListFragment(val index: Int) :BaseListFragment() {}
+ * 如果要给 Fragment 中传递参数，可以使用 Bundle 进行传参
+ *
  * @version : 1.0
  * @date : 2021/7/30
 </pre> *

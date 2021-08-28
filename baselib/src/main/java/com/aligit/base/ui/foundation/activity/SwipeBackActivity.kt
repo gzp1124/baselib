@@ -10,6 +10,7 @@ import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.aligit.base.R
 import com.aligit.base.Settings
 import com.aligit.base.Settings.app_force_use_portrait
+import com.aligit.base.common.AppManager
 import com.aligit.base.common.BaseApplication
 import com.aligit.base.ext.find
 import com.aligit.base.ext.tool.isDarkMode
@@ -30,7 +31,7 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //根类记录 Activity
-        com.aligit.base.common.AppManager.addActivity(this)
+        AppManager.addActivity(this)
         //横竖屏
         if (app_force_use_portrait) setScreenPortrait()
         //滑动返回
@@ -40,7 +41,7 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
     }
 
     override fun onDestroy() {
-        com.aligit.base.common.AppManager.finishActivity(this)
+        AppManager.finishActivity(this)
         super.onDestroy()
     }
 
