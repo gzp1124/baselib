@@ -27,6 +27,7 @@ abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.f
             val haveVm = (mDataBinding.vm != null)
             it.setEnableLoadMore(haveVm && canLoadMore())
             it.setEnableRefresh(haveVm && canRefresh())
+            it.setEnableOverScrollDrag(true)
         }
     }
 }
