@@ -5,6 +5,8 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.R
 import com.aligit.base.Settings
@@ -20,7 +22,6 @@ import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.impl.LoadingPopupView
 import com.permissionx.guolindev.PermissionX
 import me.jessyan.autosize.AutoSizeCompat
-import me.jessyan.autosize.AutoSizeConfig
 
 /**
  * <pre>
@@ -58,6 +59,16 @@ abstract class BaseActivity : InternationalizationActivity() {
                 override fun onAdaptAfter(target: Any, activity: Activity) {}
             }
         }*/
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        //注释掉 super 的调用，意味着不保存任何信息，
+        // 如果 activity 被回收需要重建，表现出来的形式就是 activity 重新打开了
+//        super.onSaveInstanceState(outState)
+
+        //单独使用下面的一行，只是不保存 fragment 的信息，也会发生 fragment 的重叠
+        // 不保存 fragment 的任何信息，防止 fragment 重叠
+//        outState.putParcelable("android:support:fragments", null)
     }
 
     override fun onDestroy() {
