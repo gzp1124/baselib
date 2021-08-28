@@ -108,5 +108,4 @@ abstract class BaseVmFragment<DataBinding : ViewDataBinding>(
 
     abstract fun onInitDataBinding()
 
-
 }

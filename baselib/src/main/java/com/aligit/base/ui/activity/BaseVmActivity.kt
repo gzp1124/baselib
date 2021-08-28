@@ -43,6 +43,9 @@ abstract class BaseVmActivity<DataBinding : ViewDataBinding>(
 
         var vms = injectViewModel()
 
+        onInitDataBinding()
+        mDataBinding.executePendingBindings()
+
         dowithTry({
             rootView = statePageView.getRootView(this).apply {
                 failView.setOnClickListener { currentChangePageStateViewModel?.refresh() }
@@ -71,9 +74,6 @@ abstract class BaseVmActivity<DataBinding : ViewDataBinding>(
         })
 
         vms = emptyList()
-
-
-        onInitDataBinding()
 
         initData()
     }

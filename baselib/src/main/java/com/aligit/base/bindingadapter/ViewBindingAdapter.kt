@@ -15,6 +15,11 @@ fun bindInvisible(v: View, invisible: Boolean) {
     v.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
 }
 
+@BindingAdapter(value = ["isSelect"])
+fun bindIsSelect(v: View, isSelect: Boolean) {
+    v.isSelected = isSelect
+}
+
 @BindingAdapter("onBackPressed")
 fun bindOnBackPressed(view: View, onBackPress: Boolean) {
     val context = view.context

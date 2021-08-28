@@ -77,7 +77,7 @@ dependencies {
     api "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
 
     //leakCanary
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
+//    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 
     // bugly
     api 'com.tencent.bugly:crashreport:3.1.0'
@@ -244,7 +244,7 @@ dependencies {
 //    api 'com.scwang.smart:refresh-footer-classics:2.0.1'    //经典加载
 
     //阴影 https://github.com/lihangleo2/ShadowLayout
-    api 'com.github.lihangleo2:ShadowLayout:3.1.2'
+    api 'com.github.lihangleo2:ShadowLayout:3.2.1'
 
     //动画 https://github.com/florent37/ViewAnimator
 //    api 'com.github.florent37:viewanimator:1.1.0'
