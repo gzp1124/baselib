@@ -20,7 +20,7 @@ android {
         flavorDimensions "1"
 
         ndk {
-            abiFilters "armeabi", "armeabi-v7a"
+            abiFilters "armeabi", "armeabi-v7a", "armeabi-v8a", "x86", "x64"
         }
 
         javaCompileOptions {
@@ -66,7 +66,7 @@ dependencies {
 
     api fileTree(dir: 'libs', include: ['*.jar'])
 
-    api project(project.path.replace(project.name, '') + ':fragmentation_core')
+//    api project(project.path.replace(project.name, '') + ':fragmentation_core')
 
     //协程 MVVM
     //ViewModel
@@ -220,7 +220,7 @@ dependencies {
     kapt 'androidx.annotation:annotation:1.1.0'
 
     // 弹窗框架 https://github.com/li-xiaojun/XPopup
-    api 'com.github.li-xiaojun:XPopup:2.5.10'
+    api 'com.github.li-xiaojun:XPopup:2.5.13'
 
     //依赖注入库 https://github.com/google/dagger 此时放弃
 //    api 'com.google.dagger:dagger:2.24'

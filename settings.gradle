@@ -1,4 +1,3 @@
 rootProject.name = "BaseLibDev"
 include ':app'
-include ':fragmentation_core'
 include ':baselib'
