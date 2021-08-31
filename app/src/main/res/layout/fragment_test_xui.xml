@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingVertical="30dp"
+            android:background="#dcdcdc"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.xuexiang.xui.widget.layout.XUILinearLayout
+                app:xui_radius="10dp"
+                app:xui_borderWidth="3dp"
+                app:xui_borderColor="#0f0"
+                android:background="#00f"
+
+                android:layout_width="200dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="测试边框,XUILinearLayout 不能设置点击效果(可以 圆角、阴影、透明度)"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"/>
+            </com.xuexiang.xui.widget.layout.XUILinearLayout>
+
+            <com.xuexiang.xui.widget.alpha.XUIAlphaLinearLayout
+                android:background="#299EE3"
+                android:clickable="true"
+                android:focusable="true"
+
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="XUIAlphaView 点击改变透明度(只能改变透明度，没有其他属性，改变透明度在空间内完成无需设置)"
+                    android:textSize="10sp"
+                    android:textColor="@color/white"
+                    android:layout_marginLeft="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.xuexiang.xui.widget.alpha.XUIAlphaLinearLayout>
+
+            <com.xuexiang.xui.widget.layout.XUILinearLayout
+                app:xui_radius="10dp"
+                android:background="#fff"
+                app:xui_shadowElevation="10dp"
+                app:xui_shadowAlpha="1"
+
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="XUILayout(测试结果显示阴影和边框不能同时用)"
+                    android:textColor="@color/xui_config_color_red"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="10sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.xuexiang.xui.widget.layout.XUILinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:orientation="horizontal"
+                android:layout_height="wrap_content">
+
+                <com.xuexiang.xui.widget.layout.XUILinearLayout
+                    app:xui_rightDividerColor="#0f0"
+                    app:xui_rightDividerWidth="5dp"
+                    app:xui_leftDividerColor="#00f"
+                    app:xui_leftDividerWidth="5dp"
+
+                    android:background="@color/white"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:text="XUILayout 测试分割线"
+                        android:textColor="@color/xui_config_color_red"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="10sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </com.xuexiang.xui.widget.layout.XUILinearLayout>
+            </LinearLayout>
+
+
+            <com.xuexiang.xui.widget.layout.XUILinearLayout
+                android:id="@+id/xuiLayout"
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="XUILayout通过代码设置属性"
+                    android:textColor="@color/xui_config_color_red"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="10sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </com.xuexiang.xui.widget.layout.XUILinearLayout>
+
+            <com.xuexiang.xui.widget.textview.supertextview.SuperTextView
+                app:sLeftTextString="普通左侧文字，默认点击效果"
+                app:sLeftTextColor="#00f"
+                app:sLeftTextSize="10sp"
+
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"/>
+
+            <com.xuexiang.xui.widget.textview.supertextview.SuperButton
+                app:sLeftTextString="普通左侧文字，默认点击效果"
+                app:sLeftTextColor="#00f"
+                app:sLeftTextSize="10sp"
+
+                android:layout_marginTop="10dp"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
