@@ -30,7 +30,7 @@ object Settings {
     var language_status: Locale by Mmkv("LANGUAGE_STATUS", Locale.SIMPLIFIED_CHINESE, Locale::class.java)
 
     // 项目主题
-    var project_theme: Int by Mmkv("PROJECT_THEME", R.style.AppBaseTheme)
+    var project_theme: Int by Mmkv("PROJECT_THEME", R.style.AppPhoneTheme)
 
     // 深色主题
     var dark_model: Int by Mmkv("PROJECT_DARK_MODEL", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)

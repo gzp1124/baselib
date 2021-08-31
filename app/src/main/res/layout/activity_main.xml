@@ -21,6 +21,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ui.MainActivity">
+        <TextView
+            android:background="#0f0"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
 
         <TextView
             android:layout_width="187.5dp"
@@ -48,6 +52,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="match_parent"/>
+        <TextView
+            android:background="#f00"
+            android:text="底部"
+            android:gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"/>
     </LinearLayout>
 </layout>

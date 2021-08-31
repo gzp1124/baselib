@@ -9,8 +9,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.provider.Settings
-import android.widget.Toast
-import me.drakeet.support.toast.ToastCompat
+import com.aligit.base.ext.tool.toast
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -57,7 +56,7 @@ class PermissionCompat {
             intent.component = comp
             activity.startActivityForResult(intent, PERMISSION_COMPAT_REQUEST_CODE)
         } catch (e: Exception) {
-            ToastCompat.makeText(activity, "跳转失败", Toast.LENGTH_SHORT).show()
+            toast { "跳转失败" }
             e.printStackTrace()
             goIntentSetting(activity)
         }
@@ -70,7 +69,7 @@ class PermissionCompat {
             intent.component = comp
             activity.startActivityForResult(intent, PERMISSION_COMPAT_REQUEST_CODE)
         } catch (e: Exception) {
-            ToastCompat.makeText(activity, "跳转失败", Toast.LENGTH_SHORT).show()
+            toast { "跳转失败" }
             e.printStackTrace()
             goIntentSetting(activity)
         }
@@ -87,7 +86,7 @@ class PermissionCompat {
             intent.component = comp
             activity.startActivity(intent)
         } catch (e: Exception) {
-            ToastCompat.makeText(activity, "跳转失败", Toast.LENGTH_SHORT).show()
+            toast { "跳转失败" }
             e.printStackTrace()
             goIntentSetting(activity)
         }

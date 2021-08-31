@@ -2,11 +2,10 @@ package com.aligit.base.net.ok
 
 import android.content.Context
 import android.os.Environment
-import com.elvishew.xlog.XLog
+import com.aligit.base.Settings
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
-import com.aligit.base.Settings
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
@@ -42,7 +41,7 @@ class OkHttpManager private constructor() {
         // 设置 Log 拦截器，可以用于以后处理一些异常情况
         val logger: HttpLoggingInterceptor.Logger = object : HttpLoggingInterceptor.Logger {
             override fun log(message: String) {
-                XLog.e(message)
+                com.aligit.base.ext.tool.logi(message)
             }
         }
         val interceptor = HttpLoggingInterceptor(logger)

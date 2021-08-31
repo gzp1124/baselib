@@ -16,7 +16,6 @@ import com.aligit.base.ext.find
 import com.aligit.base.ext.tool.isDarkMode
 import com.aligit.base.ext.tool.setScreenPortrait
 import com.blankj.utilcode.util.BarUtils
-import com.elvishew.xlog.XLog
 import com.gyf.immersionbar.ImmersionBar
 
 /**
@@ -105,27 +104,29 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
         }
 
         //status Bar 沉浸式状态栏相关设置
-        if (isImmersionBar()) {
-            BaseApplication.darkMode.observe(this) {
-                setImmersionBar()
-            }
+        BaseApplication.darkMode.observe(this) {
+            setImmersionBar()
         }
     }
 
     val darkMode: MutableLiveData<Int> = MutableLiveData(Settings.dark_model)
 
-    protected open fun booHideBottom() = true
-
-    protected open fun isImmersionBar() = false
+    // 隐藏虚拟按键
+    protected open fun booHideBottom():Boolean = false
+    // 使用沉浸式
+    protected open fun isImmersionBar():Boolean = false
 
     protected open fun setImmersionBar() {
         val isDark = isDarkMode()
+        val barColor = if (isDark)android.R.color.background_dark else android.R.color.background_light
         ImmersionBar.with(this)
             .keyboardEnable(true)
-            .titleBarMarginTop(R.id.toolbar)
+//            .titleBarMarginTop(R.id.toolbar)
+            .fitsSystemWindows(!isImmersionBar(),barColor)
             .statusBarDarkFont(!isDark)
-            .navigationBarColor(if (isDark)android.R.color.background_dark else android.R.color.background_light) //导航栏颜色，不写默认黑色
+            .navigationBarColor(barColor) //导航栏颜色，不写默认黑色
             .navigationBarDarkIcon(!isDark) //导航栏图标是深色，不写默认为亮色
+//            .fullScreen(booHideBottom())
             .init()
     }
 
@@ -142,13 +143,12 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
     }
 
     override fun onSwipeBackLayoutSlide(slideOffset: Float) {
-        XLog.i("onSwipeBackLayoutSlide $slideOffset")
     }
 
     override fun onSwipeBackLayoutCancel() {
-        XLog.i("onSwipeBackLayoutCancel")
     }
 
-    override fun isSupportSwipeBack() = Settings.useSwipeBack
+    // 是否需要侧滑返回
+    override fun isSupportSwipeBack():Boolean = Settings.useSwipeBack
 
 }

@@ -17,7 +17,7 @@ import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.activity.BaseActivity
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.SimpleImmersionOwner
-import com.permissionx.guolindev.PermissionCollection
+import com.permissionx.guolindev.PermissionMediator
 import com.permissionx.guolindev.PermissionX
 
 /**
@@ -38,7 +38,7 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
 
     protected open val mMainHandler = Handler(Looper.getMainLooper())
 
-    protected open lateinit var mPermission: PermissionCollection
+    protected open lateinit var mPermission: PermissionMediator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

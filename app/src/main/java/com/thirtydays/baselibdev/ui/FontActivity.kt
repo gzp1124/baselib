@@ -9,8 +9,9 @@ import com.thirtydays.baselibdev.databinding.ActivityFontBinding
 
 /**
  * 字体使用很简单，在 res 下创建 font 文件夹，把字体文件( otf 或者 tff )放到font文件夹中
- *      在 xml 中使用 android:fontFamily="@font/NotoSansHK"
- *      在代码中使用 如下
+ *      在 style 中使用 android:fontFamily="@font/NotoSansHK" 即可全局替换
+ *      在代码中使用  - 暂时不使用代码了，还是直接使用 资源文件比较方便
+ *
  */
 @Route(path = "/test/font")
 class FontActivity: BaseVmActivity<ActivityFontBinding>(R.layout.activity_font) {

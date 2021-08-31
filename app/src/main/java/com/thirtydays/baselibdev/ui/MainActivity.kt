@@ -11,12 +11,12 @@ import com.thirtydays.baselibdev.adapter.MainAdapter
 import com.thirtydays.baselibdev.click.MainClick
 import com.thirtydays.baselibdev.databinding.ActivityMainBinding
 import com.thirtydays.baselibdev.net.bean.MainBean
-import com.thirtydays.baselibdev.router.RouterPath
+import com.thirtydays.baselibdev.router.RouterPath.AppCenter.PATH_APP_MAIN
 import com.thirtydays.baselibdev.vm.MainViewModel
 import com.thirtydays.baselibdev.vm.TestViewModel
 
 
-@Route(path = RouterPath.AppCenter.PATH_APP_MAIN)
+@Route(path = PATH_APP_MAIN)
 class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main), MainClick {
 
 

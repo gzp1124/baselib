@@ -18,14 +18,12 @@ import com.aligit.base.net.retrofit.RetrofitFactory
 import com.elvishew.xlog.LogConfiguration
 import com.elvishew.xlog.XLog
 import com.elvishew.xlog.printer.AndroidPrinter
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
-import com.orhanobut.logger.PrettyFormatStrategy
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
+import com.xuexiang.xui.XUI
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
 import okhttp3.OkHttpClient
@@ -66,7 +64,7 @@ abstract class BaseApplication : MultiDexApplication() {
         val retrofitFactory: RetrofitFactory by lazy { RetrofitFactory.getInstance(okHttpClient) }
     }
 
-    private val TAG = "Base_gzp1124"
+    private val TAG = "BaseLib"
 
     /**
      * 更新全局的 Settings 文件
@@ -87,22 +85,15 @@ abstract class BaseApplication : MultiDexApplication() {
             .build()
         XLog.init(config, AndroidPrinter())
 
-        //Logger
-        val formatStrategy = PrettyFormatStrategy.newBuilder()
-            .showThreadInfo(false)
-            .methodCount(0)
-            .methodOffset(7)
-            .tag(TAG)
-            .build()
-        Logger.addLogAdapter(AndroidLogAdapter(formatStrategy))
-
-
         //ARouter初始化
         if (BuildConfig.DEBUG) {
             ARouter.openLog() // 打印日志
             ARouter.openDebug()
         }
         ARouter.init(this)
+
+        // UI库设置
+        XUI.debug(BuildConfig.DEBUG)
 
         // 设置屏幕适配参数
         setAutoSizeConfig()

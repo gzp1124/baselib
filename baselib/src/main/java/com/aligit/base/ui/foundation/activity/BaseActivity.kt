@@ -5,8 +5,6 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.R
 import com.aligit.base.Settings
@@ -20,6 +18,7 @@ import com.aligit.base.model.CoroutineState
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.impl.LoadingPopupView
+import com.permissionx.guolindev.PermissionMediator
 import com.permissionx.guolindev.PermissionX
 import me.jessyan.autosize.AutoSizeCompat
 
@@ -36,7 +35,7 @@ abstract class BaseActivity : InternationalizationActivity() {
 
     protected open val mMainHandler = Handler(Looper.getMainLooper())
 
-    protected open lateinit var mPermission: com.permissionx.guolindev.PermissionCollection
+    protected open lateinit var mPermission: PermissionMediator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         updateAutoSizeBaseWidth()
@@ -45,20 +44,6 @@ abstract class BaseActivity : InternationalizationActivity() {
         ARouter.getInstance().inject(this)
 
         mPermission = PermissionX.init(this)
-
-        /*if (isFullScreen){
-            AutoSizeConfig.getInstance().onAdaptListener = object : onAdaptListener {
-                override fun onAdaptBefore(target: Any, activity: Activity) {
-                    //ScreenUtils.getScreenSize(activity) 的参数一定要不要传 Application!!!
-                    AutoSizeConfig.getInstance().screenWidth =
-                        ScreenUtils.getScreenSize(activity).get(0)
-                    AutoSizeConfig.getInstance().screenHeight =
-                        ScreenUtils.getScreenSize(activity).get(1)
-                }
-
-                override fun onAdaptAfter(target: Any, activity: Activity) {}
-            }
-        }*/
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
