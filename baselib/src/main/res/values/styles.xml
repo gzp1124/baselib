@@ -30,8 +30,7 @@
         <item name="xui_shadowAlpha">0.5</item>
         <item name="xui_useThemeGeneralShadowElevation">true</item>
     </style>
-
-
+    
 
     <!-- 自定义XUI的主题. -->
     <style name="TestCustomAppTheme" parent="XUITheme.Phone">

@@ -230,6 +230,9 @@ dependencies {
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
 
+    //阴影 https://github.com/lihangleo2/ShadowLayout
+    api 'com.github.lihangleo2:ShadowLayout:3.2.1'
+
     //解决Toast崩溃BadTokenException问题 https://github.com/PureWriter/ToastCompat
     api 'me.drakeet.support:toastcompat:1.1.0'
 

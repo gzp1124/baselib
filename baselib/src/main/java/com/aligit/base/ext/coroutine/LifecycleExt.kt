@@ -4,12 +4,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-fun <T> LifecycleOwner.observe(liveData: LiveData<T>, observer: (T) -> Unit) {
+fun <T,L:LiveData<T>> LifecycleOwner.observe(liveData: L, observer: (T) -> Unit) {
     liveData.observe(this, { it?.let { t -> observer(t) } }
     )
 }
 
-fun <T> LifecycleOwner.observe(liveData: MutableLiveData<T>, observer: (T) -> Unit) {
+fun <T,L:MutableLiveData<T>> LifecycleOwner.observe(liveData: L, observer: (T) -> Unit) {
     liveData.observe(this, { it?.let { t -> observer(t) } }
     )
 }
