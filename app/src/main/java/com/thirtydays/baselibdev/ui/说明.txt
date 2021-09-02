@@ -1,0 +1,6 @@
+
+
+使用总结：
+1. XUI
+    XUILinearLayout  系列，用来做  圆角 + 阴影
+    XUIAlphaLinearLayout  系列，用来处理点击变色，点击会改变背景透明度，实现按下状态变化

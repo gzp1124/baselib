@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="100dp">
+
+<!--            外包的宽高被限定，加上 hl_shadowLimit 阴影才能显示出来-->
+            <com.lihang.ShadowLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:hl_cornerRadius="10dp"
+                app:hl_shadowColor="#333"
+                app:hl_shadowLimit="10dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="1 - ShaowLayout" />
+            </com.lihang.ShadowLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
+
+<!--            外面的宽高被限定，加上 layout_margin 阴影才能显示出来-->
+            <com.xuexiang.xui.widget.layout.XUILinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:layout_margin="10dp"
+                app:xui_radius="10dp"
+                app:xui_shadowAlpha="0.5"
+                app:xui_shadowElevation="5dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="2 - XUILinearLayout" />
+            </com.xuexiang.xui.widget.layout.XUILinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
+
+            <!--elevation 的阴影，默认是由 backgroud 提供的
+            如果控件没有设置 backgroud 则需要加上 outlineProvider="bounds"
+
+            elevation 处理圆角控件的阴影貌似有点问题
+            -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:elevation="1dp"
+                android:gravity="center"
+                android:outlineProvider="bounds"
+                android:text="3 - elevation outlineProvider (api>21)"
+                android:translationZ="1dp"
+                app:rv_cornerRadius="10dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                android:elevation="10dp"
+                android:gravity="center"
+                android:text="4 - elevation backgroud (api>21)"
+                app:rv_cornerRadius="3dp" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>
