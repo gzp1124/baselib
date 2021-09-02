@@ -12,6 +12,7 @@ import com.aligit.base.ext.coroutine.observe
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.onError
 import com.aligit.base.ext.tool.isLandscape
+import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
@@ -65,7 +66,7 @@ abstract class BaseActivity : InternationalizationActivity() {
      * 指定 autoSize 使用的布局宽度
      * autoSizeBaseWidth 为 true 时以 该值 为基准进行适配
      */
-    open fun autoSizeWidth():Float {
+    open fun autoSizeWidth(): Float {
         val w = if (isLandscape) {
             Settings.app_landscape_screen_width
         } else {
@@ -78,7 +79,7 @@ abstract class BaseActivity : InternationalizationActivity() {
      * 指定 autoSize 使用的布局高度
      * autoSizeBaseWidth 为 false 时以 该值 为基准进行适配
      */
-    open fun autoSizeHeight():Float{
+    open fun autoSizeHeight(): Float {
         val h = if (isLandscape) {
             Settings.app_landscape_screen_height
         } else {
@@ -92,16 +93,16 @@ abstract class BaseActivity : InternationalizationActivity() {
      * 返回 true 表示宽度为 autoSizeWidth 指定的宽度，高度进行等比例计算
      * 返回 false 则相反
      */
-    open fun autoSizeBaseWidth():Boolean = Settings.autoSizeIsBaseOnWidth
+    open fun autoSizeBaseWidth(): Boolean = Settings.autoSizeIsBaseOnWidth
 
     /**
      * 更新布局适配的基本 宽/高 autosize 将进行自动适配
      */
-    open fun updateAutoSizeBaseWidth(){
+    open fun updateAutoSizeBaseWidth() {
         if (Looper.myLooper() == Looper.getMainLooper()) {
             if (autoSizeBaseWidth()) {
                 AutoSizeCompat.autoConvertDensity(super.getResources(), autoSizeWidth(), true)
-            }else{
+            } else {
                 AutoSizeCompat.autoConvertDensity(super.getResources(), autoSizeHeight(), false)
             }
         }
@@ -124,13 +125,13 @@ abstract class BaseActivity : InternationalizationActivity() {
 
     open fun showLoading(tip: String? = getString(R.string.loading)) {
         if (!loadingView.isShow) {
-            (loadingView as? LoadingPopupView)?.setTitle(tip)
+            (loadingView as? LoadingPopupView)?.setTitle(tip ?: getString(R.string.loading))
             loadingView.show()
         }
     }
 
     open fun hideLoading() {
-        if (loadingView.isShow) loadingView.dismiss()
+        if (loadingView.isShow) loadingView.smartDismiss()
     }
 
     open fun onError(throwable: BaseThrowable) {

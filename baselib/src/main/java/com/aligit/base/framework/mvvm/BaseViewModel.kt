@@ -1,5 +1,6 @@
 package com.aligit.base.framework.mvvm
 
+import android.os.SystemClock
 import androidx.lifecycle.*
 import com.aligit.base.Settings
 import com.aligit.base.ext.foundation.BaseThrowable
@@ -23,28 +24,6 @@ abstract class BaseViewModel : ViewModel() {
     }
     val error = UnPeekLiveData<BaseThrowable>()
 
-    // 对 flow 进行统一处理
-    private fun <T> parseRequest(
-        flow: Flow<T>,
-        showLoading: Boolean = true,
-        loadingTips: String? = "",
-    ): Flow<T> {
-        return flow
-            .onStart {
-                val loading = CoroutineState.Loading
-                if (showLoading) statusLiveData.postValue(loading)
-            }
-            .onCompletion {
-                if (showLoading) statusLiveData.postValue(CoroutineState.Finish)
-            }
-            .catch { e ->
-                e.printStackTrace()
-                if (showLoading) statusLiveData.postValue(CoroutineState.Error)
-                val e1 = BaseThrowable.ExternalThrowable(e)
-                error.postValue(e1)
-            }
-            .flowOn(Dispatchers.IO)
-    }
 
     //=======================
     // 页面状态管理
@@ -88,23 +67,46 @@ abstract class BaseViewModel : ViewModel() {
     }
 
 
+    //===========数据请求=========
+    // 对 flow 进行统一处理
+    private fun <T> parseRequest(
+        flow: Flow<T>,
+        showLoading: Boolean = true,
+        loadingTips: String? = null,
+    ): Flow<T> {
+        return flow
+            .onStart {
+                val loading = CoroutineState.Loading
+                if (loadingTips != null) loading.loadingTips = loadingTips
+                if (showLoading) statusLiveData.postValue(loading)
+            }
+            .onCompletion {
+                if (showLoading) statusLiveData.postValue(CoroutineState.Finish)
+            }
+            .catch { e ->
+                e.printStackTrace()
+                if (showLoading) statusLiveData.postValue(CoroutineState.Error)
+                val e1 = BaseThrowable.ExternalThrowable(e)
+                error.postValue(e1)
+            }
+            .flowOn(Dispatchers.IO)
+    }
     /**
      * 普通方式请求普通接口，不使用 livedata
      */
-    fun <T> requestData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit){
+    fun <T> requestData(flow: Flow<T>, showLoading: Boolean = true, loadingTips: String? = null, parseBolck: (T) -> Unit){
         viewModelScope.launch {
-            parseRequest(flow, showLoading).collect {
+            parseRequest(flow, showLoading,loadingTips).collect {
                 parseBolck(it)
             }
         }
     }
-
     /**
      * 普通方式请求列表接口，不使用 livedata
      */
-    fun <Y, T : IResponse<Y>> requestListData(flow: Flow<T>, showLoading: Boolean = true, parseBolck: (T) -> Unit) {
+    fun <Y, T : IResponse<Y>> requestListData(flow: Flow<T>, showLoading: Boolean = true, loadingTips: String? = null, parseBolck: (T) -> Unit) {
         viewModelScope.launch {
-            parseRequest(flow, showLoading).collect {
+            parseRequest(flow, showLoading,loadingTips).collect {
                 refreshing.value = false
                 moreLoading.value = false
                 hasMore.value = it.hasMoreData()
@@ -112,12 +114,11 @@ abstract class BaseViewModel : ViewModel() {
             }
         }
     }
-
     /**
      * 普通接口请求
      * @param reqBolck 请求网络获取数据的方法体
      * @param showLoading 显示加载中的 loading
-     * @param loadingTips 加载中的提示语
+     * @param loadingTips 加载中的提示语（传 null 显示默认提示语，传 其他值则显示对应的值，传 空字符串 显示也为空字符串）
      * @param watchTag 监听该字段，自动请求接口
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
      *
@@ -129,7 +130,7 @@ abstract class BaseViewModel : ViewModel() {
     fun <R, Y, T : IResponse<Y>> requestDataToLiveData(
         reqBolck: Flow<T>,
         showLoading: Boolean = true,
-        loadingTips: String? = "",
+        loadingTips: String? = null,
         watchTag: UnPeekLiveData<out Any> = refreshTrigger,
         parseBolck: (Y?) -> R
     ): LiveData<R> {
@@ -141,7 +142,6 @@ abstract class BaseViewModel : ViewModel() {
             parseBolck(it.resultData)
         }
     }
-
     /**
      * 列表页面请求，监听 page 自动请求列表接口
      * @param reqBolck 网络请求的方法体
@@ -152,7 +152,7 @@ abstract class BaseViewModel : ViewModel() {
     fun <R, Y, T : IResponse<Y>> requestListDataToLiveData(
         reqBolck: Flow<T>,
         showLoading: Boolean = true,
-        loadingTips: String? = "",
+        loadingTips: String? = null,
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(

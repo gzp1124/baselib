@@ -5,7 +5,7 @@ import com.aligit.base.framework.mvvm.BaseViewState
 /**
  * 网络请求的状态
  */
-sealed class CoroutineState(var loadingTips: String? = "") : BaseViewState {
+sealed class CoroutineState(var loadingTips: String? = null) : BaseViewState {
 
     object Loading : CoroutineState()
     object Finish : CoroutineState()
