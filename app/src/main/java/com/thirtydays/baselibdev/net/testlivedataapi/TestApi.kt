@@ -3,14 +3,24 @@ package com.thirtydays.baselibdev.net.testlivedataapi
 import androidx.lifecycle.LiveData
 import com.aligit.base.model.BaseResponse
 import com.aligit.base.net.livedata_api.ApiFactory
+import com.thirtydays.baselibdev.net.bean.GoosLoginInfo
 import com.thirtydays.baselibdev.net.bean.VerBean
+import com.thirtydays.baselibdev.net.req.TestLoginReq
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Url
 
 interface TestApi {
     companion object {
         fun get(): TestApi {
             return ApiFactory.create("http://api-service.live:8080/", false) { resultStatus, errorCode, errorMessage, content ->
+                BaseResponse(errorMessage, errorCode, resultStatus, content)
+            }
+        }
+
+        fun getGoos(): TestApi {
+            return ApiFactory.create("http://api.goostruck.com/goos/app/driver/v1/", false) { resultStatus, errorCode, errorMessage, content ->
                 BaseResponse(errorMessage, errorCode, resultStatus, content)
             }
         }
@@ -38,4 +48,10 @@ interface TestApi {
      */
     @GET
     suspend fun getFlowString(@Url url:String):String
+
+    /**
+     * 测试使用 goos 登录接口
+     */
+    @POST("account/login/common")
+    suspend fun goosLoginReq(@Body req: TestLoginReq):BaseResponse<GoosLoginInfo>
 }

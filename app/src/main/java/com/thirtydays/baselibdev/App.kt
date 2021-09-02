@@ -1,6 +1,5 @@
 package com.thirtydays.baselibdev
 
-import android.util.Log
 import com.aligit.base.common.BaseApplication
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.tool.postEvent
@@ -12,10 +11,9 @@ import retrofit2.HttpException
 class App: BaseApplication() {
 
     override fun onNetError(err: BaseThrowable) {
-        Log.e("gzp112411","发现了异常"+err.localizedMessage)
         when {
             err.isExternal() -> {
-                val externalThrowable = this as BaseThrowable.ExternalThrowable
+                val externalThrowable = err as BaseThrowable.ExternalThrowable
                 externalThrowable.cause?.apply {
                     message?.apply {
                         toast { this }
@@ -31,7 +29,7 @@ class App: BaseApplication() {
                 }
             }
             err.isInside() -> {
-                val insideThrowable = this as BaseThrowable.InsideThrowable
+                val insideThrowable = err as BaseThrowable.InsideThrowable
                 toast { insideThrowable.errorMessage }
                 if (insideThrowable.errorCode == "000000") {
                     startMain(true)

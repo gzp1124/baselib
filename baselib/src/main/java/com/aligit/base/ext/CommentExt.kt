@@ -46,3 +46,10 @@ private fun Application.getProcessName(): String? {
     }
     return null
 }
+
+/**
+ * 判断类型是否一致
+ */
+inline fun <reified T:Any> checkType(t:Any):Boolean{
+    return T::class.java.isAssignableFrom(t.javaClass)
+}

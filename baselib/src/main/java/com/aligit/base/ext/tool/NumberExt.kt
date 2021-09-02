@@ -31,3 +31,9 @@ fun Double?.removeLastZero(isGroupingUsed: Boolean = false) = when (this == null
         }
     }
 }
+
+fun String?.getLength(): Int = when {
+    this == null -> 0
+    isNullOrEmpty() -> 0
+    else -> length
+}

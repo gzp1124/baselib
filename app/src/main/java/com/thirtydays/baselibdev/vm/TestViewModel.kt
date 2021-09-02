@@ -1,8 +1,11 @@
 package com.thirtydays.baselibdev.vm
 
-import androidx.lifecycle.MutableLiveData
+import com.aligit.base.ext.tool.log
+import com.aligit.base.ext.tool.toast
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
+import com.thirtydays.baselibdev.net.req.TestLoginReq
+import com.thirtydays.baselibdev.net.testlivedataapi.TestRepository
 
 class TestViewModel: BaseViewModel() {
     /*
@@ -13,4 +16,20 @@ class TestViewModel: BaseViewModel() {
     val testData = UnPeekLiveData<String>()
 
     val openNewPage = UnPeekLiveData<Boolean>()
+
+
+
+    //登录需要的参数对象
+    val loginReq = TestLoginReq()
+    //校验参数是否完整
+    fun checkParam(str:String?,str2: String?):Boolean{
+        return !str.isNullOrEmpty() && !str2.isNullOrEmpty()
+    }
+    //执行登录操作
+    fun login(){
+        requestData(TestRepository.testGoosLogin(loginReq)){
+            toast { it.errorMessage.toString() }
+            log("gzp112411 ---- 来这里了"+it.toString())
+        }
+    }
 }

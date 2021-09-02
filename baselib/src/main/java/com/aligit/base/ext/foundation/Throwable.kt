@@ -1,5 +1,6 @@
 package com.aligit.base.ext.foundation
 
+import com.aligit.base.common.AppContext
 import com.aligit.base.ext.tool.log
 
 
@@ -11,8 +12,8 @@ import com.aligit.base.ext.tool.log
 
 sealed class BaseThrowable(
     val code: String? = null,
-    message: String? = null,
-    cause: Throwable? = null
+    override val message: String? = null,
+    override val cause: Throwable? = null
 ) :
     Throwable(message, cause) {
 
@@ -26,11 +27,20 @@ sealed class BaseThrowable(
 
     fun isExternal() = this is ExternalThrowable
     fun isInside() = this is InsideThrowable
+
+    override fun toString(): String {
+        return "Throwable(code=$code message=$message cause=${cause?.localizedMessage})"
+    }
+}
+
+interface ParseThrowable{
+    fun onNetError(throwable: BaseThrowable)
 }
 
 fun BaseThrowable.onError() {
-//    (AppContext.baseContext as BaseApplication).onNetError(this)
     log("========================================================")
-    printStackTrace()
+    log(toString())
+    cause?.printStackTrace()
     log("error over ========================================================")
+    (AppContext.baseContext as? ParseThrowable)?.onNetError(this)
 }

@@ -27,6 +27,10 @@ class BaseResponse<T>(
     override fun hasMoreData(): Boolean {
         return true
     }
+
+    override fun toString(): String {
+        return "BaseResponse(errorMessage=$errorMessage, errorCode=$errorCode, resultStatus=$resultStatus, resultData=$resultData)"
+    }
 }
 
 data class BaseResult<T>(

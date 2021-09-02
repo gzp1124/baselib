@@ -40,7 +40,8 @@ abstract class BaseViewModel : ViewModel() {
             .catch { e ->
                 e.printStackTrace()
                 if (showLoading) statusLiveData.postValue(CoroutineState.Error)
-                error.postValue(BaseThrowable.ExternalThrowable(e))
+                val e1 = BaseThrowable.ExternalThrowable(e)
+                error.postValue(e1)
             }
             .flowOn(Dispatchers.IO)
     }

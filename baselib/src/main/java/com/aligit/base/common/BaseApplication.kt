@@ -11,6 +11,7 @@ import com.aligit.base.BuildConfig
 import com.aligit.base.Settings
 import com.aligit.base.Settings.app_force_use_portrait
 import com.aligit.base.ext.foundation.BaseThrowable
+import com.aligit.base.ext.foundation.ParseThrowable
 import com.aligit.base.ext.initWebViewDataDirectory
 import com.aligit.base.ext.tool.isLandscape
 import com.aligit.base.net.ok.OkHttpManager
@@ -36,7 +37,7 @@ import okhttp3.OkHttpClient
  */
 private lateinit var INSTANCE: Application
 
-abstract class BaseApplication : MultiDexApplication() {
+abstract class BaseApplication : MultiDexApplication(), ParseThrowable {
 
     override fun attachBaseContext(base: Context) {
         CommonHelper.context = base
@@ -48,7 +49,7 @@ abstract class BaseApplication : MultiDexApplication() {
     /**
      * 网络错误的统一封装
      */
-    abstract fun onNetError(err: BaseThrowable)
+    abstract override fun onNetError(err: BaseThrowable)
 
     companion object {
 
