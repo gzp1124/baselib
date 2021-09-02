@@ -15,9 +15,16 @@ fun bindInvisible(v: View, invisible: Boolean) {
     v.visibility = if (invisible) View.INVISIBLE else View.VISIBLE
 }
 
-@BindingAdapter(value = ["isSelect"])
-fun bindIsSelect(v: View, isSelect: Boolean) {
+@BindingAdapter(value = ["isSelectClick"])
+fun bindIsSelectClick(v: View, isSelect: Boolean) {
     v.isSelected = isSelect
+    v.isClickable = isSelect
+}
+
+@BindingAdapter(value = ["isOnlySelect"])
+fun bindIsOnlySelect(v: View, isSelect: Boolean) {
+    v.isSelected = isSelect
+    v.isClickable = isSelect
 }
 
 @BindingAdapter("onBackPressed")
