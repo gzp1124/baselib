@@ -24,7 +24,6 @@ fun bindIsSelectClick(v: View, isSelect: Boolean) {
 @BindingAdapter(value = ["isOnlySelect"])
 fun bindIsOnlySelect(v: View, isSelect: Boolean) {
     v.isSelected = isSelect
-    v.isClickable = isSelect
 }
 
 @BindingAdapter("onBackPressed")
