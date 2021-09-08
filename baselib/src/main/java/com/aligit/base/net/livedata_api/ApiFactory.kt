@@ -1,7 +1,6 @@
 package com.aligit.base.net.livedata_api
 
 import androidx.databinding.ObservableField
-import com.aligit.base.BuildConfig
 import com.aligit.base.Settings
 import com.aligit.base.common.AppContext
 import com.aligit.base.ext.tool.logi
@@ -52,7 +51,7 @@ object ApiFactory {
         //使用拦截器，添加公用请求头
         clientBuilder.addInterceptor(headInterceptor)
 
-        if (BuildConfig.DEBUG) {
+        if (Settings.isDebug) {
             // 添加 log 拦截器
             val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
                 override fun log(message: String) {

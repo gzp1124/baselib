@@ -87,14 +87,14 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable {
         XLog.init(config, AndroidPrinter())
 
         //ARouter初始化
-        if (BuildConfig.DEBUG) {
+        if (Settings.isDebug) {
             ARouter.openLog() // 打印日志
             ARouter.openDebug()
         }
         ARouter.init(this)
 
         // UI库设置
-        XUI.debug(BuildConfig.DEBUG)
+        XUI.debug(Settings.isDebug)
 
         // 设置屏幕适配参数
         setAutoSizeConfig()
@@ -103,7 +103,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable {
         BGASwipeBackHelper.init(this,null)
 
         //腾讯
-        CrashReport.initCrashReport(this, "3dd9e06f7e", BuildConfig.DEBUG)
+        CrashReport.initCrashReport(this, "3dd9e06f7e", Settings.isDebug)
 
         //多语言切换
         LanguageHelper.switchLanguage()

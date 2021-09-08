@@ -12,6 +12,8 @@ import java.util.*
  * </pre>
  */
 object Settings {
+    // debug
+    val isDebug = true
     // 强制使用竖屏
     var app_force_use_portrait: Boolean = false
 
