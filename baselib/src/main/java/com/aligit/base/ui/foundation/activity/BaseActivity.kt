@@ -68,9 +68,9 @@ abstract class BaseActivity : InternationalizationActivity() {
      */
     open fun autoSizeWidth(): Float {
         val w = if (isLandscape) {
-            Settings.app_landscape_screen_width
+            Settings.AutoSize.app_landscape_screen_width
         } else {
-            Settings.app_portrait_screen_width
+            Settings.AutoSize.app_portrait_screen_width
         }
         return w
     }
@@ -81,9 +81,9 @@ abstract class BaseActivity : InternationalizationActivity() {
      */
     open fun autoSizeHeight(): Float {
         val h = if (isLandscape) {
-            Settings.app_landscape_screen_height
+            Settings.AutoSize.app_landscape_screen_height
         } else {
-            Settings.app_portrait_screen_height
+            Settings.AutoSize.app_portrait_screen_height
         }
         return h
     }
@@ -93,13 +93,13 @@ abstract class BaseActivity : InternationalizationActivity() {
      * 返回 true 表示宽度为 autoSizeWidth 指定的宽度，高度进行等比例计算
      * 返回 false 则相反
      */
-    open fun autoSizeBaseWidth(): Boolean = Settings.autoSizeIsBaseOnWidth
+    open fun autoSizeBaseWidth(): Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth
 
     /**
      * 更新布局适配的基本 宽/高 autosize 将进行自动适配
      */
     open fun updateAutoSizeBaseWidth() {
-        if (Looper.myLooper() == Looper.getMainLooper()) {
+        if (Settings.AutoSize.useAutoSize && Looper.myLooper() == Looper.getMainLooper()) {
             if (autoSizeBaseWidth()) {
                 AutoSizeCompat.autoConvertDensity(super.getResources(), autoSizeWidth(), true)
             } else {

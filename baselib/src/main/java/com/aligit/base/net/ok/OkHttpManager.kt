@@ -80,8 +80,8 @@ class OkHttpManager private constructor() {
                 val request = chain.request()
                 val newBuilder = request.newBuilder()
                 newBuilder.addHeader("Content-Type", "application/json;charset=UTF-8")
-                if (Settings.app_token.isNotEmpty()) {
-                    newBuilder.addHeader(Settings.appTokenHeadKey, Settings.app_token)
+                if (Settings.Request.app_token.isNotEmpty()) {
+                    newBuilder.addHeader(Settings.Request.appTokenHeadKey, Settings.Request.app_token)
                         .build()
                 }
                 return chain.proceed(newBuilder.build())

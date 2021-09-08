@@ -9,11 +9,12 @@ import androidx.lifecycle.MutableLiveData
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.aligit.base.R
 import com.aligit.base.Settings
-import com.aligit.base.Settings.app_force_use_portrait
+import com.aligit.base.Settings.UI.app_force_use_portrait
 import com.aligit.base.common.AppManager
 import com.aligit.base.common.BaseApplication
 import com.aligit.base.ext.find
 import com.aligit.base.ext.tool.isDarkMode
+import com.aligit.base.ext.tool.setScreenLandscape
 import com.aligit.base.ext.tool.setScreenPortrait
 import com.blankj.utilcode.util.BarUtils
 import com.gyf.immersionbar.ImmersionBar
@@ -32,7 +33,8 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
         //根类记录 Activity
         AppManager.addActivity(this)
         //横竖屏
-        if (app_force_use_portrait) setScreenPortrait()
+        if (app_force_use_portrait == 1)setScreenPortrait()
+        if (app_force_use_portrait == 2)setScreenLandscape()
         //滑动返回
         initSwipeBackFinish()
         //屏幕设置
@@ -109,7 +111,7 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
         }
     }
 
-    val darkMode: MutableLiveData<Int> = MutableLiveData(Settings.dark_model)
+    val darkMode: MutableLiveData<Int> = MutableLiveData(Settings.UI.dark_model)
 
     // 隐藏虚拟按键
     protected open fun booHideBottom():Boolean = false
@@ -149,6 +151,6 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
     }
 
     // 是否需要侧滑返回
-    override fun isSupportSwipeBack():Boolean = Settings.useSwipeBack
+    override fun isSupportSwipeBack():Boolean = Settings.UI.useSwipeBack
 
 }

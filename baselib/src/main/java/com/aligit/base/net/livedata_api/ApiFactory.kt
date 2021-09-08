@@ -25,9 +25,9 @@ object ApiFactory {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()
             .cache(Cache(file, 1024 * 1024 * 100))
-            .connectTimeout(Settings.request.connectTimeout, TimeUnit.MINUTES)
-            .readTimeout(Settings.request.readTimeout, TimeUnit.MINUTES)
-            .writeTimeout(Settings.request.writeTimeout, TimeUnit.MINUTES)
+            .connectTimeout(Settings.Request.connectTimeout, TimeUnit.MINUTES)
+            .readTimeout(Settings.Request.readTimeout, TimeUnit.MINUTES)
+            .writeTimeout(Settings.Request.writeTimeout, TimeUnit.MINUTES)
         //保存 cookie
         if (saveCookie) {
             val cookieJar = PersistentCookieJar(
@@ -42,8 +42,8 @@ object ApiFactory {
                 val newBuilder = request.newBuilder()
                 newBuilder.addHeader("Content-Type", "application/json;charset=UTF-8")
                 //添加公用请求头
-                if (Settings.app_token.isNotEmpty()) {
-                    newBuilder.addHeader(Settings.appTokenHeadKey, Settings.app_token).build()
+                if (Settings.Request.app_token.isNotEmpty()) {
+                    newBuilder.addHeader(Settings.Request.appTokenHeadKey, Settings.Request.app_token).build()
                 }
                 return chain.proceed(newBuilder.build())
             }

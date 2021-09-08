@@ -39,7 +39,7 @@ fun BaseFragment.injectViewModel(): List<BaseViewModel> {
             if (!haveSetEle) {
                 // 触发默认数据的加载
                 vm.refreshTrigger.postValue(true)
-                vm.page.postValue(Settings.pageStartIndex)
+                vm.page.postValue(Settings.Request.pageStartIndex)
             }
 
             //viewModel 状态监听
@@ -81,7 +81,7 @@ fun BaseActivity.injectViewModel(): List<BaseViewModel> {
             if (!haveSetEle) {
                 // 触发默认数据的加载
                 vm.refreshTrigger.postValue(true)
-                vm.page.postValue(Settings.pageStartIndex)
+                vm.page.postValue(Settings.Request.pageStartIndex)
             }
 
             //viewModel 状态监听

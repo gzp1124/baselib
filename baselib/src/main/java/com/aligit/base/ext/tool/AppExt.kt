@@ -101,8 +101,8 @@ fun Context.isDarkMode(): Boolean {
  * 切换深色模式
  */
 fun Context.changDarkMode(mode:Int){
-    Settings.dark_model = mode
-    if (Settings.dark_model == resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)return
+    Settings.UI.dark_model = mode
+    if (Settings.UI.dark_model == resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK)return
     BaseApplication.darkMode.postValue(mode)
     when(mode){
         1 -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)

@@ -25,7 +25,7 @@ class RetrofitFactory private constructor(client: OkHttpClient) {
     }
 
     private val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(Settings.BASE_URL)
+        .baseUrl(Settings.Request.BASE_URL)
         .addConverterFactory(GsonConverterFactory.create())
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(client)

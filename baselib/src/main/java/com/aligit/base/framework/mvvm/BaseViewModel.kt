@@ -1,6 +1,5 @@
 package com.aligit.base.framework.mvvm
 
-import android.os.SystemClock
 import androidx.lifecycle.*
 import com.aligit.base.Settings
 import com.aligit.base.ext.foundation.BaseThrowable
@@ -11,9 +10,6 @@ import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-
-class NoViewModel : BaseViewModel() {
-}
 
 abstract class BaseViewModel : ViewModel() {
     /**
@@ -50,13 +46,13 @@ abstract class BaseViewModel : ViewModel() {
 
     // 列表数据加载更多
     fun loadMore() {
-        page.value = (page.value ?: Settings.pageStartIndex) + 1
+        page.value = (page.value ?: Settings.Request.pageStartIndex) + 1
         moreLoading.value = true
     }
 
     // 刷新列表数据
     fun refresh() {
-        page.value = Settings.pageStartIndex
+        page.value = Settings.Request.pageStartIndex
         refreshing.value = true
     }
 

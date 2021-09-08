@@ -7,9 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.multidex.MultiDexApplication
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.alibaba.android.arouter.launcher.ARouter
-import com.aligit.base.BuildConfig
 import com.aligit.base.Settings
-import com.aligit.base.Settings.app_force_use_portrait
+import com.aligit.base.Settings.UI.app_force_use_portrait
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.ParseThrowable
 import com.aligit.base.ext.initWebViewDataDirectory
@@ -55,7 +54,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable {
 
         // 深色模式
         val darkMode: MutableLiveData<Int> by lazy{
-            MutableLiveData(Settings.dark_model)
+            MutableLiveData(Settings.UI.dark_model)
         }
 
         val okHttpClient: OkHttpClient by lazy {
@@ -64,8 +63,6 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable {
 
         val retrofitFactory: RetrofitFactory by lazy { RetrofitFactory.getInstance(okHttpClient) }
     }
-
-    private val TAG = "BaseLib"
 
     /**
      * 更新全局的 Settings 文件
@@ -82,7 +79,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable {
 
         //XLog
         val config = LogConfiguration.Builder()
-            .tag(TAG)
+            .tag(Settings.logTag)
             .build()
         XLog.init(config, AndroidPrinter())
 
@@ -126,16 +123,16 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable {
 
     fun setAutoSizeConfig(){
         // 适配
-        if (Settings.useAutoSize) {
-            if (!app_force_use_portrait && isLandscape) {
-                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_landscape_screen_width.toInt()
-                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_landscape_screen_height.toInt()
+        if (Settings.AutoSize.useAutoSize) {
+            if (app_force_use_portrait==2 || isLandscape) {
+                AutoSizeConfig.getInstance().designWidthInDp = Settings.AutoSize.app_landscape_screen_width.toInt()
+                AutoSizeConfig.getInstance().designHeightInDp = Settings.AutoSize.app_landscape_screen_height.toInt()
             } else {
-                AutoSizeConfig.getInstance().designWidthInDp = Settings.app_portrait_screen_width.toInt()
-                AutoSizeConfig.getInstance().designHeightInDp = Settings.app_portrait_screen_height.toInt()
+                AutoSizeConfig.getInstance().designWidthInDp = Settings.AutoSize.app_portrait_screen_width.toInt()
+                AutoSizeConfig.getInstance().designHeightInDp = Settings.AutoSize.app_portrait_screen_height.toInt()
             }
             AutoSizeConfig.getInstance().isCustomFragment = true
-            AutoSizeConfig.getInstance().isBaseOnWidth = Settings.autoSizeIsBaseOnWidth
+            AutoSizeConfig.getInstance().isBaseOnWidth = Settings.AutoSize.autoSizeIsBaseOnWidth
             AutoSize.initCompatMultiProcess(this)
         }
     }

@@ -11,6 +11,8 @@ import com.thirtydays.baselibdev.databinding.ActivityChangeThemeBinding
  *
  * 换肤使用三方库：https://github.com/ximsfei/Android-skin-support
  * baselib 中还没有进行换肤的操作，后续项目中用到了，再去使用该三方库去实现吧
+ * 
+ * 或者使用 xui 中的换肤方案
  */
 @Route(path = "/change/theme")
 class ChangeThemeActivity: BaseVmActivity<ActivityChangeThemeBinding>(R.layout.activity_change_theme)
@@ -26,7 +28,7 @@ class ChangeThemeActivity: BaseVmActivity<ActivityChangeThemeBinding>(R.layout.a
      * theme 0默认，1红色，2绿色，3蓝色
      */
     override fun changeTheme(theme: Int) {
-        Settings.project_theme = theme
+        Settings.UI.project_theme = theme
     }
 
 }

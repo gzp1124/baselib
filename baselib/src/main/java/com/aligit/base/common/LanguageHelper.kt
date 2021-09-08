@@ -27,15 +27,15 @@ object LanguageHelper {
      * 切换语言
      */
     fun switchLanguage(language: LanguageStatus,isRelaunchApp:Boolean = false) {
-        Settings.language_status = getLocal(language)
-        if (Settings.language_status != LanguageUtils.getAppContextLanguage())
-            LanguageUtils.applyLanguage(Settings.language_status,isRelaunchApp)
+        Settings.UI.language_status = getLocal(language)
+        if (Settings.UI.language_status != LanguageUtils.getAppContextLanguage())
+            LanguageUtils.applyLanguage(Settings.UI.language_status,isRelaunchApp)
     }
 
-    fun switchLanguage(language: Locale = Settings.language_status,isRelaunchApp:Boolean = false) {
-        Settings.language_status = language
-        if (Settings.language_status != LanguageUtils.getAppContextLanguage())
-            LanguageUtils.applyLanguage(Settings.language_status,isRelaunchApp)
+    fun switchLanguage(language: Locale = Settings.UI.language_status,isRelaunchApp:Boolean = false) {
+        Settings.UI.language_status = language
+        if (Settings.UI.language_status != LanguageUtils.getAppContextLanguage())
+            LanguageUtils.applyLanguage(Settings.UI.language_status,isRelaunchApp)
     }
 
     private fun getLocal(lang: LanguageStatus): Locale = when (lang) {
