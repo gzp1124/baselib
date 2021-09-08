@@ -15,7 +15,7 @@ import kotlin.reflect.KProperty
  * </pre>
  */
 @Suppress("UNCHECKED_CAST")
-class Mmkv<T>(val name: String, val default: T, val clazz: Class<T>? = null) : ReadWriteProperty<Any?, T> {
+class Mmkv<T>(val name: String, val default: T?, val clazz: Class<T>? = null) : ReadWriteProperty<Any?, T> {
     /*
     如果要保存 Parcelable 和 其他任意对象 则 clazz 为必须设置，否则会报错
     最后一个参数 clazz 用于保存 Parcelable 或者其他任意类型的对象
