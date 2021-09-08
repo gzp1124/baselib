@@ -1,4 +1,4 @@
-package com.aligit.base.widget
+package com.aligit.base.widget.textview
 
 import android.content.Context
 import android.graphics.Canvas
@@ -139,11 +139,11 @@ class AutoLinkStyleTextView @JvmOverloads constructor(
     }
 
     fun addClickCallBack(listener: () -> Unit) {
-        mClickable.mListener.add(listener)
+        Clickable.mListener.add(listener)
     }
 
     fun removeClickCallBack(listener: () -> Unit) {
-        mClickable.mListener.remove(listener)
+        Clickable.mListener.remove(listener)
     }
 
     companion object {
@@ -160,8 +160,8 @@ object Clickable : ClickableSpan(), NoCopySpan {
     var mListener = mutableListOf<() -> Unit>()
 
     fun init(defaultColor: Int, hasUnderLine: Boolean): Clickable {
-        this.defaultColor = defaultColor
-        this.hasUnderLine = hasUnderLine
+        Clickable.defaultColor = defaultColor
+        Clickable.hasUnderLine = hasUnderLine
         return this
     }
 

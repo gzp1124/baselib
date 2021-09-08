@@ -244,3 +244,24 @@ dependencies {
     api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
 
 }
+
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from components.release
+
+                groupId = 'com.aligit'
+                artifactId = 'baselib'
+                version = '1.0'
+            }
+            debug(MavenPublication) {
+                from components.debug
+
+                groupId = 'com.aligit'
+                artifactId = 'baselib-debug'
+                version = '1.0'
+            }
+        }
+    }
+}
