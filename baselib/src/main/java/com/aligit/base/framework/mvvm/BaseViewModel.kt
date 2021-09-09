@@ -90,7 +90,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 普通方式请求普通接口，不使用 livedata
      */
-    fun <T> requestData(flow: Flow<T>, showLoading: Boolean = true, loadingTips: String? = null, parseBolck: (T) -> Unit){
+    fun <T> requestData(flow: Flow<T>, showLoading: Boolean = Settings.Request.showLoading, loadingTips: String? = null, parseBolck: (T) -> Unit){
         viewModelScope.launch {
             parseRequest(flow, showLoading,loadingTips).collect {
                 parseBolck(it)
@@ -100,7 +100,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 普通方式请求列表接口，不使用 livedata
      */
-    fun <Y, T : IResponse<Y>> requestListData(flow: Flow<T>, showLoading: Boolean = true, loadingTips: String? = null, parseBolck: (T) -> Unit) {
+    fun <Y, T : IResponse<Y>> requestListData(flow: Flow<T>, showLoading: Boolean = Settings.Request.showLoading, loadingTips: String? = null, parseBolck: (T) -> Unit) {
         viewModelScope.launch {
             parseRequest(flow, showLoading,loadingTips).collect {
                 refreshing.value = false
@@ -125,7 +125,7 @@ abstract class BaseViewModel : ViewModel() {
      */
     fun <R, Y, T : IResponse<Y>> requestDataToLiveData(
         reqBolck: Flow<T>,
-        showLoading: Boolean = true,
+        showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
         watchTag: UnPeekLiveData<out Any> = refreshTrigger,
         parseBolck: (Y?) -> R
@@ -147,7 +147,7 @@ abstract class BaseViewModel : ViewModel() {
      */
     fun <R, Y, T : IResponse<Y>> requestListDataToLiveData(
         reqBolck: Flow<T>,
-        showLoading: Boolean = true,
+        showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
         parseBolck: (Y?,Int) -> R
     ): LiveData<R> {
