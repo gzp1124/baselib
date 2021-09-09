@@ -51,6 +51,8 @@ object Settings {
     object Request{
         // 分页起始页页码
         var pageStartIndex = 1
+        // 显示加载中的loading
+        var showLoading = false
         // 请求url
         var BASE_URL: String = "http://101.200.207.61:9650/"
         // 请求网络的token key

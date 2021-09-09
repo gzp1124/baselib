@@ -1,0 +1,45 @@
+
+使用步骤：
+
+0. 项目支持的最低版本21
+
+1. 项目的 gradle 文件中
+    maven { url "https://jitpack.io" }
+    或
+    maven {
+            url "https://jitpack.io"
+            credentials { username authToken }
+        }
+
+2. APP 的 gradle 文件中
+    plugins {
+        id 'com.android.application'
+        id 'kotlin-android'
+        id 'kotlin-kapt'
+        id 'kotlin-parcelize'
+    }
+
+    javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+
+        buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+
+    使用baselib
+    implementation 'com.github.gzp1124.baselib:baselib:1.1.1'
+    kapt "com.alibaba:arouter-compiler:1.5.2"
+    kapt 'androidx.annotation:annotation:1.1.0'
+
+3. gradle.properties 文件中
+    android.enableJetifier=true
+    authToken=jp_g2qmapiq64nn3kt4f8dj6csu19 （可选）
+
+

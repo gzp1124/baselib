@@ -28,6 +28,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
 
 
     val pages = arrayListOf(
+        MainBean("测试正则","/test/reg",true),
         MainBean("测试阴影","/test/shadow",true),
         MainBean("测试参数自动校验","/test/auto_check_param",true),
         MainBean("打开test页面","/test/test",false),

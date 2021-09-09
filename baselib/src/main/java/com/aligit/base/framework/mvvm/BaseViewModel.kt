@@ -67,7 +67,7 @@ abstract class BaseViewModel : ViewModel() {
     // 对 flow 进行统一处理
     private fun <T> parseRequest(
         flow: Flow<T>,
-        showLoading: Boolean = true,
+        showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
     ): Flow<T> {
         return flow
@@ -111,7 +111,7 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
     /**
-     * 普通接口请求
+     * 普通接口请求，只返回业务数据
      * @param reqBolck 请求网络获取数据的方法体
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语（传 null 显示默认提示语，传 其他值则显示对应的值，传 空字符串 显示也为空字符串）
@@ -139,7 +139,7 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
     /**
-     * 列表页面请求，监听 page 自动请求列表接口
+     * 列表页面请求，监听 page 自动请求列表接口，只返回业务数据
      * @param reqBolck 网络请求的方法体
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语
@@ -149,7 +149,7 @@ abstract class BaseViewModel : ViewModel() {
         reqBolck: Flow<T>,
         showLoading: Boolean = true,
         loadingTips: String? = null,
-        parseBolck: (Y?) -> R
+        parseBolck: (Y?,Int) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(page) {
@@ -159,7 +159,7 @@ abstract class BaseViewModel : ViewModel() {
             refreshing.value = false
             moreLoading.value = false
             hasMore.value = it.hasMoreData()
-            parseBolck(it.resultData)
+            parseBolck(it.resultData,page.value!!)
         }
     }
 }

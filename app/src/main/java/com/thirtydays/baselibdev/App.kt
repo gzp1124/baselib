@@ -1,5 +1,6 @@
 package com.thirtydays.baselibdev
 
+import com.aligit.base.Settings
 import com.aligit.base.common.BaseApplication
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.tool.postEvent
@@ -40,5 +41,6 @@ class App: BaseApplication() {
     }
 
     override fun updateSettings() {
+        Settings.UI.app_force_use_portrait = 1
     }
 }

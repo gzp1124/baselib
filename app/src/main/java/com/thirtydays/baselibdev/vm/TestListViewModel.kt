@@ -43,7 +43,7 @@ class TestListViewModel : BaseViewModel() {
 //    }
 
     private val mApi = TestApi.get()
-    val dataList = requestListDataToLiveData(TestRepository.getFlowVer()) {
+    val dataList = requestListDataToLiveData(TestRepository.getFlowVer()) { datas,page ->
         val list = mutableListOf<String>()
         for (i in 1..Random.nextInt(10)) {
             list.add(" -- $i")
