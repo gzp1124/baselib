@@ -32,4 +32,15 @@ class TestViewModel: BaseViewModel() {
             log("gzp112411 ---- 来这里了"+it.toString())
         }
     }
+
+    val reqData = UnPeekLiveData<String>()
+    val normalData1 = requestDataToLiveData(TestRepository.getFlowVer(),watchTag = reqData) {
+        log("gzp112411 请求成功了 test1")
+        it?.downloadUrl
+    }
+    val reqData2 = UnPeekLiveData<String>()
+    val normalData2 = requestDataToLiveData(TestRepository.getFlowVer(),watchTag = reqData2) {
+        log("gzp112411 请求成功了 test2")
+        it?.downloadUrl
+    }
 }

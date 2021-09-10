@@ -1,7 +1,7 @@
 package com.thirtydays.baselibdev.vm
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
 import com.aligit.base.ext.tool.log
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
@@ -38,8 +38,12 @@ class MainViewModel : BaseViewModel() {
     // 使用 livedata 请求网络的第二种写法，监听其他 livedata ，点击按钮的时候 修改监听的 livedata 的值，实现请求执行
     val reqData = UnPeekLiveData<String>()
     val normalData1 = requestDataToLiveData(TestRepository.getFlowVer(),watchTag = reqData) {
+        log("gzp112411 请求成功了 main")
         it?.downloadUrl
     }
+    val observableTasks = Transformations.map(reqData, {
+        log("gzp112411 单独观察来了")
+    })
 
     // 请求方式三：调用方法进行请求，最常见
     // 普通的网络请求，调用该方法执行，和传统的网络请求一样，通过调用的方式执行
@@ -58,5 +62,11 @@ class MainViewModel : BaseViewModel() {
         requestData(TestRepository.getStrData()){
             strData.postValue(it)
         }
+    }
+
+
+    val normalData4 = requestDataToLiveData(TestRepository.getFlowVer()) {
+        log("gzp112411 请求成功了 main222")
+        it?.downloadUrl
     }
 }
