@@ -10,6 +10,7 @@
         <entry key="app/src/main/res/layout/activity_test.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_flow_test.xml" value="0.22146739130434784" />
         <entry key="app/src/main/res/layout/fragment_test.xml" value="0.2520833333333333" />
+        <entry key="app/src/main/res/layout/fragment_test_convert.xml" value="0.12259371833839919" />
         <entry key="app/src/main/res/layout/fragment_test_error_data.xml" value="0.12259371833839919" />
         <entry key="app/src/main/res/layout/fragment_test_list.xml" value="0.16666666666666666" />
         <entry key="app/src/main/res/layout/fragment_test_normal_request.xml" value="0.22509057971014493" />

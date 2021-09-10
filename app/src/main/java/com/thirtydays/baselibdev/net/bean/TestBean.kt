@@ -18,4 +18,14 @@ data class VerBean(
     val updateTime: String,
     val versionCode: String,
     val versionId: Int
-)
+){
+    fun getShowTime():String{
+        return "改了$createTime"
+    }
+
+    fun getShowVersion():String{
+        return if (versionId >= 0)
+            "现在是正数：$versionId"
+        else "现在是负数：$versionId"
+    }
+}

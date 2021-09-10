@@ -103,8 +103,9 @@ abstract class BaseVmFragment<DataBinding : ViewDataBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         onInitDataBinding()
-
     }
+
+    override fun requestData() {  }
 
     abstract fun onInitDataBinding()
 
