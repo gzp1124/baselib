@@ -2,8 +2,8 @@ package com.aligit.base
 
 import androidx.appcompat.app.AppCompatDelegate
 import com.aligit.base.ext.foundation.Mmkv
-import com.aligit.base.ext.image.GlideEngine
-import com.aligit.base.ext.image.ImageLoderEngine
+import com.aligit.base.common.image.GlideEngine
+import com.aligit.base.common.image.ImageLoderEngine
 import java.util.*
 
 /**

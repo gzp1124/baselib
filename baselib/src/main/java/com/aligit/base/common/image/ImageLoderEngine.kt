@@ -1,4 +1,4 @@
-package com.aligit.base.ext.image
+package com.aligit.base.common.image
 
 import android.content.Context
 import android.widget.ImageView

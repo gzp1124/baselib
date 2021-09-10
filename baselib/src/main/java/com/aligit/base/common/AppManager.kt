@@ -9,7 +9,7 @@ import kotlin.system.exitProcess
 /**
  * author : gzp1124
  * Time: 2020/4/8 9:39
- * Des:
+ * Des: 弃用，使用 com.blankj.utilcode.util.ActivityUtils 代替
  */
 object AppManager {
 
