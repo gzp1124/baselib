@@ -2,6 +2,8 @@ package com.aligit.base
 
 import androidx.appcompat.app.AppCompatDelegate
 import com.aligit.base.ext.foundation.Mmkv
+import com.aligit.base.ext.image.GlideEngine
+import com.aligit.base.ext.image.ImageLoderEngine
 import java.util.*
 
 /**
@@ -67,8 +69,14 @@ object Settings {
 
     // 文件保存路径
     object fileSavePath {
+        var rootPath = ""
         // HTTP 请求的缓存路径
         var httpCachePath = "http_cache"
+    }
+
+    object Tools{
+        // 图片加载
+        val imageLoader: ImageLoderEngine = GlideEngine.createGlideEngine()
     }
 
     // oss用到的常量

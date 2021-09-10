@@ -1,8 +1,9 @@
 package com.aligit.base.bindingadapter
 
-import android.graphics.drawable.Drawable
 import android.widget.ImageView
+import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
+import com.aligit.base.Settings
 
 
 /*
@@ -12,7 +13,9 @@ import androidx.databinding.BindingAdapter
 使用方式
 <ImageView app:imageUrl="@{venue.imageUrl}" app:error="@{@drawable/venueError}" />
  */
-@BindingAdapter(value = ["imageUrl", "error"], requireAll = false)
-fun loadImage(view: ImageView, url: String?, error: Drawable?) {
-//        Picasso.get().load(url).error(error).into(view)
+@BindingAdapter(value = ["gImageUrl", "gError", "gLoading"], requireAll = false)
+fun loadImage(view: ImageView, url: String?, @DrawableRes error: Int?, @DrawableRes loading: Int?) {
+    url?.let {
+        Settings.Tools.imageLoader.loadImage(view.context,it,error,loading,view)
+    }
 }
