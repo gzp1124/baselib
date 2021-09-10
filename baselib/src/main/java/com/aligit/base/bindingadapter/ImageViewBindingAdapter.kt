@@ -1,9 +1,11 @@
 package com.aligit.base.bindingadapter
 
+import android.text.TextUtils
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
 import androidx.databinding.BindingAdapter
 import com.aligit.base.Settings
+import com.aligit.base.ext.tool.dp2px
 
 
 /*
@@ -13,9 +15,29 @@ import com.aligit.base.Settings
 使用方式
 <ImageView app:imageUrl="@{venue.imageUrl}" app:error="@{@drawable/venueError}" />
  */
-@BindingAdapter(value = ["gImageUrl", "gError", "gLoading"], requireAll = false)
-fun loadImage(view: ImageView, url: String?, @DrawableRes error: Int?, @DrawableRes loading: Int?) {
-    url?.let {
-        Settings.Tools.imageLoader.loadImage(view.context,it,error,loading,view)
+/**
+ * 单位使用 dp
+ * @param gShowType 0矩形，1圆形，2圆角，3分别设置四个圆角
+ */
+@BindingAdapter(value = ["gImageUrl", "gError", "gLoading", "gShowType","gRadius","gLeftTop","gLeftBottom","gRightTop","gRightBottom"], requireAll = false)
+fun loadImage(
+    view: ImageView,
+    url: String?,
+    @DrawableRes error: Int?,
+    @DrawableRes loading: Int?,
+    showType: Int = 0,// 0矩形，1圆形，2圆角，3分别设置四个圆角
+    radius: Int = 1,
+    leftTop: Int = 0,
+    leftBottom: Int = 0,
+    rightTop: Int = 0,
+    rightBottom: Int = 0,
+) {
+    if (TextUtils.isEmpty(url))return
+    when(showType){
+        0 -> Settings.Tools.imageLoader.loadImage(view.context, url, error, loading, view)
+        1 -> Settings.Tools.imageLoader.loadCircleImage(view.context,url,error,loading,view)
+        2 -> Settings.Tools.imageLoader.loadRoundedImage(view.context,url,error,loading,view, dp2px(radius))
+        3 -> Settings.Tools.imageLoader.load4RoundedImage(view.context,url,error,loading,view, dp2px(leftTop), dp2px(leftBottom), dp2px(rightTop), dp2px(rightBottom))
     }
+
 }

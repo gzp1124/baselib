@@ -14,6 +14,11 @@ import androidx.core.graphics.drawable.RoundedBitmapDrawableFactory;
 
 import com.aligit.base.R;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.load.resource.bitmap.GranularRoundedCorners;
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
+import com.bumptech.glide.request.BaseRequestOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.ImageViewTarget;
@@ -225,19 +230,43 @@ public class GlideEngine implements ImageLoderEngine {
         return instance;
     }
 
+    private void _loadImg(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, @Nullable BaseRequestOptions<?> requestOptions){
+        RequestBuilder<Drawable> gb = Glide.with(context).load(url);
+        if (error != null) gb.error(error);
+        if (loading != null) gb.placeholder(loading);
+        if (requestOptions != null) gb.apply(requestOptions);
+        gb.into(imageView);
+    }
+
+    /**
+     * 带加载中和加载失败
+     */
     @Override
-    public void loadImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
-        if (loading == null){
-            Glide.with(context)
-                    .load(url)
-                    .error(error)
-                    .into(imageView);
-        }else {
-            Glide.with(context)
-                    .load(url)
-                    .error(error)
-                    .placeholder(loading)
-                    .into(imageView);
-        }
+    public void loadImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
+        _loadImg(context, url, error, loading, imageView,null);
+    }
+
+    /**
+     * 圆形
+     */
+    @Override
+    public void loadCircleImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
+        _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new CircleCrop()));
+    }
+
+    /**
+     * 圆角矩形
+     */
+    @Override
+    public void loadRoundedImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int radius) {
+        _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new RoundedCorners(radius)));
+    }
+
+    /**
+     * 分别设置四个圆角
+     */
+    @Override
+    public void load4RoundedImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int leftTop, int leftBottom, int rightTop, int rightBottom) {
+        _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new GranularRoundedCorners(leftTop,rightTop,rightBottom,leftBottom)));
     }
 }
