@@ -12,6 +12,7 @@ import android.webkit.WebView
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
+import com.blankj.utilcode.util.GsonUtils
 
 /**
  * author : gzp1124
@@ -106,4 +107,8 @@ inline fun <T: Any> ifNotNullLet(vararg elements: T?, closure: (List<T>) -> Unit
     if (elements.all { it != null }) {
         closure(elements.filterNotNull())
     }
+}
+
+inline fun <reified T> T.deepCopy() : T {
+    return GsonUtils.fromJson(GsonUtils.toJson(this), T::class.java)
 }
