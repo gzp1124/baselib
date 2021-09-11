@@ -23,8 +23,10 @@ fun BaseFragment.injectViewModel(): List<BaseViewModel> {
             if (TextUtils.isEmpty(element)) {
                 haveSetEle = false
                 element = this::class.java.simpleName
+                element = element+"_"+Integer.toHexString(System.identityHashCode(this))+"_"+field.type.simpleName
+            }else{
+                element = element+"_"+field.type.simpleName
             }
-            element = element+"_"+Integer.toHexString(System.identityHashCode(this))+"_"+field.type.simpleName
             var store: VMStore
             if (vMStores.keys.contains(element) && null != element) {
                 //如果该作用域存在缓存，则从缓存中获取view model商店
@@ -66,8 +68,11 @@ fun BaseActivity.injectViewModel(): List<BaseViewModel> {
             if (TextUtils.isEmpty(element)) {
                 haveSetEle = false
                 element = this::class.java.simpleName
+                element = element+"_"+Integer.toHexString(System.identityHashCode(this))+"_"+field.type.simpleName
+            }else{
+                element = element+"_"+field.type.simpleName
             }
-            element = element+"_"+Integer.toHexString(System.identityHashCode(this))+"_"+field.type.simpleName
+
             var store: VMStore
             if (vMStores.keys.contains(element) && null != element) {
                 //如果该作用域存在缓存，则从缓存中获取view model商店
