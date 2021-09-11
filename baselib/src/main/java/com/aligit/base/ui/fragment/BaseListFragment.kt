@@ -34,5 +34,7 @@ abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.f
             it.setEnableRefresh(haveVm && canRefresh())
             it.setEnableOverScrollDrag(true)
         }
+
+        showData()
     }
 }

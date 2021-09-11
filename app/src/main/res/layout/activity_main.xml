@@ -30,7 +30,6 @@
             android:layout_width="187.5dp"
             android:layout_height="54dp"
             android:background="#f00"
-            android:layout_marginTop="30dp"
             android:text="@{viewModel.testContent.downloadUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
