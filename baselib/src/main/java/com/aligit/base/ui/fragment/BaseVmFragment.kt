@@ -10,7 +10,7 @@ import androidx.annotation.LayoutRes
 import androidx.core.widget.NestedScrollView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import com.aligit.base.ext.foundation.dowithTry
+import com.aligit.base.ext.dowithTry
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.framework.mvvm.scope.injectViewModel
 import com.aligit.base.ui.foundation.fragment.BaseFragment
@@ -50,7 +50,7 @@ abstract class BaseVmFragment<DataBinding : ViewDataBinding>(
 
         var vms = injectViewModel()
 
-        dowithTry({
+        dowithTry {
             rootView = context?.let {
                 statePageView.getRootView(it).apply {
                     failView.setOnClickListener { currentChangePageStateViewModel?.refresh() }
@@ -77,7 +77,7 @@ abstract class BaseVmFragment<DataBinding : ViewDataBinding>(
                     }
                 }
             }
-        })
+        }
 
         vms = emptyList()
 

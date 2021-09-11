@@ -68,6 +68,15 @@ fun startCommonFragment(fragmentPath:String,bundle: Bundle? = null){
         .navigation()
 }
 
+inline fun dowithTry(catchBlock: (e: Throwable) -> Unit = {},block: () -> Unit) {
+    try {
+        block()
+    } catch (e: Throwable) {
+        catchBlock(e)
+        e.printStackTrace()
+    }
+}
+
 /**
  * 多个参数使用 let
  * 如果参数中有 null 就 执行代码块

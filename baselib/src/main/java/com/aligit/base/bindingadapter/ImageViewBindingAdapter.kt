@@ -18,7 +18,11 @@ import com.aligit.base.ext.tool.dp2px
  * 单位使用 dp
  * @param gShowType 0矩形，1圆形，2圆角，3分别设置四个圆角
  */
-@BindingAdapter(value = ["gImageUrl", "gError", "gLoading", "gShowType","gRadius","gLeftTop","gLeftBottom","gRightTop","gRightBottom"], requireAll = false)
+@BindingAdapter(
+    value = ["gImageUrl", "gError", "gLoading", "gShowType", "gRadius",
+            "gLeftTop", "gLeftBottom", "gRightTop", "gRightBottom"],
+    requireAll = false
+)
 fun loadImage(
     view: ImageView,
     url: String?,
@@ -31,10 +35,10 @@ fun loadImage(
     rightTop: Int = 0,
     rightBottom: Int = 0,
 ) {
-    when(showType){
+    when (showType) {
         0 -> Settings.Tools.imageLoader.loadImage(view.context, url, error, loading, view)
-        1 -> Settings.Tools.imageLoader.loadCircleImage(view.context,url,error,loading,view)
-        2 -> Settings.Tools.imageLoader.loadRoundedImage(view.context,url,error,loading,view, dp2px(radius))
-        3 -> Settings.Tools.imageLoader.load4RoundedImage(view.context,url,error,loading,view, dp2px(leftTop), dp2px(leftBottom), dp2px(rightTop), dp2px(rightBottom))
+        1 -> Settings.Tools.imageLoader.loadCircleImage(view.context, url, error, loading, view)
+        2 -> Settings.Tools.imageLoader.loadRoundedImage(view.context, url, error, loading, view, dp2px(radius))
+        3 -> Settings.Tools.imageLoader.load4RoundedImage(view.context, url, error, loading, view, dp2px(leftTop), dp2px(leftBottom), dp2px(rightTop), dp2px(rightBottom))
     }
 }

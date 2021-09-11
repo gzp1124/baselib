@@ -96,7 +96,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable, IApp {
         ARouter.init(this)
 
         // UI库设置
-        XUI.debug(Settings.isDebug)
+        XUI.debug(false)
 
         // 设置屏幕适配参数
         setAutoSizeConfig()
