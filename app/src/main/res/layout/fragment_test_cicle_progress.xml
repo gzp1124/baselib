@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="vm"
+            type="com.thirtydays.baselibdev.vm.TestViewModel" />
+    </data>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <com.xuexiang.xui.widget.progress.CircleProgressView
+            app:gProgress="@{vm.testProgress}"
+            app:gProgressColor="@{@color/xui_config_color_red}"
+            app:cpv_progress_width="10dp"
+            app:cpv_track_width="10dp"
+            android:layout_marginTop="5dp"
+            app:cpv_progress_textSize="25sp"
+            app:cpv_isTracked="true"
+            app:cpv_circle_broken="false"
+            app:cpv_progress_textColor="@color/xui_config_color_red"
+            android:layout_width="120dp"
+            android:layout_height="120dp"/>
+        <Button
+            android:id="@+id/add"
+            android:text="加10"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/jian"
+            android:text="减10"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</layout>

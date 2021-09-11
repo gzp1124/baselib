@@ -14,9 +14,10 @@ import com.xuexiang.xui.widget.progress.CircleProgressView
  * gStartColor 进度起始颜色(优先)
  * gEndColor 进度结束颜色
  * gTrackColor 进度条的底色（默认取进度颜色的透明 0.1）
+ * gDuration 动画执行时间
  */
 @BindingAdapter(
-    value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor"],
+    value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor","gDuration"],
     requireAll = false
 )
 fun setData(
@@ -26,7 +27,8 @@ fun setData(
     progressColor: Int? = null,
     startColor: Int? = null,
     endColor: Int? = null,
-    trackColor: Int? = null
+    trackColor: Int? = null,
+    duration: Int = 1000
 ) {
     view.run {
         dowithTry{
@@ -37,6 +39,7 @@ fun setData(
             } ?: (startColor ?: progressColor)?.let { it1 -> setTrackColor(ColorUtils.setColorAlpha(it1, 0.1f)) }
             setStartProgress((startProgress ?: 0).toFloat())
             setEndProgress(gress.toFloat())
+            setProgressDuration(duration)
             startProgressAnimation()
         }
     }

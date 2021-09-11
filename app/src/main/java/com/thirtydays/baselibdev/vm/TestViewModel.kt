@@ -43,4 +43,7 @@ class TestViewModel: BaseViewModel() {
         log("gzp112411 请求成功了 test2")
         it?.downloadUrl
     }
+
+
+    var testProgress = UnPeekLiveData<Int>()
 }

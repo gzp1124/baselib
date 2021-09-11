@@ -28,6 +28,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
 
 
     val pages = arrayListOf(
+        MainBean("测试圆形进度条","/test/cicle_progress",true),
         MainBean("测试 databinding 转换器","/test/test_convert",true),
         MainBean("测试 hide show 切换 fragment，请求网络","/test/hide_show",true),
         MainBean("测试正则","/test/reg",true),
