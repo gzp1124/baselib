@@ -25,7 +25,7 @@ class TestListFragment2:BaseListFragment() {
         return viewModel
     }
 
-    override fun requestData() {
+    override fun showData() {
         viewModel.dataList.observe(this){
             adapter.setList(it)
         }

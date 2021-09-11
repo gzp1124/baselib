@@ -14,11 +14,11 @@
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/smartRefreshLayout"
             android:layout_width="match_parent"
-            app:bindOnLoadMoreListener="@{()->vm.loadMore()}"
-            app:bindOnRefreshListener="@{()->vm.refresh()}"
-            app:bindMoreLoading="@{vm.moreLoading}"
-            app:bindRefreshing="@{vm.refreshing}"
-            app:bindHasMore="@{vm.hasMore}"
+            app:gOnLoadMoreListener="@{()->vm.loadMore()}"
+            app:gOnRefreshListener="@{()->vm.refresh()}"
+            app:gMoreLoading="@{vm.moreLoading}"
+            app:gRefreshing="@{vm.refreshing}"
+            app:gHasMore="@{vm.hasMore}"
             android:layout_height="match_parent">
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"

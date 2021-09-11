@@ -14,6 +14,8 @@ abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.f
 
     abstract fun setViewModel() : BaseViewModel?
 
+    abstract fun showData()
+
     fun canLoadMore():Boolean = true
     fun canRefresh():Boolean = true
 

@@ -1,14 +1,13 @@
 package com.aligit.base.bindingadapter
 
 import androidx.databinding.BindingAdapter
-import com.aligit.base.ext.tool.log
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener
 
 
 @BindingAdapter(
-    value = ["bindRefreshing", "bindMoreLoading", "bindHasMore"],
+    value = ["gRefreshing", "gMoreLoading", "gHasMore"],
     requireAll = false
 )
 fun bindSmartRefreshLayout(
@@ -27,9 +26,22 @@ fun bindSmartRefreshLayout(
         smartLayout.setNoMoreData(!hasMore)//调用次方法会停止刷新动作
 }
 
+@BindingAdapter(
+    value = ["gCanLoadMore", "gCanRefresh", "gCanDrag"], requireAll = false
+)
+fun bindSmartCan(
+    smartLayout: SmartRefreshLayout,
+    canLoadMore: Boolean = true,
+    canRefresh: Boolean = true,
+    canDrag: Boolean = true
+) {
+    smartLayout.setEnableLoadMore(canLoadMore)
+    smartLayout.setEnableRefresh(canRefresh)
+    smartLayout.setEnableOverScrollDrag(canDrag)
+}
 
 @BindingAdapter(
-    value = ["bindAutoRefresh"]
+    value = ["gAutoRefresh"]
 )
 fun bindSmartRefreshLayout(
     smartLayout: SmartRefreshLayout,
@@ -39,7 +51,7 @@ fun bindSmartRefreshLayout(
 }
 
 @BindingAdapter(
-    value = ["bindOnRefreshListener", "bindOnLoadMoreListener"],
+    value = ["gOnRefreshListener", "gOnLoadMoreListener"],
     requireAll = false
 )
 fun bindListener(

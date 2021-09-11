@@ -28,11 +28,14 @@
             android:id="@+id/smartRefreshLayout"
             android:layout_width="match_parent"
             android:layout_weight="1"
-            app:bindOnLoadMoreListener="@{()->vm.loadMore()}"
-            app:bindOnRefreshListener="@{()->vm.refresh()}"
-            app:bindMoreLoading="@{vm.moreLoading}"
-            app:bindRefreshing="@{vm.refreshing}"
-            app:bindHasMore="@{vm.hasMore}"
+            app:gOnLoadMoreListener="@{()->vm.loadMore()}"
+            app:gOnRefreshListener="@{()->vm.refresh()}"
+            app:gMoreLoading="@{vm.moreLoading}"
+            app:gRefreshing="@{vm.refreshing}"
+            app:gHasMore="@{vm.hasMore}"
+            app:gCanLoadMore="@{false}"
+            app:gCanRefresh="@{false}"
+            app:gCanDrag="@{true}"
             android:layout_height="match_parent">
 
             <com.scwang.smart.refresh.header.ClassicsHeader
