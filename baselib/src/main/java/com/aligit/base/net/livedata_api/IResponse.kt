@@ -6,7 +6,4 @@ interface IResponse<T> {
     val errorMessage: String? // 错误信息
     val errorCode: Int? // 错误码
     val resultData: T?// 响应的数据体
-
-    //分页加载 - 有更多数据
-    fun hasMoreData():Boolean
 }

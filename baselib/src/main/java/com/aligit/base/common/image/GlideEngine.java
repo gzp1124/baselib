@@ -230,7 +230,7 @@ public class GlideEngine implements ImageLoderEngine {
         return instance;
     }
 
-    private void _loadImg(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, @Nullable BaseRequestOptions<?> requestOptions){
+    private void _loadImg(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, @Nullable BaseRequestOptions<?> requestOptions){
         RequestBuilder<Drawable> gb = Glide.with(context).load(url);
         if (error != null) gb.error(error);
         if (loading != null) gb.placeholder(loading);
@@ -242,7 +242,7 @@ public class GlideEngine implements ImageLoderEngine {
      * 带加载中和加载失败
      */
     @Override
-    public void loadImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
+    public void loadImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
         _loadImg(context, url, error, loading, imageView,null);
     }
 
@@ -250,7 +250,7 @@ public class GlideEngine implements ImageLoderEngine {
      * 圆形
      */
     @Override
-    public void loadCircleImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
+    public void loadCircleImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
         _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new CircleCrop()));
     }
 
@@ -258,7 +258,7 @@ public class GlideEngine implements ImageLoderEngine {
      * 圆角矩形
      */
     @Override
-    public void loadRoundedImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int radius) {
+    public void loadRoundedImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int radius) {
         _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new RoundedCorners(radius)));
     }
 
@@ -266,7 +266,7 @@ public class GlideEngine implements ImageLoderEngine {
      * 分别设置四个圆角
      */
     @Override
-    public void load4RoundedImage(@NotNull Context context, @NotNull String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int leftTop, int leftBottom, int rightTop, int rightBottom) {
+    public void load4RoundedImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int leftTop, int leftBottom, int rightTop, int rightBottom) {
         _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new GranularRoundedCorners(leftTop,rightTop,rightBottom,leftBottom)));
     }
 }

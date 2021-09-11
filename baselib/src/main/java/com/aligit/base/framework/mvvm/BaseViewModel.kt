@@ -3,6 +3,7 @@ package com.aligit.base.framework.mvvm
 import androidx.lifecycle.*
 import com.aligit.base.Settings
 import com.aligit.base.ext.foundation.BaseThrowable
+import com.aligit.base.model.BasePageBean
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.net.livedata_api.IResponse
 import com.aligit.base.widget.loadpage.LoadPageStatus
@@ -87,29 +88,44 @@ abstract class BaseViewModel : ViewModel() {
             }
             .flowOn(Dispatchers.IO)
     }
+
     /**
      * 普通方式请求普通接口，不使用 livedata
      */
-    fun <T> requestData(flow: Flow<T>, showLoading: Boolean = Settings.Request.showLoading, loadingTips: String? = null, parseBolck: (T) -> Unit){
+    fun <T> requestData(
+        flow: Flow<T>,
+        showLoading: Boolean = Settings.Request.showLoading,
+        loadingTips: String? = null,
+        parseBolck: (T) -> Unit
+    ) {
         viewModelScope.launch {
-            parseRequest(flow, showLoading,loadingTips).collect {
+            parseRequest(flow, showLoading, loadingTips).collect {
                 parseBolck(it)
             }
         }
     }
+
     /**
      * 普通方式请求列表接口，不使用 livedata
      */
-    fun <Y, T : IResponse<Y>> requestListData(flow: Flow<T>, showLoading: Boolean = Settings.Request.showLoading, loadingTips: String? = null, parseBolck: (T) -> Unit) {
+    fun <Y, T : IResponse<Y>> requestListData(
+        flow: Flow<T>,
+        showLoading: Boolean = Settings.Request.showLoading,
+        loadingTips: String? = null,
+        parseBolck: (pageBean: BasePageBean<Y?>) -> Unit
+    ) {
         viewModelScope.launch {
-            parseRequest(flow, showLoading,loadingTips).collect {
+            parseRequest(flow, showLoading, loadingTips).collect {
                 refreshing.value = false
                 moreLoading.value = false
-                hasMore.value = it.hasMoreData()
-                parseBolck(it)
+                val pageBean = BasePageBean(it.resultData, page.value!!)
+                val result = parseBolck(pageBean)
+                hasMore.value = pageBean.hasMoreData
+                result
             }
         }
     }
+
     /**
      * 普通接口请求，只返回业务数据
      * @param reqBolck 请求网络获取数据的方法体
@@ -138,6 +154,7 @@ abstract class BaseViewModel : ViewModel() {
             parseBolck(it.resultData)
         }
     }
+
     /**
      * 列表页面请求，监听 page 自动请求列表接口，只返回业务数据
      * @param reqBolck 网络请求的方法体
@@ -149,7 +166,7 @@ abstract class BaseViewModel : ViewModel() {
         reqBolck: Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
-        parseBolck: (Y?,Int) -> R
+        parseBolck: (pageBean: BasePageBean<Y?>) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(page) {
@@ -158,8 +175,10 @@ abstract class BaseViewModel : ViewModel() {
         ) {
             refreshing.value = false
             moreLoading.value = false
-            hasMore.value = it.hasMoreData()
-            parseBolck(it.resultData,page.value!!)
+            val pageBean = BasePageBean(it.resultData, page.value!!)
+            val result = parseBolck(pageBean)
+            hasMore.value = pageBean.hasMoreData
+            result
         }
     }
 }

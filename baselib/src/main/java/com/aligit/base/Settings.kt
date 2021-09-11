@@ -1,9 +1,9 @@
 package com.aligit.base
 
 import androidx.appcompat.app.AppCompatDelegate
-import com.aligit.base.ext.foundation.Mmkv
 import com.aligit.base.common.image.GlideEngine
 import com.aligit.base.common.image.ImageLoderEngine
+import com.aligit.base.ext.foundation.Mmkv
 import java.util.*
 
 /**
@@ -61,6 +61,8 @@ object Settings {
         var appTokenHeadKey: String = "accessToken"
         // 登录后保存的用户标识
         var app_token: String by Mmkv("app_token_save", "")
+        // 保存 cookie
+        var saveCookie: Boolean = true
 
         var connectTimeout: Long = 5L   // 连接超时事件，单位秒
         var readTimeout: Long = 5L      // 读取超时时间，单位秒

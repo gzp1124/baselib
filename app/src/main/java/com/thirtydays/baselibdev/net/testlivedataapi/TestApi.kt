@@ -14,19 +14,19 @@ import retrofit2.http.Url
 interface TestApi {
     companion object {
         fun get(): TestApi {
-            return ApiFactory.create("http://api-service.live:8080/", false) { resultStatus, errorCode, errorMessage, content ->
+            return ApiFactory.create("http://api-service.live:8080/") { resultStatus, errorCode, errorMessage, content ->
                 BaseResponse(errorMessage, errorCode, resultStatus, content)
             }
         }
 
         fun getGoos(): TestApi {
-            return ApiFactory.create("http://api.goostruck.com/goos/app/driver/v1/", false) { resultStatus, errorCode, errorMessage, content ->
+            return ApiFactory.create("http://api.goostruck.com/goos/app/driver/v1/") { resultStatus, errorCode, errorMessage, content ->
                 BaseResponse(errorMessage, errorCode, resultStatus, content)
             }
         }
 
         fun getStr(): TestApi{
-            return ApiFactory.createString("http://api-service.live:8080/",false)
+            return ApiFactory.createString("http://api-service.live:8080/")
         }
     }
 

@@ -21,7 +21,9 @@ import java.lang.reflect.Type
 import java.util.concurrent.TimeUnit
 
 object ApiFactory {
-    fun makeClientBuilder(saveCookie: Boolean): OkHttpClient.Builder {
+
+    val clientBuilder = makeClientBuilder()
+    private fun makeClientBuilder(): OkHttpClient.Builder {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()
             .cache(Cache(file, 1024 * 1024 * 100))
@@ -29,7 +31,7 @@ object ApiFactory {
             .readTimeout(Settings.Request.readTimeout, TimeUnit.MINUTES)
             .writeTimeout(Settings.Request.writeTimeout, TimeUnit.MINUTES)
         //保存 cookie
-        if (saveCookie) {
+        if (Settings.Request.saveCookie) {
             val cookieJar = PersistentCookieJar(
                 SetCookieCache(),
                 SharedPrefsCookiePersistor(AppContext)
@@ -69,9 +71,7 @@ object ApiFactory {
      */
     inline fun <reified T> createString(
         baseUrl: String,
-        saveCookie: Boolean,
     ): T {
-        val clientBuilder = makeClientBuilder(saveCookie)
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(clientBuilder.build())
@@ -100,10 +100,8 @@ object ApiFactory {
      */
     inline fun <reified T> create(
         baseUrl: String,
-        saveCookie: Boolean,
         noinline creator: (Boolean, Int, String, T?) -> Any
     ): T {
-        val clientBuilder = makeClientBuilder(saveCookie)
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(clientBuilder.build())
