@@ -1,6 +1,7 @@
 package com.aligit.base.ext.foundation
 
 import com.aligit.base.model.BaseResult
+import com.aligit.base.net.livedata_api.IResponse
 
 /**
  * <pre>
@@ -16,4 +17,11 @@ inline fun <reified T> BaseResult<T>.dcEither() =
         Either.left(resultData)
     }.otherwise {
         Either.right(BaseThrowable.InsideThrowable(errorCode, errorMessage))
+    }
+
+fun <T> IResponse<T>.dcEither() =
+    resultStatus.yes {
+        Either.left(resultData)
+    }.otherwise {
+        Either.right(BaseThrowable.InsideThrowable(errorCode.toString(), errorMessage))
     }

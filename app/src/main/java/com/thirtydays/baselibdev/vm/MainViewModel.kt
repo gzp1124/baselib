@@ -59,7 +59,7 @@ class MainViewModel : BaseViewModel() {
     // 直接返回字符串形式的，不用 IResponse
     val strData = MediatorLiveData<String>()
     fun getStrData(){
-        requestData(TestRepository.getStrData()){
+        requestStringData(TestRepository.getStrData()){
             strData.postValue(it)
         }
     }

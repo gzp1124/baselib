@@ -90,9 +90,25 @@ abstract class BaseViewModel : ViewModel() {
     }
 
     /**
+     * 较少用到，单独处理字符串返回的情况
+     */
+    fun requestStringData(
+        flow: Flow<String>,
+        showLoading: Boolean = Settings.Request.showLoading,
+        loadingTips: String? = null,
+        parseBolck: (String) -> Unit
+    ) {
+        viewModelScope.launch {
+            parseRequest(flow, showLoading, loadingTips).collect {
+                parseBolck(it)
+            }
+        }
+    }
+
+    /**
      * 普通方式请求普通接口，不使用 livedata
      */
-    fun <T> requestData(
+    fun <Y, T : IResponse<Y>> requestData(
         flow: Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
