@@ -2,7 +2,9 @@ package com.aligit.base.framework.mvvm
 
 import androidx.lifecycle.*
 import com.aligit.base.Settings
+import com.aligit.base.ext.dowithTry
 import com.aligit.base.ext.foundation.BaseThrowable
+import com.aligit.base.ext.tool.log
 import com.aligit.base.model.BasePageBean
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.net.livedata_api.IResponse
@@ -20,7 +22,6 @@ abstract class BaseViewModel : ViewModel() {
         UnPeekLiveData<CoroutineState>()
     }
     val error = UnPeekLiveData<BaseThrowable>()
-
 
     //=======================
     // 页面状态管理
@@ -65,8 +66,8 @@ abstract class BaseViewModel : ViewModel() {
 
 
     //===========数据请求=========
-    // 对 flow 进行统一处理
-    private fun <T> parseRequest(
+    // ViewModel内通用方法：对请求体 flow 进行统一处理
+    open fun <T> parseRequest(
         flow: Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
@@ -81,12 +82,26 @@ abstract class BaseViewModel : ViewModel() {
                 if (showLoading) statusLiveData.postValue(CoroutineState.Finish)
             }
             .catch { e ->
-                e.printStackTrace()
                 if (showLoading) statusLiveData.postValue(CoroutineState.Error)
-                val e1 = BaseThrowable.ExternalThrowable(e)
-                error.postValue(e1)
+                catchErr(e)
             }
             .flowOn(Dispatchers.IO)
+    }
+
+    // ViewModel内通用方法：过滤所有响应数据，处理通用业务，如 token 失效 账号被顶等情况
+    // ViewModel 可以覆盖该方法，实现其他的业务需求，不会影响其他 ViewModel
+    open fun <Y, T : IResponse<Y>> responseFilter(t: T) {
+        if (Settings.Request.tokenErrCode?.equals(t.errorCode) == true) {
+            error.postValue(BaseThrowable.TokenThrowable())
+        }
+    }
+
+    // ViewModel内通用方法：捕获到异常的处理方法，默认处理方式为 error.postValue，交由 BaseApplication.onNetError 统一处理
+    // ViewModel 可以覆盖该方法，实现 ViewModel 单独的 catch 处理，不会影响其他 ViewModel
+    open fun catchErr(e: Throwable) {
+        e.printStackTrace()
+        val e1 = BaseThrowable.ExternalThrowable(e)
+        error.postValue(e1)
     }
 
     /**
@@ -100,7 +115,11 @@ abstract class BaseViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             parseRequest(flow, showLoading, loadingTips).collect {
-                parseBolck(it)
+                dowithTry(catchBlock = {
+                    catchErr(it)
+                }, {
+                    parseBolck(it)
+                })
             }
         }
     }
@@ -116,7 +135,12 @@ abstract class BaseViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             parseRequest(flow, showLoading, loadingTips).collect {
-                parseBolck(it)
+                dowithTry(catchBlock = {
+                    catchErr(it)
+                }, {
+                    responseFilter(it)
+                    parseBolck(it)
+                })
             }
         }
     }
@@ -124,7 +148,7 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 普通方式请求列表接口，不使用 livedata
      */
-    fun <Y, T : IResponse<Y>> requestListData(
+    fun <R, Y, T : IResponse<Y>> requestListData(
         flow: Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
@@ -134,10 +158,14 @@ abstract class BaseViewModel : ViewModel() {
             parseRequest(flow, showLoading, loadingTips).collect {
                 refreshing.value = false
                 moreLoading.value = false
-                val pageBean = BasePageBean(it.resultData, page.value!!)
-                val result = parseBolck(pageBean)
-                hasMore.value = pageBean.hasMoreData
-                result
+                dowithTry(catchBlock = {
+                    catchErr(it)
+                }, {
+                    responseFilter(it)
+                    val pageBean = BasePageBean(it.resultData, page.value!!)
+                    parseBolck(pageBean)
+                    hasMore.value = pageBean.hasMoreData
+                })
             }
         }
     }
@@ -149,6 +177,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param loadingTips 加载中的提示语（传 null 显示默认提示语，传 其他值则显示对应的值，传 空字符串 显示也为空字符串）
      * @param watchTag 监听该字段，自动请求接口
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
+     *     所有请求的执行顺序：reqBolck(请求体) -> parseRequest(请求统一处理) -> responseFilter(响应统一过滤) -> parseBolck(响应具体处理) -> catchErr(异常处理)
      *
      * 泛型说明
      *      R: 通过 parseBolck 方法将接口返回的原始类型 Y 处理为 R 类型，Y 和 R 可以是同一类型，可以是不同类型
@@ -167,7 +196,13 @@ abstract class BaseViewModel : ViewModel() {
                 parseRequest(reqBolck, showLoading, loadingTips).asLiveData()
             }
         ) {
-            parseBolck(it.resultData)
+            dowithTry(catchBlock = {
+                catchErr(it)
+            }, {
+                responseFilter(it)
+                return@map parseBolck(it.resultData)
+            })
+            null
         }
     }
 
@@ -191,10 +226,16 @@ abstract class BaseViewModel : ViewModel() {
         ) {
             refreshing.value = false
             moreLoading.value = false
-            val pageBean = BasePageBean(it.resultData, page.value!!)
-            val result = parseBolck(pageBean)
-            hasMore.value = pageBean.hasMoreData
-            result
+            dowithTry(catchBlock = {
+                catchErr(it)
+            }, {
+                responseFilter(it)
+                val pageBean = BasePageBean(it.resultData, page.value!!)
+                val result = parseBolck(pageBean)
+                hasMore.value = pageBean.hasMoreData
+                return@map result
+            })
+            null
         }
     }
 }

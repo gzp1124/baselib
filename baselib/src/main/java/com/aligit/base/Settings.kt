@@ -61,6 +61,8 @@ object Settings {
         var appTokenHeadKey: String = "accessToken"
         // 登录后保存的用户标识
         var app_token: String by Mmkv("app_token_save", "")
+        // token 异常的状态码 (即 app_token 失效)
+        var tokenErrCode : String? = null
         // 保存 cookie
         var saveCookie: Boolean = true
 

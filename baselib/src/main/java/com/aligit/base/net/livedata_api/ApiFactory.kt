@@ -100,7 +100,7 @@ object ApiFactory {
      */
     inline fun <reified T> create(
         baseUrl: String,
-        noinline creator: (Boolean, Int, String, T?) -> Any
+        noinline creator: (Boolean, String, String, T?) -> Any
     ): T {
         return Retrofit.Builder()
             .baseUrl(baseUrl)

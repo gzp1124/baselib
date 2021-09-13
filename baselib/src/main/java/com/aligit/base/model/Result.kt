@@ -7,15 +7,15 @@ class StringResponse() : IResponse<String> {
         get() = true
     override val errorMessage: String
         get() = ""
-    override val errorCode: Int
-        get() = 0
+    override val errorCode: String
+        get() = "0"
     override val resultData: String?
         get() = this as? String
 }
 
 open class BaseResponse<T>(
     override val errorMessage: String,
-    override val errorCode: Int,
+    override val errorCode: String,
     override val resultStatus: Boolean,
     override val resultData: T?
 ) : IResponse<T> {

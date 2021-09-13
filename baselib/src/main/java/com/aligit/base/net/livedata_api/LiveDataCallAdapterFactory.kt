@@ -7,7 +7,7 @@ import retrofit2.Retrofit
 import java.lang.reflect.ParameterizedType
 import java.lang.reflect.Type
 
-class LiveDataCallAdapterFactory<T>(var creator: (Boolean,Int, String, T?) -> Any) :
+class LiveDataCallAdapterFactory<T>(var creator: (Boolean,String, String, T?) -> Any) :
     Factory() {
 
 
@@ -22,7 +22,7 @@ class LiveDataCallAdapterFactory<T>(var creator: (Boolean,Int, String, T?) -> An
             getParameterUpperBound(0, returnType as ParameterizedType)
 
         val rawType = getRawType(observableType)
-        if (rawType != creator(true,0, "", null).javaClass) {
+        if (rawType != creator(true,"0", "", null).javaClass) {
             throw IllegalArgumentException("type must be ApiResponse")
         }
         if (observableType !is ParameterizedType) {

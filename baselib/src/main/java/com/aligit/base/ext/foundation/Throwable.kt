@@ -25,8 +25,11 @@ sealed class BaseThrowable(
         val errorMessage: String
     ) : BaseThrowable(code = errorCode, message = errorMessage)
 
+    class TokenThrowable : BaseThrowable()
+
     fun isExternal() = this is ExternalThrowable
     fun isInside() = this is InsideThrowable
+    fun isTokenErr() = this is TokenThrowable
 
     override fun toString(): String {
         return "Throwable(code=$code message=$message cause=${cause?.localizedMessage})"

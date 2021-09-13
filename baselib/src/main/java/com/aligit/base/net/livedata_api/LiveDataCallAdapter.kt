@@ -12,7 +12,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 
 class LiveDataCallAdapter<T>(
     private val responseType: Type,
-    var creator: (Boolean, Int, String, T?) -> Any
+    var creator: (Boolean, String, String, T?) -> Any
 ) :
     CallAdapter<T, LiveData<T>> {
     override fun adapt(call: Call<T>): LiveData<T> {
@@ -23,7 +23,7 @@ class LiveDataCallAdapter<T>(
                 if (started.compareAndSet(false, true)) {//确保执行一次
                     call.enqueue(object : Callback<T> {
                         override fun onFailure(call: Call<T>, t: Throwable) {
-                            val value = creator(false,-1, t.message ?: "have error ${t.localizedMessage}", null) as T
+                            val value = creator(false,"-1", t.message ?: "have error ${t.localizedMessage}", null) as T
                             postValue(value)
                         }
 
