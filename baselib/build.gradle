@@ -206,6 +206,9 @@ dependencies {
     api 'com.tencent.bugly:crashreport:3.4.4'
     api 'com.tencent.bugly:nativecrashreport:3.9.2'
 
+    // 合并多个 livedata  https://github.com/Zhuinden/livedata-combinetuple-kt
+    api 'com.github.Zhuinden:livedata-combinetuple-kt:1.2.1'
+
     //依赖注入库 Koin for Android
 //    api 'org.koin:koin-android:2.0.1'
 //    api 'org.koin:koin-androidx-scope:2.0.1'
