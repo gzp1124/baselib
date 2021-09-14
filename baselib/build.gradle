@@ -17,6 +17,8 @@ android {
         multiDexEnabled true
         flavorDimensions "1"
 
+//        目前支持的 ABIs: mips, mips64, X86, X86–64, arm64-v8a, armeabi, armeabi-v7a
+//        大厂APP一般适配：armeabi-v7a, armeabi
 //        ndk {
 //            abiFilters "armeabi", "armeabi-v7a", "armeabi-v8a", "x86", "x64"
 //        }
