@@ -5,7 +5,7 @@ import com.thirtydays.baselibdev.net.testlivedataapi.TestRepository
 
 class TestConvertViewModel: BaseViewModel() {
 
-    val testContent = requestDataToLiveData(TestRepository.getFlowVer()) {
+    val testContent = requestDataToLiveData({TestRepository.getFlowVer()},refreshTrigger) {
         it
     }
 }

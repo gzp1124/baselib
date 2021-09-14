@@ -45,9 +45,11 @@ abstract class BaseViewModel : ViewModel() {
     val moreLoading = UnPeekLiveData<Boolean>()
     val hasMore = UnPeekLiveData<Boolean>()
 
+    fun getPage() = page.value ?: Settings.Request.pageStartIndex
+
     // 列表数据加载更多
     open fun loadMore() {
-        page.postValue(page.value!!+1)
+        page.postValue(page.value!! + 1)
         moreLoading.postValue(true)
     }
 
@@ -174,9 +176,9 @@ abstract class BaseViewModel : ViewModel() {
     /**
      * 普通接口请求，只返回业务数据
      * @param reqBolck 请求网络获取数据的方法体
+     * @param watchTag 监听该字段，自动请求接口
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语（传 null 显示默认提示语，传 其他值则显示对应的值，传 空字符串 显示也为空字符串）
-     * @param watchTag 监听该字段，自动请求接口
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
      *     所有请求的执行顺序：reqBolck(请求体) -> parseRequest(请求统一处理) -> responseFilter(响应统一过滤) -> parseBolck(响应具体处理) -> catchErr(异常处理)
      *
@@ -184,17 +186,18 @@ abstract class BaseViewModel : ViewModel() {
      *      R: 通过 parseBolck 方法将接口返回的原始类型 Y 处理为 R 类型，Y 和 R 可以是同一类型，可以是不同类型
      *      Y: 实际的业务数据，去掉 IResponse 后，原始接口返回的类型
      *      T: IResponse<R>，接口返回的包裹业务数据的
+     *      W: 请求监听的对象
      */
-    fun <R, Y, T : IResponse<Y>> requestDataToLiveData(
-        reqBolck: Flow<T>,
+    fun <R, Y, T : IResponse<Y>, W> requestDataToLiveData(
+        reqBolck: (W) -> Flow<T>,
+        watchTag: UnPeekLiveData<W> = refreshTrigger as UnPeekLiveData<W>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
-        watchTag: UnPeekLiveData<out Any> = refreshTrigger,
         parseBolck: (Y?) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(watchTag) {
-                parseRequest(reqBolck, showLoading, loadingTips).asLiveData()
+                parseRequest(reqBolck(it), showLoading, loadingTips).asLiveData()
             }
         ) {
             dowithTry(catchBlock = {
@@ -209,20 +212,20 @@ abstract class BaseViewModel : ViewModel() {
 
     /**
      * 列表页面请求，监听 page 自动请求列表接口，只返回业务数据
-     * @param reqBolck 网络请求的方法体
+     * @param reqBolck 网络请求的方法体，参数为 当前的分页页码
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语
      * @param parseBolck 处理响应的数据
      */
     fun <R, Y, T : IResponse<Y>> requestListDataToLiveData(
-        reqBolck: Flow<T>,
+        reqBolck: (Int) -> Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
         parseBolck: (pageBean: BasePageBean<Y?>) -> R
     ): LiveData<R> {
         return Transformations.map(
             Transformations.switchMap(page) {
-                parseRequest(reqBolck, showLoading, loadingTips).asLiveData()
+                parseRequest(reqBolck(it), showLoading, loadingTips).asLiveData()
             }
         ) {
             refreshing.value = false

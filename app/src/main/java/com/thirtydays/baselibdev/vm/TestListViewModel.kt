@@ -46,7 +46,7 @@ class TestListViewModel : BaseViewModel() {
 
 
     private val mApi = TestApi.get()
-    val dataList = requestListDataToLiveData(TestRepository.getFlowVer()) { pageBean ->
+    val dataList = requestListDataToLiveData({TestRepository.getFlowVer(it)}) { pageBean ->
         log("当前请求的接口：${page.value}")
         val list = mutableListOf<String>()
         for (i in 1..Random.nextInt(10)) {
@@ -60,7 +60,7 @@ class TestListViewModel : BaseViewModel() {
     loadPageLiveData.postValue(LoadPageStatus.Loading) 来控制页面状态
      */
 
-    val xieyi = requestDataToLiveData(TestRepository.getFlowVer()){
+    val xieyi = requestDataToLiveData({TestRepository.getFlowVer()},refreshTrigger){
         loadPageLiveData.postValue(LoadPageStatus.Nromal)
         it
     }

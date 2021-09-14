@@ -1,12 +1,14 @@
 package com.thirtydays.baselibdev.net.testlivedataapi
 
+import com.aligit.base.ext.tool.log
 import com.thirtydays.baselibdev.net.REQUEST_URL
 import com.thirtydays.baselibdev.net.req.TestLoginReq
 import kotlinx.coroutines.flow.flow
 
 object TestRepository {
 
-    fun getFlowVer() = flow {
+    fun getFlowVer(t:Int = 0) = flow {
+        log("gzp112411 列表角标："+t)
         emit(TestApi.get().getFlowVer(REQUEST_URL))
     }
 

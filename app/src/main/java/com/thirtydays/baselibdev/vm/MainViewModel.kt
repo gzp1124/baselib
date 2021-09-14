@@ -30,14 +30,16 @@ class MainViewModel : BaseViewModel() {
 
     // 请求方式一：监听 livedata 自动请求
     // 页面加载时自动执行的网络请求，和 refreshTrigger 状态进行绑定，要执行改请求就修改 refreshTrigger 的状态
-    val testContent = requestDataToLiveData(TestRepository.getFlowVer()) {
+    val testContent = requestDataToLiveData(reqBolck = {
+        TestRepository.getFlowVer()
+    }, watchTag = refreshTrigger) {
         it
     }
 
     // 请求方式二：和第一种类似，只是监听的 livedata 触发是由按钮触发
     // 使用 livedata 请求网络的第二种写法，监听其他 livedata ，点击按钮的时候 修改监听的 livedata 的值，实现请求执行
     val reqData = UnPeekLiveData<String>()
-    val normalData1 = requestDataToLiveData(TestRepository.getFlowVer(),watchTag = reqData) {
+    val normalData1 = requestDataToLiveData({ TestRepository.getFlowVer() }, watchTag = reqData) {
         log("gzp112411 请求成功了 main")
         it?.downloadUrl
     }
@@ -48,24 +50,25 @@ class MainViewModel : BaseViewModel() {
     // 请求方式三：调用方法进行请求，最常见
     // 普通的网络请求，调用该方法执行，和传统的网络请求一样，通过调用的方式执行
     val normalData2 = MediatorLiveData<String>()
-    fun requestData2(){
-        requestData(TestRepository.getFlowVer()){
+    fun requestData2() {
+        requestData(TestRepository.getFlowVer()) {
             normalData2.postValue(it.resultData?.downloadUrl)
-            log("来这里了"+it.resultData?.downloadUrl)
+            log("来这里了" + it.resultData?.downloadUrl)
         }
     }
 
     // 请求方式四：直接获取接口响应的字符串，不转化为 javaBean 对象，一般用于特殊接口
     // 直接返回字符串形式的，不用 IResponse
     val strData = MediatorLiveData<String>()
-    fun getStrData(){
-        requestStringData(TestRepository.getStrData()){
+    fun getStrData() {
+        requestStringData(TestRepository.getStrData()) {
             strData.postValue(it)
         }
     }
 
 
-    val normalData4 = requestDataToLiveData(TestRepository.getFlowVer()) {
+    val tt = UnPeekLiveData<Boolean>()
+    val normalData4 = requestDataToLiveData({ TestRepository.getFlowVer() }, watchTag = tt) {
         log("gzp112411 请求成功了 main222")
         it?.downloadUrl
     }
