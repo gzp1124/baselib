@@ -47,14 +47,14 @@ abstract class BaseViewModel : ViewModel() {
 
     // 列表数据加载更多
     fun loadMore() {
-        page.value = (page.value ?: Settings.Request.pageStartIndex) + 1
-        moreLoading.value = true
+        page.postValue(page.value!!+1)
+        moreLoading.postValue(true)
     }
 
     // 刷新列表数据
     fun refresh() {
-        page.value = Settings.Request.pageStartIndex
-        refreshing.value = true
+        page.postValue(Settings.Request.pageStartIndex)
+        refreshing.postValue(true)
     }
 
     // 重新加载页面数据

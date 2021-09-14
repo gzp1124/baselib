@@ -1,5 +1,6 @@
 package com.thirtydays.baselibdev.vm
 
+import com.aligit.base.ext.tool.log
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.widget.loadpage.LoadPageStatus
 import com.thirtydays.baselibdev.net.testlivedataapi.TestApi
@@ -46,6 +47,7 @@ class TestListViewModel : BaseViewModel() {
 
     private val mApi = TestApi.get()
     val dataList = requestListDataToLiveData(TestRepository.getFlowVer()) { pageBean ->
+        log("当前请求的接口：${page.value}")
         val list = mutableListOf<String>()
         for (i in 1..Random.nextInt(10)) {
             list.add(" -- $i")
