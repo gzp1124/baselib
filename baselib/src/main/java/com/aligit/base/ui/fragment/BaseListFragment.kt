@@ -6,9 +6,9 @@ import com.aligit.base.databinding.FragmentListBinding
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.chad.library.adapter.base.BaseQuickAdapter
 
-abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.fragment_list) {
+abstract class BaseListFragment<B> : BaseVmFragment<FragmentListBinding>(R.layout.fragment_list) {
 
-    abstract fun createAdater(): BaseQuickAdapter<*,*>
+    abstract fun createAdater(): BaseQuickAdapter<B,*>
 
     abstract fun setLayoutManager(): RecyclerView.LayoutManager
 
@@ -19,7 +19,7 @@ abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.f
     fun canLoadMore():Boolean = true
     fun canRefresh():Boolean = true
 
-    val mAdapter : BaseQuickAdapter<*,*> by lazy { createAdater() }
+    val mAdapter : BaseQuickAdapter<B,*> by lazy { createAdater() }
 
     override fun onInitDataBinding() {
         mDataBinding.vm = setViewModel()

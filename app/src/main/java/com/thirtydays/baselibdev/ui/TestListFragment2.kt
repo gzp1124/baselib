@@ -12,7 +12,7 @@ import com.thirtydays.baselibdev.vm.TestListViewModel
  * 测试使用 BaseListFragment 来快速创建 列表页面
  */
 @Route(path = "/test/list2")
-class TestListFragment2:BaseListFragment() {
+class TestListFragment2:BaseListFragment<String>() {
     @VMScope
     lateinit var viewModel: TestListViewModel
     val adapter = TestDataBindingAdapter()
