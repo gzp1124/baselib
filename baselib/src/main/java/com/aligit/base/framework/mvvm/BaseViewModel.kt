@@ -228,15 +228,15 @@ abstract class BaseViewModel : ViewModel() {
                 parseRequest(reqBolck(it), showLoading, loadingTips).asLiveData()
             }
         ) {
-            refreshing.value = false
-            moreLoading.value = false
+            refreshing.postValue(false)
+            moreLoading.postValue(false)
             dowithTry(catchBlock = {
                 catchErr(it)
             }, {
                 responseFilter(it)
                 val pageBean = BasePageBean(it.resultData, page.value!!)
                 val result = parseBolck(pageBean)
-                hasMore.value = pageBean.hasMoreData
+                hasMore.postValue(pageBean.hasMoreData)
                 return@map result
             })
             null
