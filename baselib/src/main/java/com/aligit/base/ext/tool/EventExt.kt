@@ -4,7 +4,6 @@ package com.aligit.base.ext.tool
 
 import android.app.Activity
 import androidx.fragment.app.Fragment
-import com.aligit.base.model.BaseEvent
 import org.greenrobot.eventbus.EventBus
 
 /**
@@ -34,6 +33,6 @@ fun Fragment.unregisterEvent() {
     EventBus.getDefault().unregister(this)
 }
 
-fun <T> postEvent(event: BaseEvent<T>) {
+fun postEvent(event: Any) {
     EventBus.getDefault().post(event)
 }

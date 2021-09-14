@@ -7,6 +7,5 @@ package com.aligit.base.model
  * desc   :
  * </pre>
  */
-open class BaseEvent<T>(var bean: T? = null)
 
-class TokenInvalidEvent() : BaseEvent<Any>()
+class TokenInvalidEvent()
