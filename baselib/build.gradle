@@ -17,9 +17,9 @@ android {
         multiDexEnabled true
         flavorDimensions "1"
 
-        ndk {
-            abiFilters "armeabi", "armeabi-v7a", "armeabi-v8a", "x86", "x64"
-        }
+//        ndk {
+//            abiFilters "armeabi", "armeabi-v7a", "armeabi-v8a", "x86", "x64"
+//        }
 
         kapt {
             includeCompileClasspath = true
