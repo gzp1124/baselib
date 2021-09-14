@@ -14,6 +14,7 @@ import com.aligit.base.ext.foundation.onError
 import com.aligit.base.ext.tool.isLandscape
 import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
+import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
 import com.lxj.xpopup.XPopup
@@ -59,6 +60,7 @@ abstract class BaseActivity : InternationalizationActivity() {
 
     override fun onDestroy() {
         hideLoading()
+        unregisterEvent()
         super.onDestroy()
     }
 

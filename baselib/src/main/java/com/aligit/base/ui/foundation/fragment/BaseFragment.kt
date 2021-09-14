@@ -12,6 +12,7 @@ import com.aligit.base.ext.coroutine.observe
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.onError
 import com.aligit.base.ext.tool.toast
+import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.activity.BaseActivity
@@ -48,6 +49,7 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
 
     override fun onDestroy() {
         hideLoading()
+        unregisterEvent()
         super.onDestroy()
     }
 
