@@ -159,15 +159,15 @@ abstract class BaseViewModel : ViewModel() {
     ) {
         viewModelScope.launch {
             parseRequest(flow, showLoading, loadingTips).collect {
-                refreshing.value = false
-                moreLoading.value = false
+                refreshing.postValue(false)
+                moreLoading.postValue(false)
                 dowithTry(catchBlock = {
                     catchErr(it)
                 }, {
                     responseFilter(it)
                     val pageBean = BasePageBean(it.resultData, page.value!!)
                     parseBolck(pageBean)
-                    hasMore.value = pageBean.hasMoreData
+                    hasMore.postValue(pageBean.hasMoreData)
                 })
             }
         }
