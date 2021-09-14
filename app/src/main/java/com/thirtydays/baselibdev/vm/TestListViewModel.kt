@@ -52,6 +52,7 @@ class TestListViewModel : BaseViewModel() {
         for (i in 1..Random.nextInt(10)) {
             list.add(" -- $i")
         }
+        pageBean.hasMoreData = false
         list
     }
 
