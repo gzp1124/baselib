@@ -4,6 +4,7 @@ import androidx.databinding.BindingAdapter
 import com.aligit.base.ext.dowithTry
 import com.xuexiang.xui.utils.ColorUtils
 import com.xuexiang.xui.widget.progress.CircleProgressView
+import com.xuexiang.xui.widget.progress.HorizontalProgressView
 
 
 /**
@@ -20,7 +21,7 @@ import com.xuexiang.xui.widget.progress.CircleProgressView
     value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor","gDuration"],
     requireAll = false
 )
-fun setData(
+fun setCircleData(
     view: CircleProgressView,
     gress: Double,
     startProgress: Double? = 0.0,
@@ -40,6 +41,40 @@ fun setData(
             } ?: (startColor ?: progressColor)?.let { it1 -> setTrackColor(ColorUtils.setColorAlpha(it1, 0.1f)) }
             setStartProgress((startProgress ?: 0).toFloat())
             setEndProgress(gress.toFloat())
+            startProgressAnimation()
+        }
+    }
+}
+
+@BindingAdapter(
+    value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor","gDuration"],
+    requireAll = false
+)
+fun setHorizontalData(
+    view: HorizontalProgressView,
+    gress: Double,
+    startProgress: Double? = 0.0,
+    progressColor: Int? = null,
+    startColor: Int? = null,
+    endColor: Int? = null,
+    trackColor: Int? = null,
+    duration: Int? = null
+) {
+    view.run {
+        dowithTry{
+            setTrackEnabled(true) //是否显示轨迹背景
+            setProgressDuration(duration ?: 1000) // 动画持续时间
+            // 进度颜色
+            (startColor ?: progressColor)?.let { it1 -> setStartColor(it1) }
+            (endColor ?: progressColor)?.let { it1 -> setEndColor(it1) }
+            // 底色
+            trackColor?.let {
+                setTrackColor(trackColor)
+            } ?: (startColor ?: progressColor)?.let { it1 -> setTrackColor(ColorUtils.setColorAlpha(it1, 0.1f)) }
+            // 设置进度
+            setStartProgress((startProgress ?: 0).toFloat())
+            setEndProgress(gress.toFloat())
+            // 启动动画
             startProgressAnimation()
         }
     }
