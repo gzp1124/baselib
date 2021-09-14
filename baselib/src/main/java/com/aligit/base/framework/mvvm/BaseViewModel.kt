@@ -4,7 +4,6 @@ import androidx.lifecycle.*
 import com.aligit.base.Settings
 import com.aligit.base.ext.dowithTry
 import com.aligit.base.ext.foundation.BaseThrowable
-import com.aligit.base.ext.tool.log
 import com.aligit.base.model.BasePageBean
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.net.livedata_api.IResponse
@@ -90,6 +89,7 @@ abstract class BaseViewModel : ViewModel() {
 
     // ViewModel内通用方法：过滤所有响应数据，处理通用业务，如 token 失效 账号被顶等情况
     // ViewModel 可以覆盖该方法，实现其他的业务需求，不会影响其他 ViewModel
+    // 业务相关处理，对应 BaseThrowable.InsideThrowable
     open fun <Y, T : IResponse<Y>> responseFilter(t: T) {
         if (Settings.Request.tokenErrCode?.equals(t.errorCode) == true) {
             error.postValue(BaseThrowable.TokenThrowable())
@@ -98,6 +98,7 @@ abstract class BaseViewModel : ViewModel() {
 
     // ViewModel内通用方法：捕获到异常的处理方法，默认处理方式为 error.postValue，交由 BaseApplication.onNetError 统一处理
     // ViewModel 可以覆盖该方法，实现 ViewModel 单独的 catch 处理，不会影响其他 ViewModel
+    // 异常相关处理，对应 BaseThrowable.ExternalThrowable
     open fun catchErr(e: Throwable) {
         e.printStackTrace()
         val e1 = BaseThrowable.ExternalThrowable(e)
