@@ -19,13 +19,12 @@ abstract class BaseListFragment : BaseVmFragment<FragmentListBinding>(R.layout.f
     fun canLoadMore():Boolean = true
     fun canRefresh():Boolean = true
 
-    lateinit var recyclerView:RecyclerView
+    val mAdapter : BaseQuickAdapter<*,*> by lazy { createAdater() }
 
     override fun onInitDataBinding() {
         mDataBinding.vm = setViewModel()
         mDataBinding.recyclerView.also {
-            recyclerView = it
-            it.adapter = createAdater()
+            it.adapter = mAdapter
             it.layoutManager = setLayoutManager()
         }
         mDataBinding.smartRefreshLayout.also {
