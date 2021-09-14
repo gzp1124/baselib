@@ -46,13 +46,13 @@ abstract class BaseViewModel : ViewModel() {
     val hasMore = UnPeekLiveData<Boolean>()
 
     // 列表数据加载更多
-    fun loadMore() {
+    open fun loadMore() {
         page.postValue(page.value!!+1)
         moreLoading.postValue(true)
     }
 
     // 刷新列表数据
-    fun refresh() {
+    open fun refresh() {
         page.postValue(Settings.Request.pageStartIndex)
         refreshing.postValue(true)
     }
