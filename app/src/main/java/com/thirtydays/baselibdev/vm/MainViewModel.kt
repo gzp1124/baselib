@@ -10,6 +10,11 @@ import com.thirtydays.baselibdev.net.testlivedataapi.TestRepository
 
 class MainViewModel : BaseViewModel() {
 
+    val canFinish = UnPeekLiveData<Boolean>()
+    fun updateCanFinish(can:Boolean){
+        canFinish.postValue(can)
+    }
+
     private val mRepository: MainRepository = MainRepository()
 
     // 使用 retrofit 的写法

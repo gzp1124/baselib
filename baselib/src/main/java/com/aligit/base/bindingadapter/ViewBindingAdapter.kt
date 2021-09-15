@@ -33,6 +33,8 @@ fun bindOnBackPressed(view: View, onBackPress: Boolean) {
         view.setOnClickListener {
             context.onBackPressedDispatcher.onBackPressed()
         }
+    }else{
+        view.setOnClickListener(null)
     }
 }
 

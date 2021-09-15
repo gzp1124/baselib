@@ -20,31 +20,35 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
 
 
     // 这里的 testViewModel 用于测试数据倒灌，不要删除
-    @VMScope("TestErrorData") lateinit var testViewModel: TestViewModel
+    @VMScope("TestErrorData")
+    lateinit var testViewModel: TestViewModel
 
-//    @VMScope lateinit var twoViewModel: TwoViewModel
-    @VMScope lateinit var mainViewModel: MainViewModel
+    //    @VMScope lateinit var twoViewModel: TwoViewModel
+    @VMScope("MainActivity")
+    lateinit var mViewModel: MainViewModel
+    @VMScope
+    lateinit var mainViewModel: MainViewModel
     val adapter = MainAdapter()
 
 
     val pages = arrayListOf(
-        MainBean("测试圆形进度条","/test/cicle_progress",true),
-        MainBean("测试 databinding 转换器","/test/test_convert",true),
-        MainBean("测试 hide show 切换 fragment，请求网络","/test/hide_show",true),
-        MainBean("测试正则","/test/reg",true),
-        MainBean("测试阴影","/test/shadow",true),
-        MainBean("测试参数自动校验","/test/auto_check_param",true),
-        MainBean("打开test页面","/test/test",false),
-        MainBean("打开独立Fragment","/test/duli",true),
-        MainBean("打开切换夜间模式页面","/change/lang",false),
-        MainBean("打开切换主题页面","/change/theme",false),
-        MainBean("字体的使用","/test/font",false),
-        MainBean("列表示例","/test/list",true),
-        MainBean("列表示例 - 使用 BaseListFragment","/test/list2",true),
-        MainBean("测试数据倒灌","/test/errordata",true),
-        MainBean("测试各种请求网络","/test/normal_request",true),
-        MainBean("使用Flow代替LiveData","/test/flow",true),
-        MainBean("测试 XUI 库的使用","/test/test_xui",true)
+        MainBean("测试圆形进度条", "/test/cicle_progress", true),
+        MainBean("测试 databinding 转换器", "/test/test_convert", true),
+        MainBean("测试 hide show 切换 fragment，请求网络", "/test/hide_show", true),
+        MainBean("测试正则", "/test/reg", true),
+        MainBean("测试阴影", "/test/shadow", true),
+        MainBean("测试参数自动校验", "/test/auto_check_param", true),
+        MainBean("打开test页面", "/test/test", false),
+        MainBean("打开独立Fragment", "/test/duli", true),
+        MainBean("打开切换夜间模式页面", "/change/lang", false),
+        MainBean("打开切换主题页面", "/change/theme", false),
+        MainBean("字体的使用", "/test/font", false),
+        MainBean("列表示例", "/test/list", true),
+        MainBean("列表示例 - 使用 BaseListFragment", "/test/list2", true),
+        MainBean("测试数据倒灌", "/test/errordata", true),
+        MainBean("测试各种请求网络", "/test/normal_request", true),
+        MainBean("使用Flow代替LiveData", "/test/flow", true),
+        MainBean("测试 XUI 库的使用", "/test/test_xui", true)
     )
 
     override fun onInitDataBinding() {

@@ -29,5 +29,20 @@
             android:id="@+id/mDesc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <Button
+            app:onBackPressed="@{viewModel.canFinish}"
+            android:text="点击按钮关闭页面"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:onClick="@{()->viewModel.updateCanFinish(true)}"
+            android:text="可以关闭"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:text="不可关闭"
+            android:onClick="@{()->viewModel.updateCanFinish(false)}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </layout>
