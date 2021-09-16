@@ -2,6 +2,7 @@ package com.aligit.base.ui.foundation.fragment
 
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.Fragment
 
 /**
  * <pre>
@@ -13,7 +14,7 @@ import android.view.View
  * 会让fragment的生命周期默认停在onStart，搭配viewpager使用，只有当前被选中的page会调用onResume
  * </pre>
  */
-abstract class LazyLoadFragment : ImmersionFragment() {
+abstract class LazyLoadFragment : Fragment() {
     //是否懒加载
     protected open var isLazyLoad = true
 

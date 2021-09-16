@@ -16,8 +16,6 @@ import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.activity.BaseActivity
-import com.gyf.immersionbar.ImmersionBar
-import com.gyf.immersionbar.components.SimpleImmersionOwner
 import com.permissionx.guolindev.PermissionMediator
 import com.permissionx.guolindev.PermissionX
 
@@ -35,7 +33,7 @@ import com.permissionx.guolindev.PermissionX
  * @date : 2021/7/30
 </pre> *
  */
-abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
+abstract class BaseFragment : LazyLoadFragment() {
 
     protected open val mMainHandler = Handler(Looper.getMainLooper())
 
@@ -90,17 +88,6 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
 //            .show()
         mMainHandler.post { toast { msg } }
     }
-
-    override fun initImmersionBar() {
-        ImmersionBar.with(this)
-            .keyboardEnable(true)
-            .titleBarMarginTop(R.id.toolbar)
-            .statusBarDarkFont(true)
-            .navigationBarColor(android.R.color.white) //导航栏颜色，不写默认黑色
-            .navigationBarDarkIcon(true) //导航栏图标是深色，不写默认为亮色
-            .init()
-    }
-
 
     /**
      * 监听请求状态和错误响应

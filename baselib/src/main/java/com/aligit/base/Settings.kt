@@ -30,6 +30,10 @@ object Settings {
         var dark_model: Int by Mmkv("PROJECT_DARK_MODEL", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         // 使用滑动返回
         var useSwipeBack: Boolean = true
+        // 使用沉浸式
+        var useImmersionBar: Boolean = false
+        // 隐藏虚拟按键
+        var isHideBottom: Boolean = false
     }
 
     // autoSize 相关

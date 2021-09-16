@@ -6,7 +6,6 @@ import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.fragment.BaseVmFragment
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTestErrorDataBinding
-import com.thirtydays.baselibdev.router.startFragment
 import com.thirtydays.baselibdev.vm.TestViewModel
 
 @Route(path = "/test/errordata_edit")

@@ -1,13 +1,13 @@
 package com.thirtydays.baselibdev.ui
 
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.aligit.base.ext.startCommonFragment
 import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.view.click
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.fragment.BaseVmFragment
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTestErrorDataBinding
-import com.thirtydays.baselibdev.router.startFragment
 import com.thirtydays.baselibdev.vm.TestViewModel
 
 /**
@@ -77,7 +77,7 @@ class TestErrorDataFragment:BaseVmFragment<FragmentTestErrorDataBinding>(R.layou
 
         // 观察 ViewModel 中的 openNewPage ，如果有新值，就打开编辑页
         testViewModel.openNewPage.observe(this){
-            startFragment("/test/errordata_edit")
+            startCommonFragment("/test/errordata_edit")
         }
 
         testViewModel.testData.observe(this){

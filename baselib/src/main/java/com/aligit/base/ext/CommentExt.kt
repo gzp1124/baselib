@@ -5,13 +5,16 @@ import android.app.ActivityManager
 import android.app.Application
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
-import com.alibaba.android.arouter.launcher.ARouter
+import com.aligit.base.Settings
+import com.aligit.base.ui.activity.CommonActivity
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.GsonUtils
 
 /**
@@ -59,13 +62,29 @@ inline fun <reified T:Any> checkType(t:Any):Boolean{
 
 /**
  * CommonActivity 中打开 fragment
+ * @param fragmentPath fragment使用的 ARoute 的 path
+ * @param bundle 要传递到 fragment 中的 Bundle
+ * @param useSwipeBack 使用侧滑返回，会覆盖 Settings.UI.useSwipeBack
+ * @param useImmersionBar 使用沉浸式，会覆盖 Settings.UI.useImmersionBar
+ * @param isHideBottom 隐藏虚拟按键，会覆盖 Settings.UI.isHideBottom
+ * @param autoSizeIsBaseOnWidth autosize 基于宽度适配，会覆盖 Settings.AutoSize.autoSizeIsBaseOnWidth
  */
-fun startCommonFragment(fragmentPath:String,bundle: Bundle? = null){
-    ARouter.getInstance()
-        .build("/common/common")
-        .withBundle("fragmentBundle",bundle)
-        .withString("fragmentPath",fragmentPath)
-        .navigation()
+fun startCommonFragment(
+    fragmentPath:String,
+    bundle: Bundle? = null,
+    useSwipeBack: Boolean = Settings.UI.useSwipeBack,
+    useImmersionBar: Boolean = Settings.UI.useImmersionBar,
+    isHideBottom: Boolean = Settings.UI.isHideBottom,
+    autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,
+){
+    val i = Intent(ActivityUtils.getTopActivity(),CommonActivity::class.java)
+    i.putExtra("useSwipeBack",useSwipeBack)
+    i.putExtra("useImmersionBar",useImmersionBar)
+    i.putExtra("isHideBottom",isHideBottom)
+    i.putExtra("autoSizeIsBaseOnWidth",autoSizeIsBaseOnWidth)
+    i.putExtra("fragmentBundle",bundle)
+    i.putExtra("fragmentPath",fragmentPath)
+    ActivityUtils.startActivity(i)
 }
 
 inline fun dowithTry(catchBlock: (e: Throwable) -> Unit = {},block: () -> Unit) {

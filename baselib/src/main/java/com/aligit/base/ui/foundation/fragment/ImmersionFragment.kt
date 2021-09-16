@@ -16,6 +16,7 @@ import com.gyf.immersionbar.components.SimpleImmersionProxy
  * @version : 1.0
  * @date : 2021/7/30
  * </pre>
+ *  弃用，fragment 不需要关心状态栏
  */
 abstract class ImmersionFragment : Fragment(), SimpleImmersionOwner {
     /**
