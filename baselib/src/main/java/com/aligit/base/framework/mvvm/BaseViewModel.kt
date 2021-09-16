@@ -102,6 +102,8 @@ abstract class BaseViewModel : ViewModel() {
     // ViewModel 可以覆盖该方法，实现 ViewModel 单独的 catch 处理，不会影响其他 ViewModel
     // 异常相关处理，对应 BaseThrowable.ExternalThrowable
     open fun catchErr(e: Throwable) {
+        refreshing.postValue(false)
+        moreLoading.postValue(false)
         e.printStackTrace()
         val e1 = BaseThrowable.ExternalThrowable(e)
         error.postValue(e1)
