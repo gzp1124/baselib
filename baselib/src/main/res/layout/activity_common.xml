@@ -5,13 +5,8 @@
 
     </data>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <FrameLayout
+        android:id="@+id/commonFrameLin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <FrameLayout
-            android:id="@+id/frameLin"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
+        android:layout_height="match_parent" />
 </layout>

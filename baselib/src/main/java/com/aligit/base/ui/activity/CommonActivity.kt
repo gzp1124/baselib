@@ -22,7 +22,7 @@ class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_com
         try {
             val fragment = ARouter.getInstance().build(fragmentPath).navigation() as Fragment
             fragmentBundle?.let { fragment.arguments = it }
-            supportFragmentManager.beginTransaction().replace(R.id.frameLin,fragment).commitAllowingStateLoss()
+            supportFragmentManager.beginTransaction().replace(R.id.commonFrameLin,fragment).commitAllowingStateLoss()
         }catch (e:Exception){
             e.printStackTrace()
         }
