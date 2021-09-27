@@ -91,7 +91,7 @@ object Settings {
     val ossConstant: OssConstant = OssConstant()
     data class OssConstant(
         var BUCKET_NAME: String = "test",
-        var ENDPOINT: String = "oss-cn-hangzhou",
+        var ENDPOINT: String = "oss-cn-shenzhen.aliyuncs.com",
         var ACCESS_KEY_ID: String = "STS.NTcPUS54EThDAsymDYAyeY1mQ",
         var ACCESS_KEY_SECRET: String = "5i4eG4bXwgUoScJMMaZ9wu8qFB1oTLuXwN3E67TyGcJZ",
         var STS_TOKEN: String = "CAIS8wF1q6Ft5B2yfSjIr5fWG+/n2Otk46qvQ1XIiUQMTfZJtvTGszz2IHBJdHZtA+0atfkxlWpX7vcclqN3QplBRErLbdZxtlyoYoQ0Jdivgde8yJBZor/HcDHhJnyW9cvWZPqDP7G5U/yxalfCuzZuyL/hD1uLVECkNpv74vwOLK5gPG+CYCFBGc1dKyZ7tcYeLgGxD/u2NQPwiWeiZygB+CgE0DwmtvzvnJfAt0OB1gyhmtV4/dqhfsKWCOB3J4p6XtuP2+h7S7HMyiY46WIRpPom0/EepGuc44/MWQYJskucUe7d9NluKgB5e6kquSvoGXQhe5YagAFl6ZxdACLKhCCS4Wywjyo25L2qmZKfunawCNIj9oEmXex5f/Hte7SjENbN1UuKfjy7UDKkQA9UKSlmdcIJ/6IQlz5NTkupGBAq4/E+5PFd3duO1NiIJilTP2KNedkHD1cELBdqbxVbGj0Cxka3MTQHq7hLuIkOQoZKbc2UPVgIsw=="

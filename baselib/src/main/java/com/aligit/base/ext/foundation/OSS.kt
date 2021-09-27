@@ -31,8 +31,8 @@ Endpoint：   lanlinghui.oss-cn-hangzhou.aliyuncs.com
 data class Upload(
     var accessKeyId: String? = null,
     var accessKeySecret: String? = null,
-    var bucket: String? = Settings.ossConstant.BUCKET_NAME,
-    var region: String? = Settings.ossConstant.ENDPOINT,
+    var bucketName: String? = Settings.ossConstant.BUCKET_NAME,
+    var endpoint: String? = Settings.ossConstant.ENDPOINT,
     var stsToken: String? = null
 )
 
@@ -94,11 +94,11 @@ fun Context.uploadSingleFile(
 }
 
 private fun checkUploadParams(upload: Upload) {
-    if (upload.bucket.isNullOrEmpty()) {
-        upload.bucket = Settings.ossConstant.BUCKET_NAME
+    if (upload.bucketName.isNullOrEmpty()) {
+        upload.bucketName = Settings.ossConstant.BUCKET_NAME
     }
-    if (upload.region.isNullOrEmpty()) {
-        upload.region = Settings.ossConstant.ENDPOINT
+    if (upload.endpoint.isNullOrEmpty()) {
+        upload.endpoint = Settings.ossConstant.ENDPOINT
     }
     if (upload.accessKeyId.isNullOrEmpty()) {
         upload.accessKeyId = Settings.ossConstant.ACCESS_KEY_ID
@@ -148,7 +148,7 @@ class OSS private constructor() {
             context,
             upload.accessKeyId!!,
             upload.accessKeySecret!!,
-            upload.region + ".aliyuncs.com",
+            upload.endpoint!!,
             upload.stsToken!!
         )
 //            }
@@ -165,19 +165,16 @@ class OSS private constructor() {
                     if (file.exists()) {
                         // 构造上传请求。
                         val putObjectRequest =
-                            PutObjectRequest(upload.bucket, file.name, file.absolutePath)
+                            PutObjectRequest(upload.bucketName, file.name, file.absolutePath)
                         val putObject = ossClient.putObject(putObjectRequest)
                         if (putObject.statusCode == 200) {
                             val url = ossClient.presignConstrainedObjectURL(
-                                upload.bucket, file.name,
+                                upload.bucketName, file.name,
                                 Date(Date().time + 3600L * 1000 * 24 * 365 * 10).time
                             )
                                 .split("\\?".toRegex())
                                 .toTypedArray()[0]
                             result.ossUrl = url
-//                            result.ossUrl =
-//                                    url.replace("http://xiaofu30days.oss-cn-beijing.aliyuncs.com",
-//                                            "https://battery-cdn.30days-tech.com")
                         } else {
                             result.error = UploadThrowable("statusCode is ${putObject.statusCode}")
                         }
@@ -209,13 +206,13 @@ class OSS private constructor() {
             context,
             upload.accessKeyId!!,
             upload.accessKeySecret!!,
-            upload.region + ".aliyuncs.com",
+            upload.endpoint!!,
             upload.stsToken!!
         )
 //        }
 
         // 构造上传请求。
-        val putObjectRequest = PutObjectRequest(upload.bucket, file.name, file.absolutePath)
+        val putObjectRequest = PutObjectRequest(upload.bucketName, file.name, file.absolutePath)
         // 异步上传时可以设置进度回调。
         putObjectRequest.progressCallback = OSSProgressCallback { request, currentSize, totalSize ->
             Platform.get().execute {
@@ -231,7 +228,7 @@ class OSS private constructor() {
                     // 生成URL
                     val url =
                         ossClient.presignConstrainedObjectURL(
-                            upload.bucket,
+                            upload.bucketName,
                             file.name,
                             expiration.time
                         ).split("\\?".toRegex()).toTypedArray()[0]
