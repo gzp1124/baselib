@@ -31,25 +31,26 @@ Endpoint：   lanlinghui.oss-cn-hangzhou.aliyuncs.com
 data class Upload(
     var accessKeyId: String? = null,
     var accessKeySecret: String? = null,
-    var bucketName: String? = Settings.ossConstant.BUCKET_NAME,
-    var endpoint: String? = Settings.ossConstant.ENDPOINT,
+    var bucketName: String? = null,
+    var endpoint: String? = null,
     var stsToken: String? = null
 )
 
-object UploadInstance {
-    lateinit var upload: Upload
-}
+val defaultUpload = Upload()
 
 /**
  * 解决java调用问题
+ * @param files 上传的文件
+ * @param upload oss 参数，不传默认使用 Settings 中的 ossConstant
  */
 @JvmName("uploadMultipleFile")
-fun Context.uploadMultipleFile(upload: Upload, files: List<File>): MutableList<UploadResult> {
-    checkUploadParams(upload)
+fun Context.uploadMultipleFile(files: List<File>,upload: Upload? = null): MutableList<UploadResult> {
+    val _upload = upload ?: defaultUpload
+    checkUploadParams(_upload)
     val latch = CountDownLatch(1)
     val runBlocking = runBlocking {
         val uploadMultipleFile = OSS.INSTANCE.uploadMultipleFile(
-            this@uploadMultipleFile, upload, files
+            this@uploadMultipleFile, _upload, files
         )
         latch.countDown()
         return@runBlocking uploadMultipleFile
@@ -59,15 +60,16 @@ fun Context.uploadMultipleFile(upload: Upload, files: List<File>): MutableList<U
 }
 
 fun Context.uploadSingleFile(
-    upload: Upload,
     file: File,
+    upload: Upload? = null,
     success: (errorMsg: String) -> Unit
 ) {
-    checkUploadParams(upload)
+    val _upload = upload ?: defaultUpload
+    checkUploadParams(_upload)
 
     OSS.INSTANCE.uploadSingleFile(
         this,
-        upload,
+        _upload,
         file,
         success,
         {
@@ -77,16 +79,17 @@ fun Context.uploadSingleFile(
 }
 
 fun Context.uploadSingleFile(
-    upload: Upload,
     file: File,
+    upload: Upload? = null,
     success: (errorMsg: String) -> Unit,
     failure: (errorMsg: String) -> Unit,
 ) {
-    checkUploadParams(upload)
+    val _upload = upload ?: defaultUpload
+    checkUploadParams(_upload)
 
     OSS.INSTANCE.uploadSingleFile(
         this,
-        upload,
+        _upload,
         file,
         success,
         failure,
