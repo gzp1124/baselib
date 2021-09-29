@@ -48,8 +48,7 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="com.aligit.base.ui.activity.CommonActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenSize|screenLayout|smallestScreenSize|uiMode"/>
+        <activity android:name="com.aligit.base.ui.activity.CommonActivity"/>
 
         <!-- 360 640 Settings 中设置 -->
        <!-- <meta-data
