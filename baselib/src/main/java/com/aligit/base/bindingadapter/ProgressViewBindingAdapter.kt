@@ -18,7 +18,7 @@ import com.xuexiang.xui.widget.progress.HorizontalProgressView
  * gDuration 动画执行时间 单位 毫秒，默认 1000
  */
 @BindingAdapter(
-    value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor","gDuration"],
+    value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor","gDuration","gUseAnim"],
     requireAll = false
 )
 fun setCircleData(
@@ -29,11 +29,12 @@ fun setCircleData(
     startColor: Int? = null,
     endColor: Int? = null,
     trackColor: Int? = null,
-    duration: Int? = null
+    duration: Int? = null,
+    useAnim: Boolean? = null
 ) {
     view.run {
         dowithTry{
-            setProgressDuration(duration ?: 1000)
+            setProgressDuration(if (useAnim == true) duration ?: 1000 else 0)
             (startColor ?: progressColor)?.let { it1 -> setStartColor(it1) }
             (endColor ?: progressColor)?.let { it1 -> setEndColor(it1) }
             trackColor?.let {
@@ -47,7 +48,7 @@ fun setCircleData(
 }
 
 @BindingAdapter(
-    value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor","gDuration"],
+    value = ["gProgress", "gStartProgress", "gProgressColor", "gStartColor", "gEndColor", "gTrackColor","gDuration","gUseAnim"],
     requireAll = false
 )
 fun setHorizontalData(
@@ -58,12 +59,13 @@ fun setHorizontalData(
     startColor: Int? = null,
     endColor: Int? = null,
     trackColor: Int? = null,
-    duration: Int? = null
+    duration: Int? = null,
+    useAnim: Boolean? = null
 ) {
     view.run {
         dowithTry{
             setTrackEnabled(true) //是否显示轨迹背景
-            setProgressDuration(duration ?: 1000) // 动画持续时间
+            setProgressDuration(if (useAnim == true) duration ?: 1000 else 0)// 动画持续时间
             // 进度颜色
             (startColor ?: progressColor)?.let { it1 -> setStartColor(it1) }
             (endColor ?: progressColor)?.let { it1 -> setEndColor(it1) }
