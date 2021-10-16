@@ -15,6 +15,8 @@ import kotlin.random.Random
 /*
 测试使用
 参考文档：https://blog.csdn.net/u014136472/article/details/50273309
+文档2：https://svipbug.com/2020/03/19/MPAndroidChart的详细使用——坐标轴（X轴、Y轴、零线）/
+
  */
 @Route(path = "/test/mp_chart")
 class TestMpChartFragment:BaseVmFragment<FragmentTestMpChartBinding>(R.layout.fragment_test_mp_chart) {

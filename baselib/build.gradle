@@ -156,7 +156,7 @@ dependencies {
     api 'cn.bingoogolapple:bga-swipebacklayout:2.0.1'
 
     // 弹窗框架 https://github.com/li-xiaojun/XPopup
-    api 'com.github.li-xiaojun:XPopup:2.5.15'
+    api 'com.github.li-xiaojun:XPopup:2.5.17'
 
     //刷新加载库 https://github.com/scwang90/SmartRefreshLayout#简单用例 (查看更多刷新样式)
     api 'com.scwang.smart:refresh-layout-kernel:2.0.3'      //核心必须依赖
