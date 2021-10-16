@@ -1,4 +1,4 @@
-package com.aligit.base.subutil;
+package com.aligit.base.utils;
 
 import android.app.PendingIntent;
 import android.content.Context;

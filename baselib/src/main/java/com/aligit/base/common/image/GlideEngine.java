@@ -22,6 +22,8 @@ import com.bumptech.glide.request.BaseRequestOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.luck.picture.lib.listener.OnImageCompleteCallback;
 import com.luck.picture.lib.tools.MediaUtils;
 import com.luck.picture.lib.widget.longimage.ImageSource;
@@ -29,6 +31,9 @@ import com.luck.picture.lib.widget.longimage.ImageViewState;
 import com.luck.picture.lib.widget.longimage.SubsamplingScaleImageView;
 
 import org.jetbrains.annotations.NotNull;
+
+import kotlin.Unit;
+import kotlin.jvm.functions.Function1;
 
 public class GlideEngine implements ImageLoderEngine {
 
@@ -230,7 +235,7 @@ public class GlideEngine implements ImageLoderEngine {
         return instance;
     }
 
-    private void _loadImg(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, @Nullable BaseRequestOptions<?> requestOptions){
+    private void _loadImg(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, @Nullable BaseRequestOptions<?> requestOptions) {
         RequestBuilder<Drawable> gb = Glide.with(context).load(url);
         if (error != null) gb.error(error);
         if (loading != null) gb.placeholder(loading);
@@ -243,7 +248,7 @@ public class GlideEngine implements ImageLoderEngine {
      */
     @Override
     public void loadImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
-        _loadImg(context, url, error, loading, imageView,null);
+        _loadImg(context, url, error, loading, imageView, null);
     }
 
     /**
@@ -251,7 +256,7 @@ public class GlideEngine implements ImageLoderEngine {
      */
     @Override
     public void loadCircleImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView) {
-        _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new CircleCrop()));
+        _loadImg(context, url, error, loading, imageView, RequestOptions.bitmapTransform(new CircleCrop()));
     }
 
     /**
@@ -259,7 +264,7 @@ public class GlideEngine implements ImageLoderEngine {
      */
     @Override
     public void loadRoundedImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int radius) {
-        _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new RoundedCorners(radius)));
+        _loadImg(context, url, error, loading, imageView, RequestOptions.bitmapTransform(new RoundedCorners(radius)));
     }
 
     /**
@@ -267,6 +272,22 @@ public class GlideEngine implements ImageLoderEngine {
      */
     @Override
     public void load4RoundedImage(@NotNull Context context, @Nullable String url, @Nullable Integer error, @Nullable Integer loading, @NotNull ImageView imageView, int leftTop, int leftBottom, int rightTop, int rightBottom) {
-        _loadImg(context,url,error,loading,imageView,RequestOptions.bitmapTransform(new GranularRoundedCorners(leftTop,rightTop,rightBottom,leftBottom)));
+        _loadImg(context, url, error, loading, imageView, RequestOptions.bitmapTransform(new GranularRoundedCorners(leftTop, rightTop, rightBottom, leftBottom)));
+    }
+
+    @Override
+    public void loadBitmap(@NotNull Context context, @Nullable String url, @Nullable Function1<? super Bitmap, Unit> onBack) {
+        Glide.with(context)
+                .asBitmap()
+                .load(url)
+                .centerCrop()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                        if (onBack != null){
+                            onBack.invoke(resource);
+                        }
+                    }
+                });
     }
 }

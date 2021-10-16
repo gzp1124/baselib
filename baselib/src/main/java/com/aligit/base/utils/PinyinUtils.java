@@ -1,4 +1,4 @@
-package com.aligit.base.subutil;
+package com.aligit.base.utils;
 
 
 import androidx.collection.SimpleArrayMap;

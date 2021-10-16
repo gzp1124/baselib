@@ -140,3 +140,5 @@ inline fun <T: Any> ifNotNullLet(vararg elements: T?, closure: (List<T>) -> Unit
 inline fun <reified T> T.deepCopy() : T {
     return GsonUtils.fromJson(GsonUtils.toJson(this), T::class.java)
 }
+
+fun getImageLoader() = Settings.Tools.imageLoader

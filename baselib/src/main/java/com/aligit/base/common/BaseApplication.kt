@@ -11,6 +11,7 @@ import com.aligit.base.Settings
 import com.aligit.base.Settings.UI.app_force_use_portrait
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.ParseThrowable
+import com.aligit.base.ext.getImageLoader
 import com.aligit.base.ext.initWebViewDataDirectory
 import com.aligit.base.ext.tool.isLandscape
 import com.aligit.base.net.ok.OkHttpManager
@@ -148,7 +149,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable, IApp {
 
     override fun getPictureSelectorEngine() = object : PictureSelectorEngine{
         override fun createEngine(): ImageEngine {
-            return Settings.Tools.imageLoader
+            return getImageLoader()
         }
 
         override fun getResultCallbackListener() = object : OnResultCallbackListener<LocalMedia> {
