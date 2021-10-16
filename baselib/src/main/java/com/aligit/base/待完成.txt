@@ -1,0 +1,7 @@
+
+1. 删除 widget/round 系列，这个圆形会出问题
+2. baseviewmodel 中，请求网络可以单独指定 错误异常处理
+3. switchFragment 抽取
+4. fragment  newInstance 抽取
+
+
