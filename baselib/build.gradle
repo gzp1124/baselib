@@ -87,7 +87,6 @@ dependencies {
     //android x 库
     api 'androidx.appcompat:appcompat:1.3.1'
     api 'androidx.constraintlayout:constraintlayout:2.1.0'
-    api 'com.google.android.material:material:1.4.0'
     api 'androidx.recyclerview:recyclerview:1.2.1'
     api 'androidx.cardview:cardview:1.0.0'
     api 'androidx.browser:browser:1.2.0'
@@ -96,6 +95,9 @@ dependencies {
 //    api "androidx.dynamicanimation:dynamicanimation:1.0.0"
     api 'androidx.core:core-ktx:1.6.0'
     api 'androidx.viewpager2:viewpager2:1.0.0'
+
+    api 'com.google.android.material:material:1.4.0'
+    api 'com.google.android:flexbox:2.0.1'
 
 //    api 'androidx.camera:camera-view:1.0.0-alpha10'
 //    api 'androidx.camera:camera-lifecycle:1.0.0-beta03'
