@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.content.res.Resources
-import android.graphics.Point
 import android.os.PowerManager
 import android.provider.Settings
 import android.view.WindowManager
@@ -67,9 +66,7 @@ val screenOrientation
  * 横屏有两个方向，在某个横屏方向下再次设置横屏会选择180°，故需要先判断当前是否已经横屏。
  */
 fun Activity.setScreenLandscape() {
-    if (isPortrait) {
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-    }
+    requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 }
 
 /**
