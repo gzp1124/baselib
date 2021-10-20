@@ -1,7 +1,6 @@
 package com.aligit.base.net.ok
 
 import android.util.Log
-import com.elvishew.xlog.XLog
 import okhttp3.*
 import java.io.IOException
 import java.net.InetAddress
@@ -19,7 +18,6 @@ class OkHttpEventListener : EventListener() {
 
     override fun callStart(call: Call) {
         super.callStart(call)
-        XLog.i("callStart")
     }
 
     override fun dnsStart(call: Call, domainName: String) {
@@ -110,11 +108,9 @@ class OkHttpEventListener : EventListener() {
     }
 
     override fun callFailed(call: Call, ioe: IOException) {
-        XLog.i("callFailed ")
         super.callFailed(call, ioe)
         okHttpEvent.apiSuccess = false
         okHttpEvent.errorReason = Log.getStackTraceString(ioe)
-        XLog.i("reason " + okHttpEvent.errorReason)
     }
 
     companion object {

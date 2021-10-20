@@ -3,11 +3,12 @@ package com.aligit.base.net.ok
 import android.content.Context
 import android.os.Environment
 import com.aligit.base.Settings
+import com.aligit.base.ext.tool.logi
+import com.aligit.base.net.ok.log.MyHttpLoggingInterceptor
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import okhttp3.*
-import okhttp3.logging.HttpLoggingInterceptor
 import java.io.File
 import java.security.SecureRandom
 import java.util.concurrent.TimeUnit
@@ -39,13 +40,13 @@ class OkHttpManager private constructor() {
         sslContext.init(keyManagers, arrayOf<TrustManager>(manager), SecureRandom())
 
         // 设置 Log 拦截器，可以用于以后处理一些异常情况
-        val logger: HttpLoggingInterceptor.Logger = object : HttpLoggingInterceptor.Logger {
+        val logger: MyHttpLoggingInterceptor.Logger = object : MyHttpLoggingInterceptor.Logger {
             override fun log(message: String) {
-                com.aligit.base.ext.tool.logi(message)
+                logi(message)
             }
         }
-        val interceptor = HttpLoggingInterceptor(logger)
-        interceptor.level = HttpLoggingInterceptor.Level.BODY
+        val interceptor = MyHttpLoggingInterceptor(logger)
+        interceptor.level = MyHttpLoggingInterceptor.Level.BODY
 
         //缓存
         val cacheFile = File(Environment.getDownloadCacheDirectory(), Settings.fileSavePath.httpCachePath)

@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import com.aligit.base.Settings
 import com.aligit.base.common.AppContext
 import com.aligit.base.ext.tool.logi
+import com.aligit.base.net.ok.log.MyHttpLoggingInterceptor
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
@@ -12,7 +13,6 @@ import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -55,12 +55,12 @@ object ApiFactory {
 
         if (Settings.isDebug) {
             // 添加 log 拦截器
-            val loggingInterceptor = HttpLoggingInterceptor(object : HttpLoggingInterceptor.Logger {
+            val loggingInterceptor = MyHttpLoggingInterceptor(object : MyHttpLoggingInterceptor.Logger {
                 override fun log(message: String) {
                     logi(message)
                 }
             })
-            loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            loggingInterceptor.level = MyHttpLoggingInterceptor.Level.BODY
             clientBuilder.addInterceptor(loggingInterceptor)
         }
         return clientBuilder

@@ -30,7 +30,6 @@ class SuperHandler(looper: Looper) : Handler(looper) {
             try {
                 jsonObject.put("Msg_Cost", System.currentTimeMillis() - mStartTime)
                 jsonObject.put("MsgTrace", msg.target.toString() + " " + msgDetail[msg])
-                XLog.i("MsgDetail $jsonObject")
                 msgDetail.remove(msg)
             } catch (e: Exception) {
                 e.printStackTrace()
