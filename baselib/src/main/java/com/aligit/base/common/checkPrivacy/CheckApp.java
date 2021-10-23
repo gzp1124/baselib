@@ -137,7 +137,7 @@ public abstract class CheckApp extends MultiDexApplication {
      * @return
      */
     public boolean isUserAgree() {
-        return userAgree;
+        return userAgree || !Settings.INSTANCE.getUseSplashCheckPrivacy();
     }
 
 
