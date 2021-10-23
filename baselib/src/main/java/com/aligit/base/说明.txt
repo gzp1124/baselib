@@ -42,4 +42,18 @@
     android.enableJetifier=true
     authToken=jp_g2qmapiq64nn3kt4f8dj6csu19 （可选）
 
+4. 使用欢迎页让用户接受隐私政策，不接受隐私政策不进入APP
+    因为最新的正常原因，不这么做APP可能无法上线
+    参考：https://juejin.cn/post/6990643611130363917
+    步骤：
+    1. Settings.useSplashCheckPrivacy = true
+    2. Manifast 中 application 下 添加如下代码，name 固定，value 是欢迎页的全路径
+        <meta-data
+            android:name="com.gzp1124.check.activity"
+            android:value="com.thirtydays.kelake.module.splash.view.SplashActivity" />
+    3. 欢迎页 CheckApp.getApp().isUserAgree() 来判断是否接受，注意 onResume 也要判断
+    查看隐私政策详情也要在欢迎页打开，不能跳转其他页面打开
+    4. 点击接受：CheckApp.getApp().agree(this,false,getIntent().getExtras());
+    执行完上面的代码，application 中的 initSDK() 会自动进行执行。
+    5. 然后进行后续的继续操作。打开新页面之类的。
 

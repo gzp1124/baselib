@@ -18,6 +18,8 @@ object Settings {
     var isDebug = true
     // 日志 Tag
     var logTag = "BaseLib"
+    // 启用欢迎页授权隐私政策，不授权不能使用APP
+    var useSplashCheckPrivacy = false
 
     object UI{
         // 强制使用竖屏/横屏 0: 不固定横竖屏，1:固定使用竖屏，2:固定使用横屏

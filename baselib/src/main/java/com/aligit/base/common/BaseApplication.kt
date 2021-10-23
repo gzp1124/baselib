@@ -4,11 +4,11 @@ import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import androidx.lifecycle.MutableLiveData
-import androidx.multidex.MultiDexApplication
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.Settings
 import com.aligit.base.Settings.UI.app_force_use_portrait
+import com.aligit.base.common.checkPrivacy.CheckApp
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.ParseThrowable
 import com.aligit.base.ext.getImageLoader
@@ -42,7 +42,7 @@ import okhttp3.OkHttpClient
  */
 private lateinit var INSTANCE: Application
 
-abstract class BaseApplication : MultiDexApplication(), ParseThrowable, IApp {
+abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
 
     override fun attachBaseContext(base: Context) {
         CommonHelper.context = base
@@ -64,7 +64,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable, IApp {
         }
 
         val okHttpClient: OkHttpClient by lazy {
-            OkHttpManager.INSTANCE.initOkHttpClient(INSTANCE)
+            OkHttpManager.INSTANCE.initOkHttpClient(app)
         }
 
         val retrofitFactory: RetrofitFactory by lazy { RetrofitFactory.getInstance(okHttpClient) }
@@ -75,8 +75,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable, IApp {
      */
     abstract fun updateSettings()
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun initSDK() {
         INSTANCE = this
         val rootDir: String = MMKV.initialize(this)
 
@@ -164,7 +163,7 @@ abstract class BaseApplication : MultiDexApplication(), ParseThrowable, IApp {
 
 }
 
-object AppContext : ContextWrapper(INSTANCE)
+object AppContext : ContextWrapper(CheckApp.getApp())
 
 object CommonHelper {
     lateinit var context: Context
