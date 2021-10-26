@@ -11,8 +11,8 @@ import com.aligit.base.Settings
 import com.aligit.base.ext.coroutine.observe
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.onError
+import com.aligit.base.ext.tool.isDarkMode
 import com.aligit.base.ext.tool.isLandscape
-import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
@@ -122,7 +122,12 @@ abstract class BaseActivity : InternationalizationActivity() {
 
     open fun initLoadingView(): BasePopupView {
         //初始加载框
-        return XPopup.Builder(this).asLoading(getString(R.string.loading))
+        return XPopup.Builder(this)
+            .hasNavigationBar(Settings.UI.hasNavigationBar)
+            .hasStatusBarShadow(false)
+            .isLightStatusBar(!isDarkMode())
+            .hasStatusBar(Settings.UI.hasStatusBar)
+            .asLoading(getString(R.string.loading))
     }
 
     open fun showLoading(tip: String? = getString(R.string.loading)) {

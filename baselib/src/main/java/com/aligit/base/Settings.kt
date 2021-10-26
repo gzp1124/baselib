@@ -34,8 +34,10 @@ object Settings {
         var useSwipeBack: Boolean = true
         // 使用沉浸式
         var useImmersionBar: Boolean = false
-        // 隐藏虚拟按键
-        var isHideBottom: Boolean = false
+        // 顶部状态栏
+        var hasStatusBar: Boolean = true
+        // 底部导航栏，虚拟按键
+        var hasNavigationBar: Boolean = false
     }
 
     // autoSize 相关

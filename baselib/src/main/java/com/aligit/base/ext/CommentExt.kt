@@ -74,7 +74,7 @@ fun startCommonFragment(
     bundle: Bundle? = null,
     useSwipeBack: Boolean = Settings.UI.useSwipeBack,
     useImmersionBar: Boolean = Settings.UI.useImmersionBar,
-    isHideBottom: Boolean = Settings.UI.isHideBottom,
+    isHideBottom: Boolean = !Settings.UI.hasNavigationBar,
     autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,
 ){
     val i = Intent(ActivityUtils.getTopActivity(),CommonActivity::class.java)

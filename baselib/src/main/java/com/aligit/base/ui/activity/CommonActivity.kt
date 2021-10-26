@@ -25,7 +25,7 @@ class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_com
 //    }
 
     override fun booHideBottom(): Boolean {
-        return intent.getBooleanExtra("isHideBottom",Settings.UI.isHideBottom)
+        return intent.getBooleanExtra("isHideBottom",Settings.UI.hasNavigationBar)
     }
 
     override fun isImmersionBar(): Boolean {
