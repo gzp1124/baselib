@@ -37,7 +37,7 @@ object Settings {
         // 顶部状态栏
         var hasStatusBar: Boolean = true
         // 底部导航栏，虚拟按键
-        var hasNavigationBar: Boolean = false
+        var hasNavigationBar: Boolean = true
     }
 
     // autoSize 相关
