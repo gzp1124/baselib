@@ -3,5 +3,6 @@
 2. baseviewmodel 中，请求网络可以单独指定 错误异常处理
 3. switchFragment 抽取
 4. fragment  newInstance 抽取
+5. baselib 中的 logUtil
 
 
