@@ -1,5 +1,7 @@
 package com.aligit.base.framework.mvvm
 
+import androidx.annotation.MainThread
+import androidx.arch.core.util.Function
 import androidx.lifecycle.*
 import com.aligit.base.Settings
 import com.aligit.base.ext.dowithTry
@@ -92,8 +94,8 @@ abstract class BaseViewModel : ViewModel() {
     // ViewModel内通用方法：过滤所有响应数据，处理通用业务，如 token 失效 账号被顶等情况
     // ViewModel 可以覆盖该方法，实现其他的业务需求，不会影响其他 ViewModel
     // 业务相关处理，对应 BaseThrowable.InsideThrowable
-    open fun <Y, T : IResponse<Y>> responseFilter(t: T) {
-        if (Settings.Request.tokenErrCode?.equals(t.errorCode) == true) {
+    open fun <Y, T : IResponse<Y>> responseFilter(t: T?) {
+        if (Settings.Request.tokenErrCode?.equals(t?.errorCode) == true) {
             error.postValue(BaseThrowable.TokenThrowable())
         }
     }
@@ -181,6 +183,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param watchTag 监听该字段，自动请求接口
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语（传 null 显示默认提示语，传 其他值则显示对应的值，传 空字符串 显示也为空字符串）
+     * @param liveDataNotNull 返回的 LiveData 是否允许为空，false 表示 LiveData 肯定会有值 为 null 则不会发送 livedata
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
      *     所有请求的执行顺序：reqBolck(请求体) -> parseRequest(请求统一处理) -> responseFilter(响应统一过滤) -> parseBolck(响应具体处理) -> catchErr(异常处理)
      *
@@ -195,9 +198,11 @@ abstract class BaseViewModel : ViewModel() {
         watchTag: UnPeekLiveData<W> = refreshTrigger as UnPeekLiveData<W>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        liveDataNotNull: Boolean = false,
         parseBolck: (Y?) -> R
-    ): LiveData<R> {
-        return Transformations.map(
+    ): LiveData<R?> {
+        return map(
+            liveDataNotNull,
             Transformations.switchMap(watchTag) {
                 parseRequest(reqBolck(it), showLoading, loadingTips).asLiveData()
             }
@@ -206,7 +211,7 @@ abstract class BaseViewModel : ViewModel() {
                 catchErr(it)
             }, {
                 responseFilter(it)
-                return@map parseBolck(it.resultData)
+                return@map parseBolck(it?.resultData)
             })
             null
         }
@@ -223,9 +228,11 @@ abstract class BaseViewModel : ViewModel() {
         reqBolck: (Int) -> Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        liveDataNotNull: Boolean = false,
         parseBolck: (pageBean: BasePageBean<Y?>) -> R
-    ): LiveData<R> {
-        return Transformations.map(
+    ): LiveData<R?> {
+        return map(
+            liveDataNotNull,
             Transformations.switchMap(page) {
                 parseRequest(reqBolck(it), showLoading, loadingTips).asLiveData()
             }
@@ -236,12 +243,25 @@ abstract class BaseViewModel : ViewModel() {
                 catchErr(it)
             }, {
                 responseFilter(it)
-                val pageBean = BasePageBean(it.resultData, page.value!!)
+                val pageBean = BasePageBean(it?.resultData, page.value!!)
                 val result = parseBolck(pageBean)
                 hasMore.postValue(pageBean.hasMoreData)
                 return@map result
             })
             null
         }
+    }
+
+    @MainThread
+    open fun <Y, R> map(
+        liveDataNotNull: Boolean,
+        source: LiveData<Y>,
+        mapFunction: Function<Y?, R>
+    ): LiveData<R> {
+        val result = if (liveDataNotNull) NonNullMutableLiveData<R>() else MediatorLiveData<R>()
+        result.addSource(
+            source
+        ) { x -> result.value = mapFunction.apply(x) }
+        return result
     }
 }

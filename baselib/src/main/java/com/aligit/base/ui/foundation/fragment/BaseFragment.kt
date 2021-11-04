@@ -112,4 +112,15 @@ abstract class BaseFragment : LazyLoadFragment() {
             }
         }
     }
+
+    var isShow = false
+    override fun onResume() {
+        super.onResume()
+        isShow = true
+    }
+
+    override fun onPause() {
+        super.onPause()
+        isShow = false
+    }
 }

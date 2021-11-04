@@ -33,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="通过修改 livedata 请求"
-                android:text="@{vm.normalData1}"
+                android:text="@{vm.normalData1.downloadUrl}"
                 android:textColor="#f00"
                 android:textSize="20sp" />
 

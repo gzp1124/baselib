@@ -24,7 +24,9 @@ class TestNormalRequestFragment:BaseVmFragment<FragmentTestNormalRequestBinding>
         }
 
         //修改 livedata 的值，从而自动请求网络
+        mainViewModel.iii = 0
         mDataBinding.changeLiveData.click {
+            mainViewModel.iii++
             mainViewModel.reqData.postValue("")
         }
 

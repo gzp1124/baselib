@@ -41,12 +41,14 @@ class MainViewModel : BaseViewModel() {
         it
     }
 
+    var iii = 0
     // 请求方式二：和第一种类似，只是监听的 livedata 触发是由按钮触发
     // 使用 livedata 请求网络的第二种写法，监听其他 livedata ，点击按钮的时候 修改监听的 livedata 的值，实现请求执行
     val reqData = UnPeekLiveData<String>()
-    val normalData1 = requestDataToLiveData({ TestRepository.getFlowVer() }, watchTag = reqData) {
+    val normalData1 = requestDataToLiveData({ TestRepository.getFlowVer() }, watchTag = reqData,liveDataNotNull = true) {
         log("gzp112411 请求成功了 main")
-        it?.downloadUrl
+        if (iii >= 2)null
+        else it
     }
     val observableTasks = Transformations.map(reqData, {
         log("gzp112411 单独观察来了")
