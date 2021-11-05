@@ -183,7 +183,7 @@ abstract class BaseViewModel : ViewModel() {
      * @param watchTag 监听该字段，自动请求接口
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语（传 null 显示默认提示语，传 其他值则显示对应的值，传 空字符串 显示也为空字符串）
-     * @param liveDataNotNull 返回的 LiveData 是否允许为空，false 表示 LiveData 肯定会有值 为 null 则不会发送 livedata
+     * @param liveDataNotNull 返回的 LiveData 不为空空，true 表示 LiveData 肯定会有值 为 null 则不会发送 livedata
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
      *     所有请求的执行顺序：reqBolck(请求体) -> parseRequest(请求统一处理) -> responseFilter(响应统一过滤) -> parseBolck(响应具体处理) -> catchErr(异常处理)
      *
