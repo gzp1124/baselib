@@ -4,5 +4,10 @@
 3. switchFragment 抽取
 4. fragment  newInstance 抽取
 5. baselib 中的 logUtil
-
+6. IndicatorUtils
+7. Long.kt 时间格式化
+8. SelectImgUtil 选择照片获取路径
+    PictureSelectorUtils 选择照片工具类
+9. Bitmap.kt 保存图片到相册
+10. 练习 viewPager2 的使用，放 fragment  放view
 
