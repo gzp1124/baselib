@@ -198,7 +198,7 @@ abstract class BaseViewModel : ViewModel() {
         watchTag: UnPeekLiveData<W> = refreshTrigger as UnPeekLiveData<W>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
-        liveDataNotNull: Boolean = true,
+        liveDataNotNull: Boolean = false,
         parseBolck: (Y?) -> R
     ): LiveData<R?> {
         return map(
