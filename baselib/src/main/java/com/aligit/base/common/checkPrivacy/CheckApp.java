@@ -29,8 +29,11 @@ public abstract class CheckApp extends MultiDexApplication {
     private static final String SAVE_KEY = "save_p_key";
 
     private boolean userAgree;
-
-    protected static CheckApp app;
+    public static CheckApp app;
+    private static boolean initSDK = false;//是否已经初始化了SDK
+    String checkActivityName = null;
+    static PackageManager mPackageManager;
+    private static String realFirstActivityName = null;
 
     @Override
     protected void attachBaseContext(Context base) {
@@ -50,6 +53,66 @@ public abstract class CheckApp extends MultiDexApplication {
         }
     }
 
+    @Override
+    public final void onCreate() {
+        super.onCreate();
+        if (!isRunOnMainProcess()) {
+            return;
+        }
+        app = this;
+        //初始化那些和隐私无关的SDK
+        initSafeSDK();
+
+        if (!Settings.INSTANCE.getUseSplashCheckPrivacy()){
+            realInitSdk();
+        }else if (userAgree && !initSDK) {
+            realInitSdk();
+        }
+    }
+
+    private void realInitSdk(){
+        initSDK = true;
+        HookUtil.initProvider(this);
+        initSDK();
+    }
+
+    public void agree(Activity activity, boolean gotoFirstActivity, Bundle extras) {
+        getSharedPreferences(SAVE_KEY, Context.MODE_PRIVATE).edit().putBoolean(getUserAgreeKey(this), true).apply();
+        userAgree = true;
+
+        if (!initSDK) {
+            realInitSdk();
+        }
+
+        //启动真正的启动页
+        if (!gotoFirstActivity) {
+            //已经是同一个界面了，不需要自动打开
+            return;
+        }
+        try {
+            Intent intent = new Intent(activity, Class.forName(realFirstActivityName));
+            if (extras != null) {
+                intent.putExtras(extras);//也许是从网页中调起app，这时候extras中含有打开特定新闻的参数。需要传递给真正的启动页
+            }
+            activity.startActivity(intent);
+            activity.finish();//关闭当前页面
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 初始化那些和用户隐私无关的SDK
+     * 如果无法区分，建议只使用initSDK一个方法
+     */
+    protected void initSafeSDK() { }
+
+    /**
+     * 子类重写用于初始化SDK等相关工作
+     */
+    abstract protected void initSDK();
+
+
     protected String getUserAgreeKey(Context base) {
         if (checkForEachVersion()) {
             try {
@@ -62,19 +125,6 @@ public abstract class CheckApp extends MultiDexApplication {
         return KEY_USER_AGREE;
 
     }
-
-    /**
-     * 是否每个版本都检查是否拥有用户隐私权限
-     *
-     * @return
-     */
-    protected boolean checkForEachVersion() {
-        return true;
-    }
-
-    private static boolean initSDK = false;//是否已经初始化了SDK
-
-    String checkActivityName = null;
 
     private void getCheckActivityName(Context base) {
         mPackageManager = base.getPackageManager();
@@ -95,99 +145,28 @@ public abstract class CheckApp extends MultiDexApplication {
         }
     }
 
-    @Override
-    public final void onCreate() {
-        super.onCreate();
-        if (!isRunOnMainProcess()) {
-            return;
-        }
-        app = this;
-        //初始化那些和隐私无关的SDK
-        initSafeSDK();
-
-        if (!Settings.INSTANCE.getUseSplashCheckPrivacy()){
-            initSDK = true;
-            HookUtil.initProvider(this);
-            initSDK();
-        }else if (userAgree && !initSDK) {
-            initSDK = true;
-            HookUtil.initProvider(this);
-            initSDK();
-        }
-    }
-
-
     public static CheckApp getApp() {
         return app;
     }
 
-
     /**
-     * 初始化那些和用户隐私无关的SDK
-     * 如果无法区分，建议只使用initSDK一个方法
+     * 是否每个版本都检查是否拥有用户隐私权限
      */
-    protected void initSafeSDK() {
-
+    protected boolean checkForEachVersion() {
+        return Settings.INSTANCE.getCheckPrivacyForEachVersion();
     }
 
-
-    /**
-     * 判断用户是否同意
-     *
-     * @return
-     */
     public boolean isUserAgree() {
         return userAgree || !Settings.INSTANCE.getUseSplashCheckPrivacy();
     }
-
-
-    static PackageManager mPackageManager;
-
-
-    private static String realFirstActivityName = null;
 
     private static void setRealFirstActivityName(String realFirstActivityName) {
         CheckApp.realFirstActivityName = realFirstActivityName;
     }
 
-    public void agree(Activity activity, boolean gotoFirstActivity, Bundle extras) {
-        getSharedPreferences(SAVE_KEY, Context.MODE_PRIVATE).edit().putBoolean(getUserAgreeKey(this), true).apply();
-        userAgree = true;
-
-        if (!initSDK) {
-            initSDK = true;
-            HookUtil.initProvider(this);
-            initSDK();
-        }
-
-        //启动真正的启动页
-        if (!gotoFirstActivity) {
-            //已经是同一个界面了，不需要自动打开
-            return;
-        }
-        try {
-            Intent intent = new Intent(activity, Class.forName(realFirstActivityName));
-            if (extras != null) {
-                intent.putExtras(extras);//也许是从网页中调起app，这时候extras中含有打开特定新闻的参数。需要传递给真正的启动页
-            }
-            activity.startActivity(intent);
-            activity.finish();//关闭当前页面
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    /**
-     * 子类重写用于初始化SDK等相关工作
-     */
-    abstract protected void initSDK();
-
     /**
      * 判断是否在主进程中，一些SDK中的PushServer可能运行在其他进程中。
      * 也就会造成Application初始化两次,而只有在主进程中才需要初始化。
-     * * @return
      */
     public boolean isRunOnMainProcess() {
         ActivityManager am = ((ActivityManager) this.getSystemService(Context.ACTIVITY_SERVICE));
@@ -201,8 +180,6 @@ public abstract class CheckApp extends MultiDexApplication {
         }
         return false;
     }
-
-
 }
 
 
