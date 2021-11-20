@@ -249,7 +249,7 @@ dependencies {
     //图片压缩 https://github.com/Curzibn/Luban
 //    api 'top.zibin:Luban:1.1.8'
     // 图片选择器 https://github.com/LuckSiege/PictureSelector
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
+    api 'io.github.lucksiege:pictureselector:v2.7.3-rc10'
 
 }
 
