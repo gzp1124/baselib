@@ -29,31 +29,31 @@ import me.jessyan.autosize.utils.AutoSizeUtils;
  * </pre>
  */
 public class RoundViewDelegate {
-    private View view;
-    private Context context;
-    private GradientDrawable gd_background = new GradientDrawable();
+    private View             view;
+    private Context          context;
+    private GradientDrawable gd_background       = new GradientDrawable();
     private GradientDrawable gd_background_press = new GradientDrawable();
-    private int backgroundColor;
-    private int backgroundStartColor;
-    private int backgroundEndColor;
-    private int backgroundPressColor;
-    private int backgroundPressStartColor;
-    private int backgroundPressEndColor;
-    private int cornerRadius;
-    private int cornerRadius_TL;
-    private int cornerRadius_TR;
-    private int cornerRadius_BL;
-    private int cornerRadius_BR;
-    private int strokeWidth;
-    private int strokeColor;
-    private int strokePressColor;
-    private int textPressColor;
-    private boolean isRadiusHalfHeight;
-    private boolean isWidthHeightEqual;
-    private boolean isRippleEnable;
-    private float[] radiusArr = new float[8];
-    private int strokeDashGap;
-    private int strokeDashWidth;
+    private int              backgroundColor;
+    private int              backgroundStartColor;
+    private int              backgroundEndColor;
+    private int              backgroundPressColor;
+    private int              backgroundPressStartColor;
+    private int              backgroundPressEndColor;
+    private int              cornerRadius;
+    private int              cornerRadius_TL;
+    private int              cornerRadius_TR;
+    private int              cornerRadius_BL;
+    private int              cornerRadius_BR;
+    private int              strokeWidth;
+    private int              strokeColor;
+    private int              strokePressColor;
+    private int              textPressColor;
+    private boolean          isRadiusHalfHeight;
+    private boolean          isWidthHeightEqual;
+    private boolean          isRippleEnable;
+    private float[]          radiusArr           = new float[8];
+    private int              strokeDashGap;
+    private int              strokeDashWidth;
 
     public RoundViewDelegate(View view, Context context, AttributeSet attrs) {
         this.view = view;
@@ -117,13 +117,18 @@ public class RoundViewDelegate {
         setBgSelector();
     }
 
+    public void setCornerRadius(int cornerRadius, boolean isDp) {
+        this.cornerRadius = isDp ? cornerRadius : AutoSizeUtils.dp2px(AppContext.INSTANCE, cornerRadius);
+        setBgSelector();
+    }
+
     public void setCornerRadius(int cornerRadius) {
-        this.cornerRadius = AutoSizeUtils.dp2px(AppContext.INSTANCE,cornerRadius);
+        this.cornerRadius =  AutoSizeUtils.dp2px(AppContext.INSTANCE, cornerRadius);
         setBgSelector();
     }
 
     public void setStrokeWidth(float strokeWidth) {
-        this.strokeWidth = AutoSizeUtils.dp2px(AppContext.INSTANCE,strokeWidth);
+        this.strokeWidth = AutoSizeUtils.dp2px(AppContext.INSTANCE, strokeWidth);
         setBgSelector();
     }
 
@@ -278,17 +283,21 @@ public class RoundViewDelegate {
                 }
                 view.setBackground(bg);
                 //setDrawable(gd_background, backgroundStartColor, backgroundEndColor, strokeColor);
-                //RippleDrawable rippleDrawable = new RippleDrawable(getPressedColorSelector(backgroundPressStartColor, backgroundStartColor), gd_background, null);
-//                bg.addState(new int[]{-android.R.attr.state_pressed}, gd_background);
-//                if (backgroundPressStartColor != Integer.MAX_VALUE && backgroundPressEndColor != Integer.MAX_VALUE || strokePressColor != Integer.MAX_VALUE) {
-//                    setDrawable(gd_background_press, backgroundPressStartColor, backgroundPressEndColor, strokePressColor);
-//                    RippleDrawable rippleDrawable = new RippleDrawable(getPressedColorSelector(backgroundStartColor, backgroundPressEndColor), gd_background_press, null);
-//                    bg.addState(new int[]{android.R.attr.state_pressed}, rippleDrawable);
-//                }
-//                view.setBackground(bg);
+                //RippleDrawable rippleDrawable = new RippleDrawable(getPressedColorSelector(backgroundPressStartColor, backgroundStartColor),
+                // gd_background, null);
+                //                bg.addState(new int[]{-android.R.attr.state_pressed}, gd_background);
+                //                if (backgroundPressStartColor != Integer.MAX_VALUE && backgroundPressEndColor != Integer.MAX_VALUE ||
+                //                strokePressColor != Integer.MAX_VALUE) {
+                //                    setDrawable(gd_background_press, backgroundPressStartColor, backgroundPressEndColor, strokePressColor);
+                //                    RippleDrawable rippleDrawable = new RippleDrawable(getPressedColorSelector(backgroundStartColor,
+                //                    backgroundPressEndColor), gd_background_press, null);
+                //                    bg.addState(new int[]{android.R.attr.state_pressed}, rippleDrawable);
+                //                }
+                //                view.setBackground(bg);
             } else {
                 setDrawable(gd_background, backgroundColor, strokeColor);
-                RippleDrawable rippleDrawable = new RippleDrawable(getPressedColorSelector(backgroundColor, backgroundPressColor), gd_background, null);
+                RippleDrawable rippleDrawable = new RippleDrawable(getPressedColorSelector(backgroundColor, backgroundPressColor), gd_background,
+                        null);
                 view.setBackground(rippleDrawable);
             }
 
@@ -304,7 +313,8 @@ public class RoundViewDelegate {
                 setDrawable(gd_background, backgroundColor, strokeColor);
                 bg.addState(new int[]{-android.R.attr.state_pressed}, gd_background);
                 if (backgroundPressColor != Integer.MAX_VALUE || strokePressColor != Integer.MAX_VALUE) {
-                    setDrawable(gd_background_press, backgroundPressColor == Integer.MAX_VALUE ? backgroundColor : backgroundPressColor, strokePressColor ==
+                    setDrawable(gd_background_press, backgroundPressColor == Integer.MAX_VALUE ? backgroundColor : backgroundPressColor,
+                            strokePressColor ==
                             Integer.MAX_VALUE ? strokeColor : strokePressColor);
                     bg.addState(new int[]{android.R.attr.state_pressed}, gd_background_press);
                 }

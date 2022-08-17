@@ -27,7 +27,6 @@ import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
-import com.tencent.bugly.crashreport.CrashReport
 import com.tencent.mmkv.MMKV
 import com.xuexiang.xui.XUI
 import me.jessyan.autosize.AutoSize
@@ -103,9 +102,6 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
 
         // 滑动返回
         BGASwipeBackHelper.init(this,null)
-
-        //腾讯
-        CrashReport.initCrashReport(this, "3dd9e06f7e", Settings.isDebug)
 
         //多语言切换
         LanguageHelper.switchLanguage()

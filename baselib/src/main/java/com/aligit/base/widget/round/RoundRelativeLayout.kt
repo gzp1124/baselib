@@ -2,7 +2,7 @@ package com.aligit.base.widget.round
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.RelativeLayout
 import com.aligit.base.widget.round.RoundViewDelegate
 
 /**
@@ -10,7 +10,7 @@ import com.aligit.base.widget.round.RoundViewDelegate
  * @创建时间： 2021/4/21
  * @描述：
  **/
-class RoundConstraintLayout : ConstraintLayout {
+class RoundRelativeLayout : RelativeLayout {
     constructor(context: Context) : super(context) {
         delegate = RoundViewDelegate(this, context, null)
     }
@@ -27,7 +27,7 @@ class RoundConstraintLayout : ConstraintLayout {
         delegate = RoundViewDelegate(this, context, attrs)
     }
 
-    var delegate: RoundViewDelegate
+    lateinit var delegate: RoundViewDelegate
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         if (delegate.isWidthHeightEqual && width > 0 && height > 0) {
             val max = width.coerceAtLeast(height)

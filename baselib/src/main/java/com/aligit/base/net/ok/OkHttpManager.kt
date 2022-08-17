@@ -97,7 +97,7 @@ class OkHttpManager private constructor() {
         // 配置 client
         return OkHttpClient.Builder()
             .eventListenerFactory(OkHttpEventListener.FACTORY)
-            .dns(OkHttpDNS())
+//            .dns(OkHttpDNS())
             .addInterceptor(headInterceptor)// 设置拦截器
             .addInterceptor(interceptor) // 设置拦截器
             .retryOnConnectionFailure(true) // 是否重试

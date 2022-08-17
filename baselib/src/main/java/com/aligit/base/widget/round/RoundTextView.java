@@ -18,11 +18,15 @@ public class RoundTextView extends AppCompatTextView {
     private RoundViewDelegate delegate;
 
     public RoundTextView(Context context) {
-        this(context, null);
+        super(context);
+        setIncludeFontPadding(false);
+        delegate = new RoundViewDelegate(this, context, null);
     }
 
     public RoundTextView(Context context, AttributeSet attrs) {
-        this(context, attrs, 0);
+        super(context, attrs, 0);
+        setIncludeFontPadding(false);
+        delegate = new RoundViewDelegate(this, context, attrs);
     }
 
     public RoundTextView(Context context, AttributeSet attrs, int defStyleAttr) {

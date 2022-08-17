@@ -2,7 +2,7 @@ package com.aligit.base.widget.round
 
 import android.content.Context
 import android.util.AttributeSet
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.LinearLayout
 import com.aligit.base.widget.round.RoundViewDelegate
 
 /**
@@ -10,24 +10,21 @@ import com.aligit.base.widget.round.RoundViewDelegate
  * @创建时间： 2021/4/21
  * @描述：
  **/
-class RoundConstraintLayout : ConstraintLayout {
-    constructor(context: Context) : super(context) {
+class RoundLinearLayout:LinearLayout {
+    constructor(context: Context) : super(context){
         delegate = RoundViewDelegate(this, context, null)
     }
-
-    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs){
+        delegate = RoundViewDelegate(this, context, attrs)
+    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr){
+        delegate = RoundViewDelegate(this, context, attrs)
+    }
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes){
         delegate = RoundViewDelegate(this, context, attrs)
     }
 
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        delegate = RoundViewDelegate(this, context, attrs)
-    }
-
-    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int, defStyleRes: Int) : super(context, attrs, defStyleAttr, defStyleRes) {
-        delegate = RoundViewDelegate(this, context, attrs)
-    }
-
-    var delegate: RoundViewDelegate
+    lateinit var delegate: RoundViewDelegate
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         if (delegate.isWidthHeightEqual && width > 0 && height > 0) {
             val max = width.coerceAtLeast(height)
