@@ -32,6 +32,7 @@ import com.xuexiang.xui.XUI
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
 import okhttp3.OkHttpClient
+import okhttp3.Request
 
 
 /**
@@ -67,6 +68,11 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
         }
 
         val retrofitFactory: RetrofitFactory by lazy { RetrofitFactory.getInstance(okHttpClient) }
+
+        // 添加公用
+        fun okHttpAddHead(build: Request.Builder){
+            // newBuilder.addHeader("Content-Type", "application/json;charset=UTF-8")
+        }
     }
 
     /**

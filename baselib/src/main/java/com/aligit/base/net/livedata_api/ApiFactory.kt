@@ -3,16 +3,15 @@ package com.aligit.base.net.livedata_api
 import androidx.databinding.ObservableField
 import com.aligit.base.Settings
 import com.aligit.base.common.AppContext
+import com.aligit.base.common.BaseApplication
 import com.aligit.base.ext.tool.logi
+import com.aligit.base.net.ok.log.LoggerInterceptor
 import com.aligit.base.net.ok.log.MyHttpLoggingInterceptor
 import com.franmontiel.persistentcookiejar.PersistentCookieJar
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache
 import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import com.google.gson.*
-import okhttp3.Cache
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
-import okhttp3.Response
+import okhttp3.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
@@ -23,7 +22,9 @@ import java.util.concurrent.TimeUnit
 object ApiFactory {
 
     val clientBuilder = makeClientBuilder()
-    private fun makeClientBuilder(): OkHttpClient.Builder {
+    val EMPTY_ADD_HEAD_BLOCK:(Request.Builder) -> Unit = {}
+
+    fun makeClientBuilder(addHeadBlock: (Request.Builder) -> Unit = EMPTY_ADD_HEAD_BLOCK): OkHttpClient.Builder {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()
             .cache(Cache(file, 1024 * 1024 * 100))
@@ -45,8 +46,13 @@ object ApiFactory {
                 newBuilder.addHeader("Content-Type", "application/json;charset=UTF-8")
                 //添加公用请求头
                 if (Settings.Request.app_token.isNotEmpty()) {
-                    newBuilder.addHeader(Settings.Request.appTokenHeadKey, Settings.Request.app_token).build()
+                    newBuilder.addHeader(Settings.Request.appTokenHeadKey, Settings.Request.app_token)
                 }
+
+                // 让外包添加请求头
+                addHeadBlock(newBuilder)
+                BaseApplication.okHttpAddHead(newBuilder)
+
                 return chain.proceed(newBuilder.build())
             }
         }
@@ -61,7 +67,7 @@ object ApiFactory {
                 }
             })
             loggingInterceptor.level = MyHttpLoggingInterceptor.Level.BODY
-            clientBuilder.addInterceptor(loggingInterceptor)
+            clientBuilder.addInterceptor(LoggerInterceptor())
         }
         return clientBuilder
     }
@@ -71,10 +77,15 @@ object ApiFactory {
      */
     inline fun <reified T> createString(
         baseUrl: String,
+        noinline addHeadBlock: (Request.Builder) -> Unit = EMPTY_ADD_HEAD_BLOCK
     ): T {
+        var cb = clientBuilder
+        if (addHeadBlock != EMPTY_ADD_HEAD_BLOCK){
+            cb = makeClientBuilder(addHeadBlock=addHeadBlock)
+        }
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(clientBuilder.build())
+            .client(cb.build())
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
             .create(T::class.java)
@@ -100,11 +111,16 @@ object ApiFactory {
      */
     inline fun <reified T> create(
         baseUrl: String,
+        noinline addHeadBlock: (Request.Builder) -> Unit = EMPTY_ADD_HEAD_BLOCK,
         noinline creator: (Boolean, String, String, T?) -> Any
     ): T {
+        var cb = clientBuilder
+        if (addHeadBlock != EMPTY_ADD_HEAD_BLOCK){
+            cb = makeClientBuilder(addHeadBlock=addHeadBlock)
+        }
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(clientBuilder.build())
+            .client(cb.build())
             .addCallAdapterFactory(LiveDataCallAdapterFactory<T>(creator))
             .addConverterFactory(buildGsonConverterFactory())
             .build()
