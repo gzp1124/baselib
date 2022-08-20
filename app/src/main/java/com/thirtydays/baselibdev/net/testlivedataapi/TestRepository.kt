@@ -13,7 +13,7 @@ object TestRepository {
     }
 
     fun getStrData() = flow {
-        emit(TestApi.getStr().getFlowString(REQUEST_URL))
+        emit(TestApi.getStr().getFlowString("https://www.free-api.com/doc/565"))
     }
 
     fun testGoosLogin(req: TestLoginReq) = flow {

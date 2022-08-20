@@ -21,10 +21,7 @@ import java.util.concurrent.TimeUnit
 
 object ApiFactory {
 
-    val clientBuilder = makeClientBuilder()
-    val EMPTY_ADD_HEAD_BLOCK:(Request.Builder) -> Unit = {}
-
-    fun makeClientBuilder(addHeadBlock: (Request.Builder) -> Unit = EMPTY_ADD_HEAD_BLOCK): OkHttpClient.Builder {
+    fun makeClientBuilder(addHeadBlock: (Request.Builder) -> Unit = {}): OkHttpClient.Builder {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()
             .cache(Cache(file, 1024 * 1024 * 100))
@@ -77,15 +74,11 @@ object ApiFactory {
      */
     inline fun <reified T> createString(
         baseUrl: String,
-        noinline addHeadBlock: (Request.Builder) -> Unit = EMPTY_ADD_HEAD_BLOCK
+        noinline addHeadBlock: (Request.Builder) -> Unit = { }
     ): T {
-        var cb = clientBuilder
-        if (addHeadBlock != EMPTY_ADD_HEAD_BLOCK){
-            cb = makeClientBuilder(addHeadBlock=addHeadBlock)
-        }
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(cb.build())
+            .client(makeClientBuilder(addHeadBlock=addHeadBlock).build())
             .addConverterFactory(ScalarsConverterFactory.create())
             .build()
             .create(T::class.java)
@@ -111,16 +104,12 @@ object ApiFactory {
      */
     inline fun <reified T> create(
         baseUrl: String,
-        noinline addHeadBlock: (Request.Builder) -> Unit = EMPTY_ADD_HEAD_BLOCK,
+        noinline addHeadBlock: (Request.Builder) -> Unit = { },
         noinline creator: (Boolean, String, String, T?) -> Any
     ): T {
-        var cb = clientBuilder
-        if (addHeadBlock != EMPTY_ADD_HEAD_BLOCK){
-            cb = makeClientBuilder(addHeadBlock=addHeadBlock)
-        }
         return Retrofit.Builder()
             .baseUrl(baseUrl)
-            .client(cb.build())
+            .client(makeClientBuilder(addHeadBlock=addHeadBlock).build())
             .addCallAdapterFactory(LiveDataCallAdapterFactory<T>(creator))
             .addConverterFactory(buildGsonConverterFactory())
             .build()

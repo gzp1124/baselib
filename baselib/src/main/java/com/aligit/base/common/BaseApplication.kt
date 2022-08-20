@@ -71,7 +71,7 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
 
         // 添加公用
         fun okHttpAddHead(build: Request.Builder){
-            // newBuilder.addHeader("Content-Type", "application/json;charset=UTF-8")
+            build.addHeader("hahahaa", "this is base")
         }
     }
 
