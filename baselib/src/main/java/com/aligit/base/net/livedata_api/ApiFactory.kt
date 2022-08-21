@@ -48,7 +48,7 @@ object ApiFactory {
 
                 // 让外包添加请求头
                 addHeadBlock(newBuilder)
-                BaseApplication.okHttpAddHead(newBuilder)
+                BaseApplication.getApp().okHttpAddHead(newBuilder)
 
                 return chain.proceed(newBuilder.build())
             }

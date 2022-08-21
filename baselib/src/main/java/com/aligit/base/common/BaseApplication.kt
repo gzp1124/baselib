@@ -40,7 +40,7 @@ import okhttp3.Request
  * Time: 2020/4/8 9:40
  * Des:
  */
-private lateinit var INSTANCE: Application
+private lateinit var INSTANCE: BaseApplication
 
 abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
 
@@ -69,16 +69,18 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
 
         val retrofitFactory: RetrofitFactory by lazy { RetrofitFactory.getInstance(okHttpClient) }
 
-        // 添加公用
-        fun okHttpAddHead(build: Request.Builder){
-            build.addHeader("hahahaa", "this is base")
-        }
+        fun getApp() = INSTANCE
     }
 
     /**
      * 更新全局的 Settings 文件
      */
     abstract fun updateSettings()
+
+    // 添加公用请求头
+    open fun okHttpAddHead(build: Request.Builder){
+//        build.addHeader("pid", "pid_value")
+    }
 
     override fun initSDK() {
         INSTANCE = this

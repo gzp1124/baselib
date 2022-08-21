@@ -36,7 +36,7 @@ interface TestApi {
 
         fun getStr(): TestApi {
             return ApiFactory.createString("https://www.free-api.com/doc/565/") { build ->
-                build.addHeader("apiapiapi", "这是在API里设置的")
+                build.addHeader("apiapiapi", "this is api")
             }
         }
     }

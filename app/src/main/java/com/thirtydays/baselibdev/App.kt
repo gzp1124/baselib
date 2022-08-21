@@ -8,9 +8,14 @@ import com.aligit.base.ext.tool.toast
 import com.aligit.base.model.TokenInvalidEvent
 import com.blankj.utilcode.util.ActivityUtils
 import com.thirtydays.baselibdev.router.startMain
+import okhttp3.Request
 import retrofit2.HttpException
 
 class App: BaseApplication() {
+
+    override fun okHttpAddHead(build: Request.Builder){
+        build.addHeader("hahahaa", "ovovovovovovo  this is base")
+    }
 
     private fun tokenErr(){
         postEvent(TokenInvalidEvent())
