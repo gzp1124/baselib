@@ -34,7 +34,7 @@ class TestViewModel: BaseViewModel() {
     }
 
     val reqData = UnPeekLiveData<String>()
-    val normalData1 = requestDataToLiveData({ TestRepository.getFlowVer() }, watchTag = reqData) {
+    val normalData1 = requestDataToLiveData({ TestRepository.getFlowVer() }, showLoading = true, watchTag = reqData) {
         log("gzp112411 请求成功了 test1")
         it?.downloadUrl
     }

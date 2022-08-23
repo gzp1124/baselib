@@ -138,7 +138,7 @@ abstract class BaseActivity : InternationalizationActivity() {
     }
 
     open fun hideLoading() {
-        if (loadingView.isShow) loadingView.smartDismiss()
+        loadingView.smartDismiss()
     }
 
     open fun onError(throwable: BaseThrowable) {
