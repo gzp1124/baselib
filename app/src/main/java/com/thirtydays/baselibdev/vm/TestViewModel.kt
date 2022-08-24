@@ -1,8 +1,11 @@
 package com.thirtydays.baselibdev.vm
 
+import com.aligit.base.Settings
+import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.framework.mvvm.BaseViewModel
+import com.aligit.base.net.livedata_api.IResponse
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
 import com.thirtydays.baselibdev.net.req.TestLoginReq
 import com.thirtydays.baselibdev.net.testlivedataapi.TestRepository
@@ -17,6 +20,16 @@ class TestViewModel: BaseViewModel() {
 
     val openNewPage = UnPeekLiveData<Boolean>()
 
+    override fun <Y, T : IResponse<Y>> responseFilter(t: T?): Boolean {
+        super.responseFilter(t)
+        t?.let {
+            if (it.errorCode != "200"){
+                log("发生异常了，捕捉住")
+                return false
+            }
+        }
+        return true
+    }
 
 
     //登录需要的参数对象
@@ -34,7 +47,7 @@ class TestViewModel: BaseViewModel() {
     }
 
     val reqData = UnPeekLiveData<String>()
-    val normalData1 = requestDataToLiveData({ TestRepository.getFlowVer() }, showLoading = true, watchTag = reqData) {
+    val normalData1 = requestDataToLiveData({ TestRepository.getFlowVer() }, ignoreResponseFilter = true, showLoading = true, watchTag = reqData) {
         log("gzp112411 请求成功了 test1")
         it?.downloadUrl
     }

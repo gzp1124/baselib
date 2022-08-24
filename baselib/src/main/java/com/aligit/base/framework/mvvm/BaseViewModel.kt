@@ -6,6 +6,7 @@ import androidx.lifecycle.*
 import com.aligit.base.Settings
 import com.aligit.base.ext.dowithTry
 import com.aligit.base.ext.foundation.BaseThrowable
+import com.aligit.base.ext.tool.log
 import com.aligit.base.model.BasePageBean
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.net.livedata_api.IResponse
@@ -74,6 +75,7 @@ abstract class BaseViewModel : ViewModel() {
         flow: Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        ignoreCacheErr: Boolean = false,
     ): Flow<T> {
         return flow
             .onStart {
@@ -86,7 +88,7 @@ abstract class BaseViewModel : ViewModel() {
             }
             .catch { e ->
                 if (showLoading) statusLiveData.postValue(CoroutineState.Error)
-                catchErr(e)
+                if (!ignoreCacheErr) catchErr(e, 1)
             }
             .flowOn(Dispatchers.IO)
     }
@@ -94,16 +96,20 @@ abstract class BaseViewModel : ViewModel() {
     // ViewModel内通用方法：过滤所有响应数据，处理通用业务，如 token 失效 账号被顶等情况
     // ViewModel 可以覆盖该方法，实现其他的业务需求，不会影响其他 ViewModel
     // 业务相关处理，对应 BaseThrowable.InsideThrowable
-    open fun <Y, T : IResponse<Y>> responseFilter(t: T?) {
+    // 返回值：false业务异常中止后续操作，true业务正常后续正常执行
+    open fun <Y, T : IResponse<Y>> responseFilter(t: T?): Boolean {
         if (Settings.Request.tokenErrCode?.equals(t?.errorCode) == true) {
             error.postValue(BaseThrowable.TokenThrowable())
+            return false
         }
+        return true
     }
 
     // ViewModel内通用方法：捕获到异常的处理方法，默认处理方式为 error.postValue，交由 BaseApplication.onNetError 统一处理
     // ViewModel 可以覆盖该方法，实现 ViewModel 单独的 catch 处理，不会影响其他 ViewModel
     // 异常相关处理，对应 BaseThrowable.ExternalThrowable
-    open fun catchErr(e: Throwable) {
+    // errorType = 1表示请求出错如404，2表示代码出现bug
+    open fun catchErr(e: Throwable, errorType: Int) {
         refreshing.postValue(false)
         moreLoading.postValue(false)
         e.printStackTrace()
@@ -118,12 +124,13 @@ abstract class BaseViewModel : ViewModel() {
         flow: Flow<String>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        ignoreCacheErr: Boolean = false,
         parseBolck: (String) -> Unit
     ) {
         viewModelScope.launch {
-            parseRequest(flow, showLoading, loadingTips).collect {
+            parseRequest(flow, showLoading, loadingTips, ignoreCacheErr).collect {
                 dowithTry(catchBlock = {
-                    catchErr(it)
+                    if (!ignoreCacheErr) catchErr(it, 2)
                 }, {
                     parseBolck(it)
                 })
@@ -138,15 +145,18 @@ abstract class BaseViewModel : ViewModel() {
         flow: Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        ignoreCacheErr: Boolean = false,
+        ignoreResponseFilter: Boolean = false,
         parseBolck: (T) -> Unit
     ) {
         viewModelScope.launch {
-            parseRequest(flow, showLoading, loadingTips).collect {
+            parseRequest(flow, showLoading, loadingTips, ignoreCacheErr).collect {
                 dowithTry(catchBlock = {
-                    catchErr(it)
+                    if (!ignoreCacheErr) catchErr(it, 2)
                 }, {
-                    responseFilter(it)
-                    parseBolck(it)
+                    if (ignoreResponseFilter || responseFilter(it)) {
+                        parseBolck(it)
+                    }
                 })
             }
         }
@@ -159,19 +169,22 @@ abstract class BaseViewModel : ViewModel() {
         flow: Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        ignoreCacheErr: Boolean = false,
+        ignoreResponseFilter: Boolean = false,
         parseBolck: (pageBean: BasePageBean<Y?>) -> Unit
     ) {
         viewModelScope.launch {
-            parseRequest(flow, showLoading, loadingTips).collect {
+            parseRequest(flow, showLoading, loadingTips, ignoreCacheErr).collect {
                 refreshing.postValue(false)
                 moreLoading.postValue(false)
                 dowithTry(catchBlock = {
-                    catchErr(it)
+                    if (!ignoreCacheErr) catchErr(it, 2)
                 }, {
-                    responseFilter(it)
                     val pageBean = BasePageBean(it.resultData, page.value!!)
-                    parseBolck(pageBean)
                     hasMore.postValue(pageBean.hasMoreData)
+                    if (ignoreResponseFilter || responseFilter(it)) {
+                        parseBolck(pageBean)
+                    }
                 })
             }
         }
@@ -183,6 +196,8 @@ abstract class BaseViewModel : ViewModel() {
      * @param watchTag 监听该字段，自动请求接口
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语（传 null 显示默认提示语，传 其他值则显示对应的值，传 空字符串 显示也为空字符串）
+     * @param ignoreCacheErr 忽略公用的异常捕捉器
+     * @param ignoreResponseFilter 忽略公用响应的过滤器
      * @param liveDataNotNull 返回的 LiveData 不为空，true 表示 LiveData 肯定会有值 为 null 则不会发送 livedata
      * @param parseBolck 处理数据的方法体，该方法的返回值将作为 LiveData 对外提供
      *     所有请求的执行顺序：reqBolck(请求体) -> parseRequest(请求统一处理) -> responseFilter(响应统一过滤) -> parseBolck(响应具体处理) -> catchErr(异常处理)
@@ -198,20 +213,25 @@ abstract class BaseViewModel : ViewModel() {
         watchTag: UnPeekLiveData<W> = refreshTrigger as UnPeekLiveData<W>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        ignoreCacheErr: Boolean = false,
+        ignoreResponseFilter: Boolean = false,
         liveDataNotNull: Boolean = false,
         parseBolck: (Y?) -> R
     ): LiveData<R?> {
         return map(
             liveDataNotNull,
             Transformations.switchMap(watchTag) {
-                parseRequest(reqBolck(it), showLoading, loadingTips).asLiveData()
+                parseRequest(reqBolck(it), showLoading, loadingTips, ignoreCacheErr).asLiveData()
             }
         ) {
             dowithTry(catchBlock = {
-                catchErr(it)
+                if (!ignoreCacheErr) catchErr(it, 2)
             }, {
-                responseFilter(it)
-                return@map parseBolck(it?.resultData)
+                if (ignoreResponseFilter || responseFilter(it)) {
+                    return@map parseBolck(it?.resultData)
+                } else {
+                    return@map null
+                }
             })
             null
         }
@@ -228,25 +248,30 @@ abstract class BaseViewModel : ViewModel() {
         reqBolck: (Int) -> Flow<T>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
+        ignoreCacheErr: Boolean = false,
+        ignoreResponseFilter: Boolean = false,
         liveDataNotNull: Boolean = false,
         parseBolck: (pageBean: BasePageBean<Y?>) -> R
     ): LiveData<R?> {
         return map(
             liveDataNotNull,
             Transformations.switchMap(page) {
-                parseRequest(reqBolck(it), showLoading, loadingTips).asLiveData()
+                parseRequest(reqBolck(it), showLoading, loadingTips, ignoreCacheErr).asLiveData()
             }
         ) {
             refreshing.postValue(false)
             moreLoading.postValue(false)
             dowithTry(catchBlock = {
-                catchErr(it)
+                if (!ignoreCacheErr) catchErr(it, 2)
             }, {
-                responseFilter(it)
                 val pageBean = BasePageBean(it?.resultData, page.value!!)
-                val result = parseBolck(pageBean)
                 hasMore.postValue(pageBean.hasMoreData)
-                return@map result
+                if (ignoreResponseFilter || responseFilter(it)) {
+                    val result = parseBolck(pageBean)
+                    return@map result
+                } else {
+                    return@map null
+                }
             })
             null
         }
