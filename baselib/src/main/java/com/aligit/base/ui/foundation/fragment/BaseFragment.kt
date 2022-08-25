@@ -1,9 +1,11 @@
 package com.aligit.base.ui.foundation.fragment
 
+import android.content.res.Configuration
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.annotation.Nullable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
@@ -16,8 +18,11 @@ import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.activity.BaseActivity
+import com.gyf.immersionbar.components.SimpleImmersionOwner
+import com.gyf.immersionbar.components.SimpleImmersionProxy
 import com.permissionx.guolindev.PermissionMediator
 import com.permissionx.guolindev.PermissionX
+
 
 /**
  * <pre>
@@ -29,15 +34,32 @@ import com.permissionx.guolindev.PermissionX
  * 错误示例：class HomeworkListFragment(val index: Int) :BaseListFragment() {}
  * 如果要给 Fragment 中传递参数，可以使用 Bundle 进行传参
  *
+ * SimpleImmersionOwner 的作用：https://github.com/gyf-dev/ImmersionBar/blob/master/immersionbar-components/src/main/java/com/gyf/immersionbar/components/SimpleImmersionFragment.java
+ * 为了方便在Fragment使用沉浸式
+ *
  * @version : 1.0
  * @date : 2021/7/30
 </pre> *
  */
-abstract class BaseFragment : LazyLoadFragment() {
+abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
+    /**
+     * ImmersionBar代理类
+     */
+    private val mSimpleImmersionProxy = SimpleImmersionProxy(this)
 
     protected open val mMainHandler = Handler(Looper.getMainLooper())
 
     protected open lateinit var mPermission: PermissionMediator
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        mSimpleImmersionProxy.isUserVisibleHint = isVisibleToUser
+    }
+
+    override fun onActivityCreated(@Nullable savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        mSimpleImmersionProxy.onActivityCreated(savedInstanceState)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +71,7 @@ abstract class BaseFragment : LazyLoadFragment() {
         hideLoading()
         unregisterEvent()
         super.onDestroy()
+        mSimpleImmersionProxy.onDestroy()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -63,6 +86,16 @@ abstract class BaseFragment : LazyLoadFragment() {
                 }
             }
         })
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        mSimpleImmersionProxy.onHiddenChanged(hidden)
+    }
+
+    override fun onConfigurationChanged(newConfig: Configuration) {
+        super.onConfigurationChanged(newConfig)
+        mSimpleImmersionProxy.onConfigurationChanged(newConfig)
     }
 
     open fun onActivityResume(){}
@@ -122,5 +155,15 @@ abstract class BaseFragment : LazyLoadFragment() {
     override fun onPause() {
         super.onPause()
         isShow = false
+    }
+
+    /**
+     * 是否可以实现沉浸式，当为true的时候才可以执行initImmersionBar方法
+     * Immersion bar enabled boolean.
+     *
+     * @return the boolean
+     */
+    override fun immersionBarEnabled(): Boolean {
+        return true
     }
 }
