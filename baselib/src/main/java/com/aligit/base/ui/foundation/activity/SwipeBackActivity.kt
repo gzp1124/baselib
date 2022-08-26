@@ -118,7 +118,7 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
     // 使用沉浸式
     protected open fun isImmersionBar():Boolean = false
 
-    protected open fun setImmersionBar() {
+    open fun setImmersionBar() {
         val isDark = isDarkMode()
         val barColor = if (isDark)android.R.color.background_dark else android.R.color.background_light
         ImmersionBar.with(this)

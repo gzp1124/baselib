@@ -8,7 +8,6 @@ apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion compile_sdk_version
-    buildToolsVersion build_tools_version
 
     defaultConfig {
         minSdkVersion min_sdk_version
@@ -259,17 +258,61 @@ afterEvaluate {
             release(MavenPublication) {
                 from components.release
 
-                groupId = 'com.aligit'
+                groupId = 'com.gzp1124.baselib'
                 artifactId = 'baselib'
-                version = '1.0'
+                version = '1.2.9'
             }
-            debug(MavenPublication) {
-                from components.debug
+        }
 
-                groupId = 'com.aligit'
-                artifactId = 'baselib-debug'
-                version = '1.0'
+        repositories {
+            maven {
+                url 'https://packages.aliyun.com/maven/repository/2124813-release-mj2kic/' // 公司maven仓库地址
+                credentials {
+                    username '61027f4b4e5db15d525d1ad9'     // maven仓库账号
+                    password 'HC1VV(O4p7lR'   // maven仓库密码
+                }
             }
         }
     }
 }
+
+/*
+def repository_url() {
+    File file = new File(getRootDir().getAbsolutePath() + File.separator + "repository")
+    print(file.toString())
+    return file.toURI().toURL()
+}
+publishing {
+    publications {
+        release(MavenPublication) {
+
+        }
+    }
+}
+uploadArchives {
+    repositories.mavenDeployer {
+        // 配置本地仓库路径，项目根目录下的repository目录中
+        repository(url: repository_url())
+        pom.groupId = "com.gzp1124.baselib"// 唯一标识（通常为模块包名，也可以任意）
+        pom.artifactId = "baselib" // 项目名称（通常为类库模块名称，也可以任意）
+        pom.version = "1.2.9" // 版本号
+    }
+}
+
+
+afterEvaluate{
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                artifact repository_url()
+                groupId "com.gzp1124.baselib"
+                artifactId "baselib"
+                version "1.2.9"
+            }
+        }
+    }
+}
+
+
+
+*/

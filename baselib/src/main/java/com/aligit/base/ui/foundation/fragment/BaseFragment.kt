@@ -11,13 +11,17 @@ import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import com.aligit.base.R
 import com.aligit.base.ext.coroutine.observe
+import com.aligit.base.ext.dowithTry
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.onError
+import com.aligit.base.ext.tool.isDarkMode
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.activity.BaseActivity
+import com.aligit.base.ui.foundation.activity.SwipeBackActivity
+import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.SimpleImmersionOwner
 import com.gyf.immersionbar.components.SimpleImmersionProxy
 import com.permissionx.guolindev.PermissionMediator
@@ -83,6 +87,7 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
                     Lifecycle.Event.ON_DESTROY -> onActivityDestroy()
                     Lifecycle.Event.ON_RESUME -> onActivityResume()
                     Lifecycle.Event.ON_PAUSE -> onActivityPause()
+                    else -> {}
                 }
             }
         })
@@ -155,6 +160,12 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
     override fun onPause() {
         super.onPause()
         isShow = false
+    }
+
+    override fun initImmersionBar() {
+        dowithTry {
+            (activity as SwipeBackActivity).setImmersionBar()
+        }
     }
 
     /**
