@@ -66,10 +66,10 @@ class MainViewModel : BaseViewModel() {
 
     // 请求方式四：直接获取接口响应的字符串，不转化为 javaBean 对象，一般用于特殊接口
     // 直接返回字符串形式的，不用 IResponse
-    val strData = MediatorLiveData<String>()
+    val strData1 = MediatorLiveData<String>()
     fun getStrData() {
         requestStringData(TestRepository.getStrData()) {
-            strData.postValue(it)
+            strData1.postValue(it)
         }
     }
 

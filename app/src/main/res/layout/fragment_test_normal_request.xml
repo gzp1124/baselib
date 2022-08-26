@@ -62,7 +62,7 @@
                 android:layout_height="wrap_content"
                 android:hint="字符串方式请求"
                 android:maxLines="2"
-                android:text="@{vm.strData}"
+                android:text="@{vm.strData1}"
                 android:textColor="#f00"
                 android:textSize="20sp" />
 

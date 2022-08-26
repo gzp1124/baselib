@@ -49,6 +49,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
         MainBean("测试数据倒灌", "/test/errordata", true),
         MainBean("测试各种请求网络", "/test/normal_request", true),
         MainBean("使用Flow代替LiveData", "/test/flow", true),
+        MainBean("测试沉浸式问题", "/test/immersionBar", false),
         MainBean("测试 XUI 库的使用", "/test/test_xui", true)
     )
 

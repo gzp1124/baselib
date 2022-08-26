@@ -31,6 +31,7 @@
         <activity android:name=".ui.ChangeNightActivity"/>
         <activity android:name=".ui.ChangeThemeActivity"/>
         <activity android:name=".ui.FontActivity"/>
+        <activity android:name=".ui.TestImmersionBarActivity"/>
     </application>
 
 </manifest>
