@@ -9,6 +9,10 @@
     主要原理就是使用 LiveData 观察 这两个对象，对象有变化就进行相应的请求，从而实现自动请求
 
 
+3. 提交新版本到阿里云云效 maven
+   1. 修改 baselib -> build.gradle 中的版本信息
+   2. AndroidStdio右侧 gradle -> baselib -> publishing -> 双击 publishReleasePublicationToMavenRepository
+   3. 如果baselib 下方没有 publishing，Command+,打开设置页 - Experimental - 取消勾选 Do not build Gradle task....
 
 业务数据的转换：@InverseMethod
 
