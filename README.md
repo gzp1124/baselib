@@ -18,7 +18,6 @@
    1. 设置仓库凭证
    ```
    最新的gradle 在 settings.gradle中设置如下，以前的设置在 allprojects 中
-   下面的密码，只有只读权限，没有上传权限，可以放在其他的项目中
    dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -31,13 +30,6 @@
                 password ']5pr_euLTUHE'
             }
             url 'https://packages.aliyun.com/maven/repository/2124813-release-mj2kic/'
-        }
-        maven {
-            credentials {
-                username '6308a60201acbf842a4d05c0'
-                password ']5pr_euLTUHE'
-            }
-            url 'https://packages.aliyun.com/maven/repository/2124813-snapshot-vqKXT3/'
         }
 
         google()
