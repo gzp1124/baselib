@@ -48,8 +48,6 @@ abstract class BaseViewModel : ViewModel() {
     val moreLoading = UnPeekLiveData<Boolean>()
     val hasMore = UnPeekLiveData<Boolean>()
 
-    fun getPage() = page.value ?: Settings.Request.pageStartIndex
-
     // 列表数据加载更多
     open fun loadMore() {
         page.postValue(page.value!! + 1)
@@ -242,6 +240,12 @@ abstract class BaseViewModel : ViewModel() {
      * @param reqBolck 网络请求的方法体，参数为 当前的分页页码
      * @param showLoading 显示加载中的 loading
      * @param loadingTips 加载中的提示语
+     * @param ignoreCacheErr 忽略错误的 try，包括 网络错误，业务错误，代码错误，三种错误的捕获
+     * @param ignoreResponseFilter 忽略对响应的过滤，为 true 不执行 responseFilter 方法，为 false 则执行，默认 false
+     * @param mPage 分页加载的页标，默认使用BaseViewModel 中的 page ，防止多个接口共用一个page出问题，每个接口可以指定单独的page，需要和BaseListFragment中的 onLoadMore / onRefresh 方法结合使用
+     * @param mRefreshing 同上 mPage
+     * @param mMoreLoading 同上
+     * @param mHasMore 同上
      * @param parseBolck 处理响应的数据
      */
     fun <R, Y, T : IResponse<Y>> requestListDataToLiveData(
@@ -251,21 +255,25 @@ abstract class BaseViewModel : ViewModel() {
         ignoreCacheErr: Boolean = false,
         ignoreResponseFilter: Boolean = false,
         liveDataNotNull: Boolean = false,
+        mPage: UnPeekLiveData<Int> = page,
+        mRefreshing: UnPeekLiveData<Boolean> = refreshing,
+        mMoreLoading: UnPeekLiveData<Boolean> = moreLoading,
+        mHasMore: UnPeekLiveData<Boolean> = hasMore,
         parseBolck: (pageBean: BasePageBean<Y?>) -> R
     ): LiveData<R?> {
         return map(
             liveDataNotNull,
-            Transformations.switchMap(page) {
+            Transformations.switchMap(mPage) {
                 parseRequest(reqBolck(it), showLoading, loadingTips, ignoreCacheErr).asLiveData()
             }
         ) {
-            refreshing.postValue(false)
-            moreLoading.postValue(false)
+            mRefreshing.postValue(false)
+            mMoreLoading.postValue(false)
             dowithTry(catchBlock = {
                 if (!ignoreCacheErr) catchErr(it, 2)
             }, {
-                val pageBean = BasePageBean(it?.resultData, page.value!!)
-                hasMore.postValue(pageBean.hasMoreData)
+                val pageBean = BasePageBean(it?.resultData, mPage.value!!)
+                mHasMore.postValue(pageBean.hasMoreData)
                 if (ignoreResponseFilter || responseFilter(it)) {
                     val result = parseBolck(pageBean)
                     return@map result

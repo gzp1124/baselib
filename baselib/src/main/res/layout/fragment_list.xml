@@ -8,12 +8,19 @@
             type="com.aligit.base.framework.mvvm.BaseViewModel" />
     </data>
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/rootVV"
         android:layout_width="match_parent"
+        android:orientation="vertical"
         android:layout_height="match_parent">
+        <RelativeLayout
+            android:id="@+id/headLin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
             android:id="@+id/smartRefreshLayout"
             android:layout_width="match_parent"
+            android:layout_weight="1"
             app:gOnLoadMoreListener="@{()->vm.loadMore()}"
             app:gOnRefreshListener="@{()->vm.refresh()}"
             app:gMoreLoading="@{vm.moreLoading}"
@@ -25,5 +32,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/bottomLin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
 </layout>

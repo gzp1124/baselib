@@ -18,9 +18,13 @@ fun bindSmartRefreshLayout(
 ) {
     if (!refreshing) {
         smartLayout.finishRefresh()
+    }else{
+        smartLayout.autoRefresh()
     }
     if (!moreLoading) {
         smartLayout.finishLoadMore()
+    }else{
+        smartLayout.autoLoadMore()
     }
     if (hasMore != null)
         smartLayout.setNoMoreData(!hasMore)//调用次方法会停止刷新动作
