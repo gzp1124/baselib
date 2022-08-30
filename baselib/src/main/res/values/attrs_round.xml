@@ -2,6 +2,8 @@
 <resources>
     <!-- 圆角矩形背景色 -->
     <attr name="rv_backgroundColor" format="color" />
+    <!-- select 状态的背景色-->
+    <attr name="rv_selBackgroundColor" format="color" />
     <!-- 圆角矩形渐变开始背景色 -->
     <attr name="rv_backgroundStartColor" format="color" />
     <!-- 圆角矩形渐变结束背景色 -->
@@ -43,6 +45,7 @@
 
     <declare-styleable name="RoundTextView">
         <attr name="rv_backgroundColor" />
+        <attr name="rv_selBackgroundColor" />
         <attr name="rv_backgroundPressColor" />
         <attr name="rv_cornerRadius" />
         <attr name="rv_strokeWidth" />

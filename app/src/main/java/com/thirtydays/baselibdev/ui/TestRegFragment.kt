@@ -1,6 +1,8 @@
 package com.thirtydays.baselibdev.ui
 
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.aligit.base.ext.tool.getResColor
+import com.aligit.base.ext.view.click
 import com.aligit.base.ui.fragment.BaseVmFragment
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTestRegBinding
@@ -99,6 +101,16 @@ fun validatePhonePass(pass: String): Boolean {
 @Route(path = "/test/reg")
 class TestRegFragment:BaseVmFragment<FragmentTestRegBinding>(R.layout.fragment_test_reg) {
     override fun onInitDataBinding() {
+        mDataBinding.checkSel.click {
+            mDataBinding.roundTv.isSelected = !mDataBinding.roundTv.isSelected
+//            if (mDataBinding.roundTv.isSelected) {
+//                mDataBinding.roundTv.delegate.backgroundColor =
+//                    getResColor(R.color.xui_config_color_red)
+//            }else{
+//                mDataBinding.roundTv.delegate.backgroundColor =
+//                    getResColor(R.color.xui_config_color_blue)
+//            }
+        }
     }
 
     override fun requestData() {

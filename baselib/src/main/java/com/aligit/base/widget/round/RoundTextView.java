@@ -5,6 +5,7 @@ import android.util.AttributeSet;
 
 import androidx.appcompat.widget.AppCompatTextView;
 
+
 /**
  * <pre>
  * author : gzp1124
@@ -52,6 +53,12 @@ public class RoundTextView extends AppCompatTextView {
     }
 
     @Override
+    protected void dispatchSetSelected(boolean selected) {
+        super.dispatchSetSelected(selected);
+        if (selChangeListener != null) selChangeListener.onSelectedChanged(delegate,selected);
+    }
+
+    @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         if (delegate.isRadiusHalfHeight()) {
@@ -59,5 +66,10 @@ public class RoundTextView extends AppCompatTextView {
         } else {
             delegate.setBgSelector();
         }
+    }
+
+    private  TextViewSelectedChangeListener selChangeListener;
+    public void setSelChangeListener(TextViewSelectedChangeListener listener){
+        selChangeListener = listener;
     }
 }

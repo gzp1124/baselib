@@ -34,6 +34,7 @@ public class RoundViewDelegate {
     private GradientDrawable gd_background       = new GradientDrawable();
     private GradientDrawable gd_background_press = new GradientDrawable();
     private int              backgroundColor;
+    private int              selBackgroundColor;
     private int              backgroundStartColor;
     private int              backgroundEndColor;
     private int              backgroundPressColor;
@@ -64,6 +65,7 @@ public class RoundViewDelegate {
     private void obtainAttributes(Context context, AttributeSet attrs) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.RoundTextView);
         backgroundColor = ta.getColor(R.styleable.RoundTextView_rv_backgroundColor, Color.TRANSPARENT);
+        selBackgroundColor = ta.getColor(R.styleable.RoundTextView_rv_selBackgroundColor, Color.TRANSPARENT);
         backgroundStartColor = ta.getColor(R.styleable.RoundTextView_rv_backgroundStartColor, Color.TRANSPARENT);
         backgroundEndColor = ta.getColor(R.styleable.RoundTextView_rv_backgroundEndColor, Color.TRANSPARENT);
         backgroundPressColor = ta.getColor(R.styleable.RoundTextView_rv_backgroundPressColor, Integer.MAX_VALUE);
@@ -89,6 +91,11 @@ public class RoundViewDelegate {
 
     public void setBackgroundColor(int backgroundColor) {
         this.backgroundColor = backgroundColor;
+        setBgSelector();
+    }
+
+    public void setSelBackgroundColor(int selBackgroundColor){
+        this.selBackgroundColor = selBackgroundColor;
         setBgSelector();
     }
 
@@ -180,6 +187,8 @@ public class RoundViewDelegate {
     public int getBackgroundColor() {
         return backgroundColor;
     }
+
+    public int getSelBackgroundColor(){ return selBackgroundColor; }
 
     public int getBackgroundPressColor() {
         return backgroundPressColor;
