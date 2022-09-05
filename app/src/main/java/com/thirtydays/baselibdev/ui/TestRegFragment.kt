@@ -103,13 +103,6 @@ class TestRegFragment:BaseVmFragment<FragmentTestRegBinding>(R.layout.fragment_t
     override fun onInitDataBinding() {
         mDataBinding.checkSel.click {
             mDataBinding.roundTv.isSelected = !mDataBinding.roundTv.isSelected
-//            if (mDataBinding.roundTv.isSelected) {
-//                mDataBinding.roundTv.delegate.backgroundColor =
-//                    getResColor(R.color.xui_config_color_red)
-//            }else{
-//                mDataBinding.roundTv.delegate.backgroundColor =
-//                    getResColor(R.color.xui_config_color_blue)
-//            }
         }
     }
 

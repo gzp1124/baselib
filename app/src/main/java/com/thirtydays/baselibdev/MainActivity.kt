@@ -4,8 +4,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.common.LanguageHelper
 import com.aligit.base.common.LanguageStatus
+import com.aligit.base.ext.tool.log
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.activity.BaseVmActivity
+import com.aligit.base.utils.PermissionUtil
 import com.thirtydays.baselibdev.adapter.MainAdapter
 import com.thirtydays.baselibdev.click.MainClick
 import com.thirtydays.baselibdev.databinding.ActivityMainBinding
@@ -50,6 +52,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
         MainBean("测试各种请求网络", "/test/normal_request", true),
         MainBean("使用Flow代替LiveData", "/test/flow", true),
         MainBean("测试沉浸式问题", "/test/immersionBar", false),
+        MainBean("测试定位获取经纬度", "/test/getlocation", false),
         MainBean("测试 XUI 库的使用", "/test/test_xui", true)
     )
 
@@ -66,6 +69,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(this)
         }
+
     }
 
     override fun changeLang(lang: LanguageStatus) {

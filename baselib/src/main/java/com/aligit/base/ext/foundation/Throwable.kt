@@ -39,14 +39,12 @@ sealed class BaseThrowable(
     }
 }
 
-interface ParseThrowable{
+interface ParseThrowable {
     fun onNetError(throwable: BaseThrowable)
 }
 
 fun BaseThrowable.onError() {
-    log("========================================================")
-    log(toString())
     cause?.printStackTrace()
-    log("error over ========================================================")
+    log("========================================================\n${toString()}\n========================================================")
     (AppContext.baseContext as? ParseThrowable)?.onNetError(this)
 }
