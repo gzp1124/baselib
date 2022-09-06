@@ -60,3 +60,6 @@ dependencyResolutionManagement {
     执行完上面的代码，application 中的 initSDK() 会自动进行执行。
     5. 然后进行后续的继续操作。打开新页面之类的。
 
+4. 删除缓存在本机上的三方库
+    Mac：/Users/gzp1124/.gradle/caches/modules-2/files-2.1
+    Windows：C:/Users/Administrator/.gradle/caches/modules-2/files-2.1

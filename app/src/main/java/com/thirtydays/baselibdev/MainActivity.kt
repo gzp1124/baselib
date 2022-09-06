@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.common.LanguageHelper
 import com.aligit.base.common.LanguageStatus
+import com.aligit.base.ext.startWebFragment
 import com.aligit.base.ext.tool.log
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.activity.BaseVmActivity
@@ -70,6 +71,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
             it.layoutManager = LinearLayoutManager(this)
         }
 
+        startWebFragment("https://www.baidu.com")
     }
 
     override fun changeLang(lang: LanguageStatus) {

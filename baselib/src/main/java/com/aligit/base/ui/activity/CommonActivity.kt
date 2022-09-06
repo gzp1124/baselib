@@ -1,11 +1,16 @@
 package com.aligit.base.ui.activity
 
 import android.os.Bundle
+import android.view.KeyEvent
 import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.R
 import com.aligit.base.Settings
 import com.aligit.base.databinding.ActivityCommonBinding
+
+interface CommonActivityEvent{
+    fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean
+}
 
 class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_common) {
 
@@ -32,15 +37,25 @@ class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_com
         return intent.getBooleanExtra("useImmersionBar",Settings.UI.useImmersionBar)
     }
 
+    private lateinit var fragment: Fragment
+
     override fun initData() {
         try {
             fragmentBundle = intent.getBundleExtra("fragmentBundle")
             fragmentPath = intent.getStringExtra("fragmentPath")
-            val fragment = ARouter.getInstance().build(fragmentPath).navigation() as Fragment
+            fragment = ARouter.getInstance().build(fragmentPath).navigation() as Fragment
             fragmentBundle?.let { fragment.arguments = it }
             supportFragmentManager.beginTransaction().replace(R.id.commonFrameLin,fragment).commitAllowingStateLoss()
         }catch (e:Exception){
             e.printStackTrace()
         }
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (fragment is CommonActivityEvent) {
+            val res = (fragment as CommonActivityEvent).onKeyDown(keyCode, event)
+            if (res) return res
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

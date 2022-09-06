@@ -37,3 +37,8 @@ fun String?.getLength(): Int = when {
     isNullOrEmpty() -> 0
     else -> length
 }
+
+fun List<Any>?.getSize(): Int = when {
+    this == null -> 0
+    else -> size
+}

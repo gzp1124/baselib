@@ -12,6 +12,8 @@ import android.view.View
 import android.webkit.WebView
 import androidx.annotation.IdRes
 import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.Settings
 import com.aligit.base.ui.activity.CommonActivity
 import com.blankj.utilcode.util.ActivityUtils
@@ -85,6 +87,19 @@ fun startCommonFragment(
     i.putExtra("fragmentBundle",bundle)
     i.putExtra("fragmentPath",fragmentPath)
     ActivityUtils.startActivity(i)
+}
+
+fun startWebFragment(
+    url:String,
+    fragmentPath:String = "/common/web",
+    bundle: Bundle? = null,
+    useSwipeBack: Boolean = Settings.UI.useSwipeBack,
+    useImmersionBar: Boolean = Settings.UI.useImmersionBar,
+    isHideBottom: Boolean = !Settings.UI.hasNavigationBar,
+    autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,){
+    val myBundle = bundle ?: Bundle()
+    myBundle.putString("url",url)
+    startCommonFragment(fragmentPath,myBundle,useSwipeBack, useImmersionBar, isHideBottom, autoSizeIsBaseOnWidth)
 }
 
 inline fun dowithTry(catchBlock: (e: Throwable) -> Unit = {},block: () -> Unit) {

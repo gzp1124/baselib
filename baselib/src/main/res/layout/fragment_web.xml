@@ -9,8 +9,18 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <WebView
+        <RelativeLayout
+            android:id="@+id/headLin"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="wrap_content"/>
+        <com.aligit.base.common.web.MyWebView
+            android:id="@+id/webView"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="0dp"/>
+        <RelativeLayout
+            android:id="@+id/bottomLin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
     </LinearLayout>
 </layout>

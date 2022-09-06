@@ -11,13 +11,13 @@ import okhttp3.RequestBody
 import kotlin.system.exitProcess
 
 
-val appid = "cli_a226e0903325d013"
-val appSecret = "akpyeqc67hmX4qoBLPxfLhDb7k8tIkCk"
-val tableId = "shtcnGZEHxm4s7GF6f8JQiqqgIb"
-val sheet = "63b56a"
-var feiShuToken: String = ""
+private const val a1 = "cli_a226e0903325d013"
+private const val a2 = "akpyeqc67hmX4qoBLPxfLhDb7k8tIkCk"
+private const val a3 = "shtcnGZEHxm4s7GF6f8JQiqqgIb"
+private const val a4 = "63b56a"
+private var a5: String = ""
 
-data class TokenReq(val app_id: String = appid, val app_secret: String = appSecret)
+data class TokenReq(val app_id: String = a1, val app_secret: String = a2)
 data class TokenBean(
     val code: Int,
     val expire: Int,
@@ -63,7 +63,7 @@ object FeiShu {
                 val response = client.newCall(request).execute()  //发请求获取服务器返回的数据
                 val responseData = response.body?.string()
                 val bean = gson.fromJson(responseData, TokenBean::class.java)
-                feiShuToken = bean.tenant_access_token
+                a5 = bean.tenant_access_token
 
                 getSheet()
             }
@@ -90,13 +90,13 @@ object FeiShu {
 
     fun realGetSheet(page:Int): SheetData?{
         val url =
-            "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/$tableId/values/$sheet!A${(page-1)*10+1}:A${page*10}"
+            "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/$a3/values/$a4!A${(page-1)*10+1}:A${page*10}"
         val client = OkHttpClient()    //创建OkHClient实例
 
         val request = Request.Builder()     //发请求创建一个Request对象
             .url(url)
             .addHeader("Content-Type","application/json; charset=utf-8")
-            .addHeader("Authorization", "Bearer $feiShuToken")
+            .addHeader("Authorization", "Bearer $a5")
             .build()
 
         val response = client.newCall(request).execute()  //发请求获取服务器返回的数据

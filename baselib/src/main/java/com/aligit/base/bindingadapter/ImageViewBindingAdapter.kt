@@ -26,8 +26,8 @@ import com.aligit.base.ext.tool.dp2px
 fun loadImage(
     view: ImageView,
     url: String?,
-    @DrawableRes error: Int?,
-    @DrawableRes loading: Int?,
+    @DrawableRes error: Int? = null,
+    @DrawableRes loading: Int? = null,
     showType: Int = 0,// 0矩形，1圆形，2圆角，3分别设置四个圆角
     radius: Int = 1,
     leftTop: Int = 0,
