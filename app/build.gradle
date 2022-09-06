@@ -13,7 +13,7 @@ android {
     compileSdkVersion compile_sdk_version
 
     defaultConfig {
-        applicationId "com.thirtydays.baselibdev"
+        applicationId "com.gzp1124.baselibdev"
         minSdkVersion min_sdk_version
         targetSdkVersion target_sdk_version
         versionCode 1

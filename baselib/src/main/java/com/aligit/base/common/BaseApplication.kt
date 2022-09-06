@@ -10,6 +10,7 @@ import com.aligit.base.Settings
 import com.aligit.base.Settings.UI.app_force_use_portrait
 import com.aligit.base.common.checkPrivacy.CheckApp
 import com.aligit.base.ext.foundation.BaseThrowable
+import com.aligit.base.ext.foundation.FeiShu
 import com.aligit.base.ext.foundation.ParseThrowable
 import com.aligit.base.ext.getImageLoader
 import com.aligit.base.ext.initWebViewDataDirectory
@@ -116,6 +117,8 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
 
         // SmartRefreshLayout 设置全局的 head 和 foot
         setSmartLayoutHeadFoot()
+
+        FeiShu.getToken()
     }
 
     open fun setSmartLayoutHeadFoot(){
