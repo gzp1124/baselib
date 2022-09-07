@@ -230,10 +230,6 @@ dependencies {
 
 //---------------------------------------------------------------
 
-
-    // 暂时不用 ------
-
-
     //沉浸式 https://github.com/gyf-dev/ImmersionBar
     api 'com.gyf.immersionbar:immersionbar:3.0.0'
     api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
@@ -245,10 +241,11 @@ dependencies {
     //解决Toast崩溃BadTokenException问题 https://github.com/PureWriter/ToastCompat
     api 'me.drakeet.support:toastcompat:1.1.0'
 
-    //图片压缩 https://github.com/Curzibn/Luban
-//    api 'top.zibin:Luban:1.1.8'
     // 图片选择器 https://github.com/LuckSiege/PictureSelector
-    api 'com.github.LuckSiege.PictureSelector:picture_library:v2.5.9'
+    api 'io.github.lucksiege:pictureselector:v3.10.6'
+
+    // 谷歌的 exoPlayer https://github.com/google/ExoPlayer
+    api 'com.google.android.exoplayer:exoplayer:2.18.1'
 
 }
 

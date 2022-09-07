@@ -37,6 +37,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
     val pages = arrayListOf(
         MainBean("测试MP折线图","/test/mp_chart",true),
         MainBean("测试圆形进度条", "/test/cicle_progress", true),
+        MainBean("测试 SelectImage 图片选择器", "/test/select_image", true),
         MainBean("测试 databinding 转换器", "/test/test_convert", true),
         MainBean("测试 hide show 切换 fragment，请求网络", "/test/hide_show", true),
         MainBean("测试正则", "/test/reg", true),
@@ -70,8 +71,6 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
             it.adapter = adapter
             it.layoutManager = LinearLayoutManager(this)
         }
-
-        startWebFragment("https://www.baidu.com")
     }
 
     override fun changeLang(lang: LanguageStatus) {

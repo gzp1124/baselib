@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.annotation.IdRes
 import androidx.annotation.Nullable
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
@@ -21,6 +22,7 @@ import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.activity.BaseActivity
 import com.aligit.base.ui.foundation.activity.SwipeBackActivity
+import com.blankj.utilcode.util.FragmentUtils
 import com.gyf.immersionbar.ImmersionBar
 import com.gyf.immersionbar.components.SimpleImmersionOwner
 import com.gyf.immersionbar.components.SimpleImmersionProxy
@@ -160,6 +162,28 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
     override fun onPause() {
         super.onPause()
         isShow = false
+    }
+
+    fun showFragment(
+        @IdRes containerId: Int,
+        key: String,
+        createFragment: (key: String) -> BaseFragment
+    ) {
+        FragmentUtils.getFragments(childFragmentManager)?.forEach { f ->
+            if (f != null && f is BaseFragment && f.isShow) {
+                FragmentUtils.hide(f)
+            }
+        }
+        FragmentUtils.findFragment(childFragmentManager, key)?.let {
+            FragmentUtils.show(it)
+        } ?: let {
+            FragmentUtils.add(
+                childFragmentManager,
+                createFragment(key),
+                containerId,
+                key
+            )
+        }
     }
 
     override fun initImmersionBar() {

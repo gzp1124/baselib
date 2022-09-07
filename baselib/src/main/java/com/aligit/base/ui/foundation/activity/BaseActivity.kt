@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import androidx.annotation.IdRes
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.R
 import com.aligit.base.Settings
@@ -17,6 +18,8 @@ import com.aligit.base.ext.tool.toast
 import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
+import com.aligit.base.ui.foundation.fragment.BaseFragment
+import com.blankj.utilcode.util.FragmentUtils
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
 import com.lxj.xpopup.impl.LoadingPopupView
@@ -176,6 +179,28 @@ abstract class BaseActivity : InternationalizationActivity() {
                     }
                 }
             }
+        }
+    }
+
+    fun showFragment(
+        @IdRes containerId: Int,
+        key: String,
+        createFragment: (key: String) -> BaseFragment
+    ) {
+        FragmentUtils.getFragments(supportFragmentManager)?.forEach { f ->
+            if (f != null && f is BaseFragment && f.isShow) {
+                FragmentUtils.hide(f)
+            }
+        }
+        FragmentUtils.findFragment(supportFragmentManager, key)?.let {
+            FragmentUtils.show(it)
+        } ?: let {
+            FragmentUtils.add(
+                supportFragmentManager,
+                createFragment(key),
+                containerId,
+                key
+            )
         }
     }
 }

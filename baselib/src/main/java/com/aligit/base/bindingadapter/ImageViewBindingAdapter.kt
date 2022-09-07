@@ -12,14 +12,14 @@ import com.aligit.base.ext.tool.dp2px
 并且 imageUrl 是字符串，error 是 Drawable，就会调用适配器。
 如果您希望在设置了任意属性时调用适配器，则可以将适配器的可选 requireAll 标志设置为 false
 使用方式
-<ImageView app:imageUrl="@{venue.imageUrl}" app:error="@{@drawable/venueError}" />
+<ImageView app:imageUrl="@{venue.imageUrl}" app:error="@{@drawable-xhdpi/venueError}" />
  */
 /**
  * 单位使用 dp
  * @param gShowType 0矩形，1圆形，2圆角，3分别设置四个圆角
  */
 @BindingAdapter(
-    value = ["gImageUrl", "gError", "gLoading", "gShowType", "gRadius",
+    value = ["gImageUrl", "gError", "gLoading", "gShowType","gIsCenterCrop", "gRadius",
             "gLeftTop", "gLeftBottom", "gRightTop", "gRightBottom"],
     requireAll = false
 )
@@ -29,16 +29,17 @@ fun loadImage(
     @DrawableRes error: Int? = null,
     @DrawableRes loading: Int? = null,
     showType: Int = 0,// 0矩形，1圆形，2圆角，3分别设置四个圆角
-    radius: Int = 1,
+    isCenterCrop: Boolean = true,// true 图片填充满控件 多余的裁掉，false 显示完整图片
+    radius: Int = 1, // 单位dp
     leftTop: Int = 0,
     leftBottom: Int = 0,
     rightTop: Int = 0,
     rightBottom: Int = 0,
 ) {
     when (showType) {
-        0 -> getImageLoader().loadImage(view.context, url, error, loading, view)
-        1 -> getImageLoader().loadCircleImage(view.context, url, error, loading, view)
-        2 -> getImageLoader().loadRoundedImage(view.context, url, error, loading, view, dp2px(radius))
-        3 -> getImageLoader().load4RoundedImage(view.context, url, error, loading, view, dp2px(leftTop), dp2px(leftBottom), dp2px(rightTop), dp2px(rightBottom))
+        0 -> getImageLoader().loadImage(view.context, url, error, loading,isCenterCrop, view)
+        1 -> getImageLoader().loadCircleImage(view.context, url, error, loading,isCenterCrop, view)
+        2 -> getImageLoader().loadRoundedImage(view.context, url, error, loading,isCenterCrop, view, dp2px(radius))
+        3 -> getImageLoader().load4RoundedImage(view.context, url, error, loading,isCenterCrop, view, dp2px(leftTop), dp2px(leftBottom), dp2px(rightTop), dp2px(rightBottom))
     }
 }

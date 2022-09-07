@@ -126,4 +126,40 @@
             <enum name="content_text" value="1" />
         </attr>
     </declare-styleable>
+
+    <attr name="maxSelectNum" format="integer" />
+    <attr name="spanCount" format="integer" />
+    <!-- 0=ALL,1=IMAGE,2=VIDEO,3=AUDIO -->
+    <attr name="openType" format="integer" />
+    <attr name="delImage" format="reference" />
+    <attr name="addImage" format="reference" />
+    <attr name="canPreView" format="boolean" />
+    <attr name="isCenterCrop" format="boolean"/>
+    <attr name="canPreViewDownload" format="boolean" />
+    <attr name="canPreViewDelete" format="boolean" />
+
+    <declare-styleable name="SelectImageView">
+        <attr name="maxSelectNum" />
+        <attr name="spanCount" />
+        <attr name="openType" />
+        <attr name="delImage" />
+        <attr name="addImage" />
+        <attr name="canPreView" />
+        <attr name="canPreViewDownload" />
+        <attr name="canPreViewDelete" />
+    </declare-styleable>
+    <declare-styleable name="ShowGridImageView">
+        <attr name="spanCount" />
+        <attr name="canPreView" />
+        <attr name="canPreViewDownload" />
+    </declare-styleable>
+    <declare-styleable name="SelectOneImageView">
+        <attr name="openType" />
+        <attr name="delImage" />
+        <attr name="addImage" />
+        <attr name="canPreView" />
+        <attr name="canPreViewDownload" />
+        <attr name="canPreViewDelete" />
+        <attr name="isCenterCrop"/>
+    </declare-styleable>
 </resources>

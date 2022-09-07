@@ -78,8 +78,8 @@ abstract class SwipeBackActivity : AppCompatActivity(), BGASwipeBackHelper.Deleg
         // 设置是否是微信滑动返回样式。默认值为 true
         // 设置是否是微信滑动返回样式。默认值为 true
         mSwipeBackHelper.setIsWeChatStyle(true)
-        // 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
-        // 设置阴影资源 id。默认值为 R.drawable.bga_sbl_shadow
+        // 设置阴影资源 id。默认值为 R.drawable-xhdpi.bga_sbl_shadow
+        // 设置阴影资源 id。默认值为 R.drawable-xhdpi.bga_sbl_shadow
         mSwipeBackHelper.setShadowResId(R.drawable.bga_sbl_shadow)
         // 设置是否显示滑动返回的阴影效果。默认值为 true
         // 设置是否显示滑动返回的阴影效果。默认值为 true

@@ -1,6 +1,5 @@
 package com.aligit.base.common
 
-import android.app.Application
 import android.content.Context
 import android.content.ContextWrapper
 import androidx.lifecycle.MutableLiveData
@@ -9,11 +8,10 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.Settings
 import com.aligit.base.Settings.UI.app_force_use_portrait
 import com.aligit.base.common.checkPrivacy.CheckApp
+import com.aligit.base.common.image.PictureSelectorEngineImp
 import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.FeiShu
 import com.aligit.base.ext.foundation.ParseThrowable
-import com.aligit.base.ext.getImageLoader
-import com.aligit.base.ext.initWebViewDataDirectory
 import com.aligit.base.ext.tool.isLandscape
 import com.aligit.base.net.ok.OkHttpManager
 import com.aligit.base.net.retrofit.RetrofitFactory
@@ -21,10 +19,7 @@ import com.elvishew.xlog.LogConfiguration
 import com.elvishew.xlog.XLog
 import com.elvishew.xlog.printer.AndroidPrinter
 import com.luck.picture.lib.app.IApp
-import com.luck.picture.lib.engine.ImageEngine
 import com.luck.picture.lib.engine.PictureSelectorEngine
-import com.luck.picture.lib.entity.LocalMedia
-import com.luck.picture.lib.listener.OnResultCallbackListener
 import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -48,8 +43,6 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
     override fun attachBaseContext(base: Context) {
         CommonHelper.context = base
         super.attachBaseContext(base)
-
-        initWebViewDataDirectory()
     }
 
     /**
@@ -153,19 +146,8 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
         return this
     }
 
-    override fun getPictureSelectorEngine() = object : PictureSelectorEngine{
-        override fun createEngine(): ImageEngine {
-            return getImageLoader()
-        }
-
-        override fun getResultCallbackListener() = object : OnResultCallbackListener<LocalMedia> {
-            override fun onResult(result: MutableList<LocalMedia>?) {
-                // 这种情况是内存极度不足的情况下，比如开启开发者选项中的不保留活动或后台进程限制，导致OnResultCallbackListener被回收
-                // 可以在这里进行一些补救措施，通过广播或其他方式将结果推送到相应页面，防止结果丢失的情况
-            }
-
-            override fun onCancel() { }
-        }
+    override fun getPictureSelectorEngine(): PictureSelectorEngine {
+        return PictureSelectorEngineImp()
     }
 
 }
