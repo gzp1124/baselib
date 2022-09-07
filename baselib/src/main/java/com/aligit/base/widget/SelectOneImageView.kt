@@ -31,7 +31,7 @@ import com.luck.picture.lib.utils.MediaUtils
 import com.luck.picture.lib.utils.PictureFileUtils
 
 /**
- * 单选图片控件
+ * 选择一张图片的控件
  * 一般用于选择图片
  * xml 和 代码中都可以使用
 <com.aligit.base.widget.SelectOneImageView
