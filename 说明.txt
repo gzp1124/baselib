@@ -66,3 +66,5 @@ dependencyResolutionManagement {
 4. 删除缓存在本机上的三方库
     Mac：/Users/gzp1124/.gradle/caches/modules-2/files-2.1
     Windows：C:/Users/Administrator/.gradle/caches/modules-2/files-2.1
+
+5. 业务数据的转换：@InverseMethod
