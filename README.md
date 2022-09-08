@@ -63,7 +63,7 @@ dependencyResolutionManagement {
     implementation 'com.github.xuexiangjys:XUI:1.1.9'
 ```
 
-3. 使用欢迎页让用户接受隐私政策，不接受隐私政策不进入APP
+5.使用欢迎页让用户接受隐私政策，不接受隐私政策不进入APP
    因为最新的隐私政策原因，不这么做APP可能无法上线
    参考：https://juejin.cn/post/6990643611130363917
    步骤：
