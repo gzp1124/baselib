@@ -36,7 +36,7 @@ dependencyResolutionManagement {
     }
 }
 ```
-2. APP 的 gradle 文件中
+   2. APP 的 gradle 文件中
 ```
     plugins {
         id 'com.android.application'
