@@ -29,7 +29,7 @@ fun loadImage(
     @DrawableRes error: Int? = null,
     @DrawableRes loading: Int? = null,
     showType: Int = 0,// 0矩形，1圆形，2圆角，3分别设置四个圆角
-    isCenterCrop: Boolean = true,// true 图片填充满控件 多余的裁掉，false 显示完整图片
+    isCenterCrop: Boolean = false,// true 图片填充满控件 多余的裁掉，false 显示完整图片
     radius: Int = 1, // 单位dp
     leftTop: Int = 0,
     leftBottom: Int = 0,

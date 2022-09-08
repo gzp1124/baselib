@@ -68,3 +68,10 @@ dependencyResolutionManagement {
     Windows：C:/Users/Administrator/.gradle/caches/modules-2/files-2.1
 
 5. 业务数据的转换：@InverseMethod
+
+6. 关于图片缩放 ScaleType 的解释
+    最常用的2中模式：FIT_CENTER 缩放并完全展示图片 ImageView可能会有空白；CENTER_CROP 缩放并完整填充 ImageView 图片可能展示不完全
+    https://www.jianshu.com/p/32e335d5b842
+    以FIT_开头的4种，它们的共同点是都会对图片进行缩放；默认 FIT_CENTER
+    以CENTER_开头的3种，它们的共同点是居中显示，图片的中心点会与ImageView的中心点重叠；
+    ScaleType.MATRIX，这种就直接翻到最后看内容吧；

@@ -39,6 +39,7 @@
         <entry key="baselib/src/main/res/layout/quick_view_load_more.xml" value="0.22871376811594202" />
         <entry key="baselib/src/main/res/layout/toolbar.xml" value="0.2115036231884058" />
         <entry key="baselib/src/main/res/layout/view_select_image.xml" value="0.2125" />
+        <entry key="baselib/src/main/res/layout/view_select_one_image.xml" value="0.28229166666666666" />
       </map>
     </option>
   </component>

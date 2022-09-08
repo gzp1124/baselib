@@ -1,6 +1,7 @@
 package com.aligit.base.widget
 
 import android.content.Context
+import android.graphics.Color
 import android.net.Uri
 import android.util.AttributeSet
 import android.widget.ImageView
@@ -50,7 +51,7 @@ class SelectOneImageView : RelativeLayout {
     private var canPreView: Boolean = true // 能发预览图片
     private var canPreViewDownload: Boolean = false // 预览时能否长按下载
     private var canPreViewDelete: Boolean = true // 预览时能否删除图片
-    private var isCenterCrop:Boolean = true
+    private var isCenterCrop:Boolean = false
 
     constructor(context: Context) : super(context) {
         init(context, null)
@@ -78,7 +79,7 @@ class SelectOneImageView : RelativeLayout {
         canPreView: Boolean = true,
         canPreViewDownload: Boolean = false,
         canPreViewDelete: Boolean = true,
-        isCenterCrop: Boolean = true
+        isCenterCrop: Boolean = false
     ) : super(context) {
         this.openType = openType
         this.delImage = delImage
@@ -103,7 +104,7 @@ class SelectOneImageView : RelativeLayout {
             ta.getBoolean(R.styleable.SelectOneImageView_canPreViewDownload, false) // 预览时能否长按下载
         canPreViewDelete =
             ta.getBoolean(R.styleable.SelectOneImageView_canPreViewDelete, true) // 预览时能否删除图片
-        isCenterCrop = ta.getBoolean(R.styleable.SelectOneImageView_isCenterCrop,true)
+        isCenterCrop = ta.getBoolean(R.styleable.SelectOneImageView_isCenterCrop,false)
         ta.recycle()
     }
 
@@ -121,7 +122,8 @@ class SelectOneImageView : RelativeLayout {
     lateinit var iv_del: ImageView
     fun init(context: Context, attrs: AttributeSet?) {
         attrs?.let { obtainAttributes(context, it) }
-        val view = inflate(context, R.layout.gv_filter_image, this)
+        val view = inflate(context, R.layout.view_select_one_image, this)
+        setBackgroundColor(Color.parseColor("#ff0000"))
 
         fiv = view.findViewById<ImageView>(R.id.fiv)
         iv_del = view.findViewById<ImageView>(R.id.iv_del)
