@@ -253,7 +253,7 @@ afterEvaluate {
 
                 groupId = 'com.gzp1124.baselib'
                 artifactId = 'baselib'
-                version = '1.4.0'
+                version = '1.4.1'
             }
         }
 

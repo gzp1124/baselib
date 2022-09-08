@@ -6,8 +6,10 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.bindingadapter.loadImage
 import com.aligit.base.ext.startShowImageFragment
 import com.aligit.base.ext.tool.dp2px
+import com.aligit.base.ext.tool.toast
 import com.aligit.base.ext.view.click
 import com.aligit.base.ui.fragment.BaseVmFragment
+import com.aligit.base.utils.PermissionUtil
 import com.aligit.base.widget.SelectOneImageView
 import com.aligit.base.widget.select_image.SelectImageView
 import com.aligit.base.widget.show_grid_image.ShowGridImageView
@@ -71,7 +73,10 @@ class TestSelectImageFragment :
             "https://t7.baidu.com/it/u=2291349828,4144427007&fm=193&f=GIF"
         )
         mDataBinding.openimg.click {
-            startShowImageFragment(imgs)
+//            startShowImageFragment(imgs)
+            PermissionUtil.requestCamera({
+                toast { "请求成功" }
+            })
         }
 
         loadImage(

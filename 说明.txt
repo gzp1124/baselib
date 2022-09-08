@@ -75,3 +75,9 @@ dependencyResolutionManagement {
     以FIT_开头的4种，它们的共同点是都会对图片进行缩放；默认 FIT_CENTER
     以CENTER_开头的3种，它们的共同点是居中显示，图片的中心点会与ImageView的中心点重叠；
     ScaleType.MATRIX，这种就直接翻到最后看内容吧；
+
+7. 设置主题
+    <!-- Base application theme. -->
+    <style name="Theme.TestReq" parent="AppPhoneTheme">
+        ...
+    </style>

@@ -39,8 +39,8 @@ import com.luck.picture.lib.utils.PictureFileUtils
 app:openType="1"
 android:layout_width="200dp"
 android:layout_height="100dp"/>
- 代码中：
- lin.addView(SelectOneImageView(requireContext(), openType = 1))
+代码中：
+lin.addView(SelectOneImageView(requireContext(), openType = 1))
  */
 class SelectOneImageView : RelativeLayout {
 
@@ -51,7 +51,7 @@ class SelectOneImageView : RelativeLayout {
     private var canPreView: Boolean = true // 能发预览图片
     private var canPreViewDownload: Boolean = false // 预览时能否长按下载
     private var canPreViewDelete: Boolean = true // 预览时能否删除图片
-    private var isCenterCrop:Boolean = false
+    private var isCenterCrop: Boolean = false
 
     constructor(context: Context) : super(context) {
         init(context, null)
@@ -104,7 +104,7 @@ class SelectOneImageView : RelativeLayout {
             ta.getBoolean(R.styleable.SelectOneImageView_canPreViewDownload, false) // 预览时能否长按下载
         canPreViewDelete =
             ta.getBoolean(R.styleable.SelectOneImageView_canPreViewDelete, true) // 预览时能否删除图片
-        isCenterCrop = ta.getBoolean(R.styleable.SelectOneImageView_isCenterCrop,false)
+        isCenterCrop = ta.getBoolean(R.styleable.SelectOneImageView_isCenterCrop, false)
         ta.recycle()
     }
 
@@ -218,8 +218,17 @@ class SelectOneImageView : RelativeLayout {
             if (result.getSize() > 0) {
                 showMedia = result[0]
                 updateImg()
+                showMedia?.let {
+                    onSelectImgListener?.onSelect(it.availablePath)
+                }
             }
         }
+    }
+
+    var onSelectImgListener: OnSelectImgListener? = null
+
+    interface OnSelectImgListener {
+        fun onSelect(path:String)
     }
 
     fun getSelectMedia() = showMedia

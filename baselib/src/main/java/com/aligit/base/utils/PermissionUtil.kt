@@ -3,8 +3,12 @@ package com.aligit.base.utils
 import android.Manifest
 import android.content.Context
 import android.os.Build
+import com.aligit.base.ext.tool.getSize
+import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
+import com.blankj.utilcode.util.AppUtils
 import com.blankj.utilcode.util.PermissionUtils
+import com.blankj.utilcode.util.UtilsTransActivity
 
 /**
  * @创建者：gzp1124
@@ -25,16 +29,26 @@ object PermissionUtil {
     ) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (!PermissionUtils.isGranted(*permissions)) {
-                PermissionUtils.permission(*permissions).rationale { _, _ ->
-                    denied()
-                }.callback { isAllGranted, _, _, _ ->
-                    if (!isAllGranted) {
-                        denied()
-                    } else {
-                        function()
+                PermissionUtils.permission(*permissions)
+                    .rationale(object : PermissionUtils.OnRationaleListener {
+                        override fun rationale(
+                            activity: UtilsTransActivity,
+                            shouldRequest: PermissionUtils.OnRationaleListener.ShouldRequest
+                        ) {
+                            shouldRequest.again(true)
+                        }
                     }
-                }.request()
-            }else {
+                    ).callback { isAllGranted, granted, deniedForever, denied ->
+                        if (!isAllGranted) {
+                            denied()
+                            if (deniedForever.getSize() > 0) {
+                                AppUtils.launchAppDetailsSettings()
+                            }
+                        } else {
+                            function()
+                        }
+                    }.request()
+            } else {
                 function()
             }
         } else {

@@ -1,5 +1,6 @@
 package com.aligit.base.ui.activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import androidx.fragment.app.Fragment
@@ -8,20 +9,24 @@ import com.aligit.base.R
 import com.aligit.base.Settings
 import com.aligit.base.databinding.ActivityCommonBinding
 
-interface CommonActivityEvent{
+interface CommonActivityEvent {
     fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean
 }
 
-class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_common) {
+interface CommonActivityOnResult {
+    fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?)
+}
 
-    var fragmentPath:String? = ""
-    var fragmentBundle:Bundle? = null
+class CommonActivity : BaseVmActivity<ActivityCommonBinding>(R.layout.activity_common) {
+
+    var fragmentPath: String? = ""
+    var fragmentBundle: Bundle? = null
 
     override fun onInitDataBinding() {
     }
 
     override fun isSupportSwipeBack(): Boolean {
-        return intent.getBooleanExtra("useSwipeBack",Settings.UI.useSwipeBack)
+        return intent.getBooleanExtra("useSwipeBack", Settings.UI.useSwipeBack)
     }
 
     // 这里调用太早，会导致 intent 空指针
@@ -30,11 +35,11 @@ class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_com
 //    }
 
     override fun booHideBottom(): Boolean {
-        return intent.getBooleanExtra("isHideBottom",Settings.UI.hasNavigationBar)
+        return intent.getBooleanExtra("isHideBottom", Settings.UI.hasNavigationBar)
     }
 
     override fun isImmersionBar(): Boolean {
-        return intent.getBooleanExtra("useImmersionBar",Settings.UI.useImmersionBar)
+        return intent.getBooleanExtra("useImmersionBar", Settings.UI.useImmersionBar)
     }
 
     private lateinit var fragment: Fragment
@@ -45,8 +50,9 @@ class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_com
             fragmentPath = intent.getStringExtra("fragmentPath")
             fragment = ARouter.getInstance().build(fragmentPath).navigation() as Fragment
             fragmentBundle?.let { fragment.arguments = it }
-            supportFragmentManager.beginTransaction().replace(R.id.commonFrameLin,fragment).commitAllowingStateLoss()
-        }catch (e:Exception){
+            supportFragmentManager.beginTransaction().replace(R.id.commonFrameLin, fragment)
+                .commitAllowingStateLoss()
+        } catch (e: Exception) {
             e.printStackTrace()
         }
     }
@@ -57,5 +63,13 @@ class CommonActivity:BaseVmActivity<ActivityCommonBinding>(R.layout.activity_com
             if (res) return res
         }
         return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (fragment is CommonActivityOnResult) {
+            (fragment as CommonActivityOnResult).onActivityResult(requestCode, resultCode, data)
+        } else {
+            super.onActivityResult(requestCode, resultCode, data)
+        }
     }
 }

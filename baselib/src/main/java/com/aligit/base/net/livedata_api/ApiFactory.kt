@@ -4,6 +4,7 @@ import androidx.databinding.ObservableField
 import com.aligit.base.Settings
 import com.aligit.base.common.AppContext
 import com.aligit.base.common.BaseApplication
+import com.aligit.base.ext.tool.getLength
 import com.aligit.base.ext.tool.logi
 import com.aligit.base.net.ok.log.LoggerInterceptor
 import com.aligit.base.net.ok.log.MyHttpLoggingInterceptor
@@ -60,7 +61,11 @@ object ApiFactory {
             // 添加 log 拦截器
             val loggingInterceptor = MyHttpLoggingInterceptor(object : MyHttpLoggingInterceptor.Logger {
                 override fun log(message: String) {
-                    logi(message)
+                    if (message.getLength() > 2000){
+                        logi(message.substring(0,2000))
+                    }else {
+                        logi(message)
+                    }
                 }
             })
             loggingInterceptor.level = MyHttpLoggingInterceptor.Level.BODY
