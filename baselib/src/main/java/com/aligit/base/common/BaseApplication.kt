@@ -24,7 +24,6 @@ import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.mmkv.MMKV
-import com.xuexiang.xui.XUI
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
 import okhttp3.OkHttpClient
@@ -95,9 +94,6 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
             ARouter.openDebug()
         }
         ARouter.init(this)
-
-        // UI库设置
-        XUI.debug(false)
 
         // 设置屏幕适配参数
         setAutoSizeConfig()

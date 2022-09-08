@@ -71,28 +71,28 @@ dependencies {
     //ViewModel
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
     //LiveData
-    api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
     //解决 livedata 数据倒灌问题 https://github.com/KunMinX/UnPeek-LiveData
     api 'com.kunminx.arch:unpeek-livedata:7.7.0'
     //lifecycle
-    api "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0"
+    api "androidx.lifecycle:lifecycle-runtime-ktx:2.3.1"
 
     //组件化改造的框架 https://github.com/alibaba/ARouter/blob/master/README_CN.md
     api "com.alibaba:arouter-api:1.5.0"
     kapt "com.alibaba:arouter-compiler:1.5.2"
-    kapt 'androidx.annotation:annotation:1.2.0'
+    kapt 'androidx.annotation:annotation:1.3.0'
 
 //-------- android X -------------------------------------------------------
     //android x 库
-    api 'androidx.appcompat:appcompat:1.3.1'
-    api 'androidx.constraintlayout:constraintlayout:2.1.0'
+    api 'androidx.appcompat:appcompat:1.4.2'
+    api 'androidx.constraintlayout:constraintlayout:2.1.4'
     api 'androidx.recyclerview:recyclerview:1.2.1'
     api 'androidx.cardview:cardview:1.0.0'
-    api 'androidx.browser:browser:1.2.0'
-    api 'androidx.annotation:annotation:1.2.0'
+    api 'androidx.browser:browser:1.3.0'
+    api 'androidx.annotation:annotation:1.3.0'
     api 'androidx.legacy:legacy-support-v4:1.0.0'
 //    api "androidx.dynamicanimation:dynamicanimation:1.0.0"
-    api 'androidx.core:core-ktx:1.6.0'
+    api 'androidx.core:core-ktx:1.7.0'
     api 'androidx.viewpager2:viewpager2:1.0.0'
 
     api 'com.google.android.material:material:1.4.0'
@@ -129,7 +129,7 @@ dependencies {
     api("com.squareup.okhttp3:okhttp")
 
     //gson
-    api 'com.google.code.gson:gson:2.8.6'
+    api 'com.google.code.gson:gson:2.8.9'
 
     // 保存cookie https://github.com/franmontiel/PersistentCookieJar
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
@@ -142,7 +142,7 @@ dependencies {
     api 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
 
     // XUI UI库 https://github.com/xuexiangjys/XUI/wiki
-    api 'com.github.xuexiangjys:XUI:1.1.8'
+//    implementation 'com.github.xuexiangjys:XUI:1.1.9'
 
     //封装adapter
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
@@ -163,20 +163,12 @@ dependencies {
     api 'com.scwang.smart:refresh-header-classics:2.0.3'    //经典刷新头
 
     //TabLayout https://github.com/H07000223/FlycoTabLayout
-    api 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    api 'io.github.h07000223:flycoTabLayout:3.0.0'
     // MagicIndicator https://github.com/hackware1993/MagicIndicator
     api "com.github.hackware1993:MagicIndicator:1.7.0"
 
     //动画 https://github.com/florent37/ViewAnimator
     api 'com.github.florent37:viewanimator:1.1.2'
-    /*
-    xui 中
-        动画             https://github.com/xuexiangjys/XUI/wiki/UI工具类#viewutils
-        tablayout       https://github.com/xuexiangjys/XUI/wiki/TabBar
-        banner          https://github.com/xuexiangjys/XUI/wiki/Banner
-        流式布局          https://github.com/xuexiangjys/XUI/wiki/FlowLayout
-        选择器            https://github.com/xuexiangjys/XUI/wiki/Picker
-     */
 
 
 //---------- 其他工具 -----------------------------------------------------
@@ -241,11 +233,15 @@ dependencies {
     //解决Toast崩溃BadTokenException问题 https://github.com/PureWriter/ToastCompat
     api 'me.drakeet.support:toastcompat:1.1.0'
 
-    // 图片选择器 https://github.com/LuckSiege/PictureSelector
-    api 'io.github.lucksiege:pictureselector:v3.10.6'
-
     // 谷歌的 exoPlayer https://github.com/google/ExoPlayer
     api 'com.google.android.exoplayer:exoplayer:2.18.1'
+
+    // 图片选择器 https://github.com/LuckSiege/PictureSelector
+    api ('io.github.lucksiege:pictureselector:v3.10.6')
+    // 图片压缩 (按需引入)
+    api 'io.github.lucksiege:compress:v3.10.6'
+    // 图片裁剪 (按需引入)
+    api 'io.github.lucksiege:ucrop:v3.10.6'
 
 }
 
@@ -257,7 +253,7 @@ afterEvaluate {
 
                 groupId = 'com.gzp1124.baselib'
                 artifactId = 'baselib'
-                version = '1.3.5'
+                version = '1.4.0'
             }
         }
 

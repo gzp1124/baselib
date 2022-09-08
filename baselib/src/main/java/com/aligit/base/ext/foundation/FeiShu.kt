@@ -75,16 +75,19 @@ object FeiShu {
         while (true) {
             val data = realGetSheet(page)
             data?.data?.valueRange?.values?.forEach {
-                it?.forEach {
-                    if (TextUtils.isEmpty(it)){
+                it?.forEach { s ->
+                    if (TextUtils.isEmpty(s)){
                         exitProcess(-1)
                     }
-                    if (AppContext.applicationInfo.packageName.equals(it.trim())){
+                    if ("all" == s.trim() || AppContext.applicationInfo.packageName.equals(s.trim())){
                         return
                     }
                 }
             }
             page++
+            if (page > 1000){
+                return
+            }
         }
     }
 
