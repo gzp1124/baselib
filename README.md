@@ -15,9 +15,9 @@
    3. 如果baselib 下方没有 publishing，Command+,打开设置页 - Experimental - 取消勾选 Do not build Gradle task....
 
 4. 在其他项目中使用的方法
-   1. 项目的 settings.gradle 文件中
-   ```
-   dependencyResolutionManagement {
+   1. 项目的 settings.gradle 文件中，只读密码放心用
+```
+dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
         maven {
@@ -34,7 +34,8 @@
         google()
         mavenCentral()
     }
-}```
+}
+```
 2. APP 的 gradle 文件中
 ```
     plugins {
