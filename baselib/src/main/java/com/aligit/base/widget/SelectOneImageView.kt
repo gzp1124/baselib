@@ -123,7 +123,6 @@ class SelectOneImageView : RelativeLayout {
     fun init(context: Context, attrs: AttributeSet?) {
         attrs?.let { obtainAttributes(context, it) }
         val view = inflate(context, R.layout.view_select_one_image, this)
-        setBackgroundColor(Color.parseColor("#ff0000"))
 
         fiv = view.findViewById<ImageView>(R.id.fiv)
         iv_del = view.findViewById<ImageView>(R.id.iv_del)
