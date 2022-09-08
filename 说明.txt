@@ -29,6 +29,7 @@ dependencyResolutionManagement {
         id 'kotlin-android'
         id 'kotlin-kapt'
         id 'kotlin-parcelize'
+        id 'maven-publish'
     }
 
     kapt 和 applicationId 同级，defaultConfig 中
@@ -36,17 +37,19 @@ dependencyResolutionManagement {
         includeCompileClasspath = true
         arguments {
             arg("AROUTER_MODULE_NAME", project.getName())
-
         }
     }
 
     使用baselib
-    implementation('com.gzp1124.baselib:baselib:1.3.0')
+    implementation 'com.gzp1124.baselib:baselib:1.4.0'
     kapt "com.alibaba:arouter-compiler:1.5.2"
-    kapt 'androidx.annotation:annotation:1.2.0'
+    kapt 'androidx.annotation:annotation:1.3.0'
+    用到 xui 的话添加
+    // XUI UI库 https://github.com/xuexiangjys/XUI/wiki
+    implementation 'com.github.xuexiangjys:XUI:1.1.9'
 
 3. 使用欢迎页让用户接受隐私政策，不接受隐私政策不进入APP
-    因为最新的正常原因，不这么做APP可能无法上线
+    因为最新的隐私政策原因，不这么做APP可能无法上线
     参考：https://juejin.cn/post/6990643611130363917
     步骤：
     1. Settings.useSplashCheckPrivacy = true

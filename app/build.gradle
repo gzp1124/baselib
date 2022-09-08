@@ -106,7 +106,8 @@ dependencies {
     kapt 'androidx.annotation:annotation:1.1.0'
 
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
-
+    // XUI UI库 https://github.com/xuexiangjys/XUI/wiki
+    implementation 'com.github.xuexiangjys:XUI:1.1.9'
     //图标绘制 https://github.com/PhilJay/MPAndroidChart
     api 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 }
