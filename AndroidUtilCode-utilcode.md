@@ -9,7 +9,7 @@ implementation 'com.blankj:utilcode:1.30.7'
 ```
 
 
-[官方文档链接]: https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
+[官方文档链接](https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md)
 
 ## APIs
 

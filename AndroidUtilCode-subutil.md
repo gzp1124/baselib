@@ -2,7 +2,7 @@
 
 从下面选择拷贝你需要用到的类到你项目中即可。
 
-[官方文档链接]: https://github.com/Blankj/AndroidUtilCode/blob/master/lib/subutil/README-CN.md
+[官方文档链接](https://github.com/Blankj/AndroidUtilCode/blob/master/lib/subutil/README-CN.md)
 
 ## APIs
 
