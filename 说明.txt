@@ -50,7 +50,7 @@ dependencyResolutionManagement {
 
 2.1 设置项目主题
     使用 XUI 的话
-        <style name="Theme.TestReq" parent="XUITheme.Phone">
+        <style name="TestTheme" parent="XUITheme.Phone">
         </style>
     不用 XUI，使用 系统自带的主题
         <style name="TestTheme" parent="BaseLibTheme">
