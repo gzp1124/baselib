@@ -1,28 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/white</color>
-    <color name="colorPrimaryDark">@color/white</color>
-    <color name="colorAccent">@color/white</color>
+    <color name="colorPrimary">@color/base_white</color>
+    <color name="colorPrimaryDark">@color/base_white</color>
+    <color name="colorAccent">@color/base_black</color>
 
-    <color name="app_color_theme_1">#EF5362</color> <!-- Grapefruit -->
-    <color name="app_color_theme_2">#FE6D4B</color> <!-- Bittersweet -->
-    <color name="app_color_theme_3">#FFCF47</color> <!-- Sunflower -->
-    <color name="app_color_theme_4">#9FD661</color> <!-- Grass -->
-    <color name="app_color_theme_5">#3FD0AD</color> <!-- Mint -->
-    <color name="app_color_theme_6">#2BBDF3</color> <!-- Aqua -->
-    <color name="app_color_theme_7">#5A9AEF</color> <!-- Blue Jeans -->
-    <color name="app_color_theme_8">#AC8FEF</color> <!-- Lavender -->
-    <color name="app_color_theme_9">#EE85C1</color> <!-- Pink Rose -->
+    <color name="base_black">#000000</color>
+    <color name="base_white">#ffffff</color>
 
     <color name="app_color_f6">#f6f6f6</color>
-
-    <color name="black">#000000</color>
-    <color name="white">#ffffff</color>
-
-    <color name="light_orange">#FFC288</color>
-    <color name="dark_orange">#FF8F5D</color>
-    <color name="default_track_color">#f3e5dd</color>
-
-    <color name="text_color">#000000</color>
-    <color name="picture_color_light_grey">#999999</color>
 </resources>

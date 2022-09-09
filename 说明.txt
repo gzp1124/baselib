@@ -48,6 +48,17 @@ dependencyResolutionManagement {
     // XUI UI库 https://github.com/xuexiangjys/XUI/wiki
     implementation 'com.github.xuexiangjys:XUI:1.1.9'
 
+2.1 设置项目主题
+    使用 XUI 的话
+        <style name="TestTheme" parent="AppPhoneTheme">
+        </style>
+    不用 XUI，使用 系统自带的主题
+        <style name="TestTheme" parent="BaseLibTheme">
+        </style>
+        BaseLibTheme 中什么也没改，完全等价于下面的写法，只是为了好记。
+        <style name="TestTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        </style>
+
 3. 使用欢迎页让用户接受隐私政策，不接受隐私政策不进入APP
     因为最新的隐私政策原因，不这么做APP可能无法上线
     参考：https://juejin.cn/post/6990643611130363917

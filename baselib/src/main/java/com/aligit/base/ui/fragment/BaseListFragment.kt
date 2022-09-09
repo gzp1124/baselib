@@ -67,6 +67,6 @@ abstract class BaseListFragment<B> : BaseVmFragment<FragmentListBinding>(R.layou
         return null
     }
     open fun setBackgroundResource(): Int {
-        return R.color.white
+        return R.color.base_white
     }
 }

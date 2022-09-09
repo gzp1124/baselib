@@ -21,12 +21,4 @@ abstract class InternationalizationActivity : SwipeBackActivity() {
         super.onCreate(savedInstanceState)
     }
 
-//    override fun attachBaseContext(newBase: Context) {
-//        //语言国际化
-//        val context = Settings.language_status.let {
-//            LanguageHelper.setLanguage(newBase, it, isForce = true)
-//        }
-//        super.attachBaseContext(context)
-//    }
-
 }

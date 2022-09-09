@@ -25,21 +25,21 @@ object Settings {
 
     object UI{
         // 强制使用竖屏/横屏 0: 不固定横竖屏，1:固定使用竖屏，2:固定使用横屏
-        var app_force_use_portrait: Int = 0
+        var app_force_use_portrait: Int by Mmkv("app_force_use_portrait",0)
         // 多语言，默认简体中文
         var language_status: Locale by Mmkv("LANGUAGE_STATUS", Locale.SIMPLIFIED_CHINESE, Locale::class.java)
         // 项目主题
-        var project_theme: Int by Mmkv("PROJECT_THEME", R.style.AppPhoneTheme)
-        // 深色主题
-        var dark_model: Int by Mmkv("PROJECT_DARK_MODEL", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        var project_theme: Int by Mmkv("PROJECT_THEME", R.style.BaseLibTheme)
+        // 深色主题，1亮色，2深色，3跟随系统
+        var dark_model: Int by Mmkv("PROJECT_DARK_MODEL", AppCompatDelegate.MODE_NIGHT_NO)
         // 使用滑动返回
-        var useSwipeBack: Boolean = true
+        var useSwipeBack: Boolean by Mmkv("useSwipeBack", true)
         // 使用沉浸式
-        var useImmersionBar: Boolean = false
+        var useImmersionBar: Boolean by Mmkv("useImmersionBar", false)
         // 顶部状态栏
-        var hasStatusBar: Boolean = true
+        var hasStatusBar: Boolean by Mmkv("hasStatusBar", true)
         // 底部导航栏，虚拟按键
-        var hasNavigationBar: Boolean = true
+        var hasNavigationBar: Boolean by Mmkv("hasNavigationBar", true)
     }
 
     // autoSize 相关

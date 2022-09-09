@@ -1,15 +1,15 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="TestTheme" parent="AppPhoneTheme">
+    <style name="TestTheme" parent="BaseLibTheme">
         <item name="testBgColor">#ffffff</item>
         <item name="android:fontFamily">@font/notosanshk</item>
     </style>
-    <style name="TestTheme.Green" parent="AppPhoneTheme">
+    <style name="TestTheme.Green" parent="BaseLibTheme">
         <item name="testBgColor">#00ff00</item>
     </style>
-    <style name="TestTheme.Red" parent="AppPhoneTheme">
+    <style name="TestTheme.Red" parent="BaseLibTheme">
         <item name="testBgColor">#ff0000</item>
     </style>
-    <style name="TestTheme.Blue" parent="AppPhoneTheme">
+    <style name="TestTheme.Blue" parent="BaseLibTheme">
         <item name="testBgColor">#0000ff</item>
     </style>
 </resources>
