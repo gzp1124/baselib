@@ -13,8 +13,11 @@ import com.aligit.base.ext.foundation.BaseThrowable
 import com.aligit.base.ext.foundation.FeiShu
 import com.aligit.base.ext.foundation.ParseThrowable
 import com.aligit.base.ext.tool.isLandscape
+import com.aligit.base.ext.tool.log
+import com.aligit.base.ext.tool.toast
 import com.aligit.base.net.ok.OkHttpManager
 import com.aligit.base.net.retrofit.RetrofitFactory
+import com.blankj.utilcode.util.ToastUtils
 import com.elvishew.xlog.LogConfiguration
 import com.elvishew.xlog.XLog
 import com.elvishew.xlog.printer.AndroidPrinter
@@ -24,6 +27,10 @@ import com.scwang.smart.refresh.footer.ClassicsFooter
 import com.scwang.smart.refresh.header.ClassicsHeader
 import com.scwang.smart.refresh.layout.SmartRefreshLayout
 import com.tencent.mmkv.MMKV
+//import com.xuexiang.xaop.XAOP
+//import com.xuexiang.xaop.checker.Interceptor
+//import com.xuexiang.xaop.logger.XLogger
+//import com.xuexiang.xaop.util.Utils
 import me.jessyan.autosize.AutoSize
 import me.jessyan.autosize.AutoSizeConfig
 import okhttp3.OkHttpClient

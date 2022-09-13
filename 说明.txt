@@ -87,8 +87,73 @@ dependencyResolutionManagement {
     以CENTER_开头的3种，它们的共同点是居中显示，图片的中心点会与ImageView的中心点重叠；
     ScaleType.MATRIX，这种就直接翻到最后看内容吧；
 
-7. 设置主题
-    <!-- Base application theme. -->
-    <style name="Theme.TestReq" parent="AppPhoneTheme">
-        ...
-    </style>
+7. 使用 XAOP 进行面向切片编程，XAOP 是对 aspectjx 的一种封装，更加方便使用
+    官方链接：
+        XAOP：https://github.com/xuexiangjys/XAOP/wiki/%E9%9B%86%E6%88%90%E6%8C%87%E5%8D%97
+        aspectjx：https://github.com/wurensen/gradle_plugin_android_aspectjx
+    XAOP 不集成在 baselib 中，项目中要用到直接在项目中集成就行，集成方式：
+    1>. 最新版的项目 build.gradle ，plugins {} 顶部添加如下代码
+    buildscript {
+        dependencies {
+            classpath 'io.github.wurensen:gradle-android-plugin-aspectjx:3.0.0'
+            classpath 'com.github.xuexiangjys.XAOP:xaop-plugin:1.1.0'
+        }
+    }
+    2>. settings.gradle 中添加 maven { url "https://jitpack.io" }，
+    保证 pluginManagement 和 dependencyResolutionManagement 的 repositories 中 都有 jitpack.io
+    3>. app 的 build.gradle 中添加
+    plugins {
+        id 'com.android.application'
+        id 'org.jetbrains.kotlin.android'
+        上面的两个默认就有，添加下面的两个
+        id 'io.github.wurensen.android-aspectjx' // app 中需要这个
+        id 'com.xuexiang.xaop'  // app 和 module 中都需要这个
+    }
+    aspectjx {
+        include 'com.gzp.myapplication' // 中间是项目 APP 的 applicationId
+    }
+    android {
+    这里面没有啥特殊的
+    ......
+    }
+    dependencies {
+        // 添加
+        implementation 'com.github.xuexiangjys.XAOP:xaop-runtime:1.1.0'
+    }
+    4>. 最后在 application 中初始化 XAOP 库
+            XAOP.init(this) //初始化插件
+
+            XAOP.debug(true) //日志打印切片开启
+            XAOP.setOnPermissionDeniedListener {
+                //申请权限被拒绝的处理
+            }
+
+            XAOP.setInterceptor(object : Interceptor {
+                @Throws(Throwable::class)
+                override fun intercept(type: Int, joinPoint: JoinPoint?): Boolean {
+                    XLogger.d("正在进行拦截，拦截类型:$type")
+                    when (type) {
+                        1 -> {}
+                        2 -> return true //return true，直接拦截切片的执行
+                        else -> {}
+                    }
+                    return false
+                }
+            })
+
+            XAOP.setIThrowableHandler { flag, throwable ->
+                XLogger.d("捕获到异常，异常的flag:$flag")
+            }
+    5>. 防止快速点击的简单使用封装
+        // 1秒可点击一次，默认是 1000 即1秒1次，可以修改 1000 为 2000 则表示 2秒可点击1次
+        fun <T : View> T.click(block: (T) -> Unit){
+            this.setOnClickListener(object : View.OnClickListener{
+                @SingleClick(1000)
+                override fun onClick(v: View) {
+                    block(v as T)
+                }
+            })
+        }
+    6>. 更多的使用介绍：
+        基础：https://github.com/xuexiangjys/XAOP/wiki/%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8
+        进阶：https://github.com/xuexiangjys/XAOP/wiki/%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8

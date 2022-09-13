@@ -5,6 +5,8 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
 apply plugin: 'maven-publish'
+//apply plugin: 'com.xuexiang.xaop'
+
 
 android {
     compileSdkVersion compile_sdk_version
@@ -243,6 +245,8 @@ dependencies {
     // 图片裁剪 (按需引入)
     api 'io.github.lucksiege:ucrop:v3.10.6'
 
+//    // XAOP https://github.com/xuexiangjys/XAOP
+//    api 'com.github.xuexiangjys.XAOP:xaop-runtime:1.1.0'
 }
 
 afterEvaluate {

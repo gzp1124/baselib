@@ -1,11 +1,14 @@
 package com.thirtydays.baselibdev.ui
 
+import android.Manifest
 import android.graphics.Color
+import android.view.View
 import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.bindingadapter.loadImage
 import com.aligit.base.ext.startShowImageFragment
 import com.aligit.base.ext.tool.dp2px
+import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.ext.view.click
 import com.aligit.base.ui.fragment.BaseVmFragment
@@ -15,6 +18,8 @@ import com.aligit.base.widget.select_image.SelectImageView
 import com.aligit.base.widget.show_grid_image.ShowGridImageView
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTestSelectImageBinding
+import com.xuexiang.xaop.annotation.Permission
+import com.xuexiang.xaop.annotation.SingleClick
 
 
 @Route(path = "/test/select_image")
@@ -73,10 +78,12 @@ class TestSelectImageFragment :
             "https://t7.baidu.com/it/u=2291349828,4144427007&fm=193&f=GIF"
         )
         mDataBinding.openimg.click {
+//            toast { "点击成功" }
+            myToast(it)
 //            startShowImageFragment(imgs)
-            PermissionUtil.requestCamera({
-                toast { "请求成功" }
-            })
+//            PermissionUtil.requestCamera({
+//                toast { "请求成功" }
+//            })
         }
 
         loadImage(
@@ -92,5 +99,11 @@ class TestSelectImageFragment :
                 showImgs(imgs)
             }
         )
+    }
+
+    @Permission(Manifest.permission.CAMERA)
+    fun myToast(v: View){
+//        toast { "点击啦啦啦啦啦啦啦啦啦啦" }
+        log("lai l l l l l l l ")
     }
 }
