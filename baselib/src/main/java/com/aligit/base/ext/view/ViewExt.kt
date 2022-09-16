@@ -51,6 +51,15 @@ fun View.setGone() {
 }
 
 /**
+ * 根据isGone 自动切换显示和隐藏
+ * true 隐藏，false 显示
+ */
+fun View.setGone(isGone:Boolean){
+    if (isGone) setGone()
+    else setVisible()
+}
+
+/**
  * 将View设置为可见
  */
 fun View.setVisible() {
@@ -66,6 +75,15 @@ fun View.setInvisible() {
     if (visibility != View.INVISIBLE) {
         visibility = View.INVISIBLE
     }
+}
+
+/**
+ * 根据 isInVisible 自动切换显示和隐藏
+ * true 隐藏，false 显示
+ */
+fun View.setInvisible(isInVisible:Boolean) {
+    if (isInVisible) setInvisible()
+    else setVisible()
 }
 
 /**
