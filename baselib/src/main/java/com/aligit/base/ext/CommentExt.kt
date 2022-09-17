@@ -6,6 +6,7 @@ import android.app.Application
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.Settings
+import com.aligit.base.common.AppContext
 import com.aligit.base.ext.tool.log
 import com.aligit.base.model.ShowImageBean
 import com.aligit.base.model.SimpleShowImageBean
@@ -72,12 +74,19 @@ fun startCommonFragment(
 
 fun startWebFragment(
     url:String,
+    useSystemWeb:Boolean = false,
     fragmentPath:String = "/common/web",
     bundle: Bundle? = null,
     useSwipeBack: Boolean = Settings.UI.useSwipeBack,
     useImmersionBar: Boolean = Settings.UI.useImmersionBar,
     isHideBottom: Boolean = !Settings.UI.hasNavigationBar,
     autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,){
+    if (useSystemWeb){
+        val uri: Uri = Uri.parse(url)
+        val intent = Intent(Intent.ACTION_VIEW, uri)
+        AppContext.startActivity(intent)
+        return
+    }
     val myBundle = bundle ?: Bundle()
     myBundle.putString("url",url)
     startCommonFragment(fragmentPath,myBundle,useSwipeBack, useImmersionBar, isHideBottom, autoSizeIsBaseOnWidth)

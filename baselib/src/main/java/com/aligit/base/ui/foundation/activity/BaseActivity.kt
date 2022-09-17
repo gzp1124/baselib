@@ -5,6 +5,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.view.KeyEvent
 import androidx.annotation.IdRes
 import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.R
@@ -19,6 +20,7 @@ import com.aligit.base.ext.tool.unregisterEvent
 import com.aligit.base.framework.mvvm.BaseViewModel
 import com.aligit.base.model.CoroutineState
 import com.aligit.base.ui.foundation.fragment.BaseFragment
+import com.blankj.utilcode.util.ActivityUtils
 import com.blankj.utilcode.util.FragmentUtils
 import com.lxj.xpopup.XPopup
 import com.lxj.xpopup.core.BasePopupView
@@ -203,4 +205,36 @@ abstract class BaseActivity : InternationalizationActivity() {
             )
         }
     }
+
+    //记录用户首次点击返回键的时间
+    private var firstTime: Long = 0
+    override fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean {
+        if (doubleClickFinish() && keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_DOWN) {
+            val secondTime = System.currentTimeMillis()
+            if (secondTime - firstTime > doubleClickFinishTimeM()) {
+                showToast(doubleClickFinishNotifyStr())
+                firstTime = secondTime
+            } else {
+                ActivityUtils.finishAllActivities()
+                finish()
+            }
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    /**
+     * 启用双击退出应用
+     */
+    open fun doubleClickFinish() = false
+
+    /**
+     * 双击退出应用提示语
+     */
+    open fun doubleClickFinishNotifyStr() = "再按一次退出应用"
+
+    /**
+     * 双击退出应用的两次点击时间最大间隔
+     */
+    open fun doubleClickFinishTimeM() = 2000
 }
