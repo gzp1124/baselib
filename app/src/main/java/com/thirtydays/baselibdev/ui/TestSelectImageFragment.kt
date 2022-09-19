@@ -7,6 +7,7 @@ import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.bindingadapter.loadImage
 import com.aligit.base.ext.startShowImageFragment
+import com.aligit.base.ext.startWebFragment
 import com.aligit.base.ext.tool.dp2px
 import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast

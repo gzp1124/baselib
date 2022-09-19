@@ -184,6 +184,12 @@ abstract class BaseActivity : InternationalizationActivity() {
         }
     }
 
+    /*
+    给 activity 展示 fragment，一个 activity 中只能展示一个 fragment 
+    要展示多个 fragment ，就不能用这个方法
+    一般用于首页切换 tab ，会根据 key 自动显示已存在的 fragment ，同时隐藏其他的 fragment
+    如果根据 key 获取不到 fragment ，则会调用 createFragment 创建一个新的 fragment
+     */
     fun showFragment(
         @IdRes containerId: Int,
         key: String,

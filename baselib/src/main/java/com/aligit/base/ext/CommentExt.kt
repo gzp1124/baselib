@@ -77,11 +77,12 @@ fun startWebFragment(
     useSystemWeb:Boolean = false,
     fragmentPath:String = "/common/web",
     bundle: Bundle? = null,
-    useSwipeBack: Boolean = Settings.UI.useSwipeBack,
+    useSwipeBack: Boolean = Settings.UI.useSwipeBack, // 使用系统浏览器
     useImmersionBar: Boolean = Settings.UI.useImmersionBar,
     isHideBottom: Boolean = !Settings.UI.hasNavigationBar,
     autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,){
     if (useSystemWeb){
+        // 打开系统浏览器
         val uri: Uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
         AppContext.startActivity(intent)

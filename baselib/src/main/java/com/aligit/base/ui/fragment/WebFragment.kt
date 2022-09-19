@@ -1,5 +1,9 @@
 package com.aligit.base.ui.fragment
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
+import android.os.Build
 import android.view.KeyEvent
 import android.view.View
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -7,10 +11,12 @@ import com.aligit.base.R
 import com.aligit.base.databinding.FragmentWebBinding
 import com.aligit.base.ext.tool.log
 import com.aligit.base.ui.activity.CommonActivityEvent
+import com.aligit.base.ui.activity.CommonActivityOnResult
+import java.io.File
 
 @Route(path = "/common/web")
 open class WebFragment : BaseVmFragment<FragmentWebBinding>(R.layout.fragment_web),
-    CommonActivityEvent {
+    CommonActivityEvent, CommonActivityOnResult {
     protected var mUrl: String? = null
     override fun onInitDataBinding() {
         setHeadTitleView()?.let { mDataBinding.headLin.addView(it) }
@@ -46,4 +52,38 @@ open class WebFragment : BaseVmFragment<FragmentWebBinding>(R.layout.fragment_we
         }
         return false
     }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        // 处理 webview 中的文件选择，一般用于 webview 客服中的图片选择
+        if (requestCode == 10011) {
+            if (Build.VERSION.SDK_INT >= 21) {
+                var results: Array<Uri>? = null
+                //Check if response is positive
+                if (resultCode == Activity.RESULT_OK) {
+                    if (null == mDataBinding.webView.mUMA) {
+                        return
+                    }
+                    if (intent == null) { //Capture Photo if no image available
+                        if (mDataBinding.webView.mCM != null) {
+                            results = arrayOf(Uri.parse(mDataBinding.webView.mCM))
+                        }
+                    } else {
+                        val dataString = intent.dataString
+                        if (dataString != null) {
+                            results = arrayOf(Uri.parse(dataString))
+                        }
+                    }
+                }
+                mDataBinding.webView.mUMA!!.onReceiveValue(results)
+                mDataBinding.webView.mUMA = null
+            } else {
+                if (null == mDataBinding.webView.mUM) return
+                val result =
+                    if (intent == null || resultCode != Activity.RESULT_OK) null else intent.data
+                mDataBinding.webView.mUM!!.onReceiveValue(result)
+                mDataBinding.webView.mUM = null
+            }
+        }
+    }
+
 }
