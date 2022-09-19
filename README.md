@@ -1,4 +1,5 @@
 
+** 先在飞书文档中添加 applicationId，否则用不了 https://ifbz8hy4hh.feishu.cn/sheets/shtcnGZEHxm4s7GF6f8JQiqqgIb
 
 1. 页面状态 加载中，请求失败点击重试等
     原理：把页面状态对应成 View 封装到对象中，再在 BaseVmFragment/BaseVmActivity 中动态添加到真实的布局中

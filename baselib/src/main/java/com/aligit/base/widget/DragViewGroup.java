@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
@@ -52,7 +53,6 @@ public class DragViewGroup extends FrameLayout {
         super(context, attrs, defStyleAttr);
         mSlop = ViewConfiguration.getWindowTouchSlop();
     }
-
 
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
@@ -112,10 +112,15 @@ public class DragViewGroup extends FrameLayout {
                 }
                 if (!haveMove){
                     if (myOnClickListener != null)myOnClickListener.onClick(mDragView);
+                    mDragView.performClick();
+                    haveMove = false;
+                    mDragView = null;
+                    return false;
+                }else {
+                    if (myOnClickListener != null) myOnClickListener.onTouchUp();
+                    haveMove = false;
+                    mDragView = null;
                 }
-                if (myOnClickListener != null)myOnClickListener.onTouchUp();
-                haveMove = false;
-                mDragView = null;
                 break;
         }
         return true;

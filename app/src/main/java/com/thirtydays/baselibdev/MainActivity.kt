@@ -6,6 +6,8 @@ import com.aligit.base.common.LanguageHelper
 import com.aligit.base.common.LanguageStatus
 import com.aligit.base.ext.startWebFragment
 import com.aligit.base.ext.tool.log
+import com.aligit.base.ext.tool.toast
+import com.aligit.base.ext.view.click
 import com.aligit.base.framework.mvvm.scope.VMScope
 import com.aligit.base.ui.activity.BaseVmActivity
 import com.aligit.base.utils.PermissionUtil
@@ -66,6 +68,9 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
     override fun initData() {
 //        mainViewModel.getTime()
 //        twoViewModel.getTime()
+        mDataBinding.tt?.click{
+            toast { "fdajklfdjsak" }
+        }
         mDataBinding.recyclerView?.also {
             adapter.setList(pages)
             it.adapter = adapter

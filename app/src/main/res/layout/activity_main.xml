@@ -48,11 +48,26 @@
             android:onClick='@{()->click.changeLang(LanguageStatus.LANGUAGE_ENGLISH)}'
             android:text="@string/change_en" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="match_parent"/>
+            <com.aligit.base.widget.DragViewGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/tt"
+                    android:src="@mipmap/ic_launcher"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+            </com.aligit.base.widget.DragViewGroup>
+        </RelativeLayout>
         <TextView
             android:background="#f00"
             android:text="底部"
