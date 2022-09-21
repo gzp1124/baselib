@@ -51,6 +51,7 @@ class SelectOneImageView : RelativeLayout {
     private var canPreView: Boolean = true // 能发预览图片
     private var canPreViewDownload: Boolean = false // 预览时能否长按下载
     private var canPreViewDelete: Boolean = true // 预览时能否删除图片
+    private var canDelete: Boolean = true // 选择图片后能否删除
     private var isCenterCrop: Boolean = false
 
     constructor(context: Context) : super(context) {
@@ -77,6 +78,7 @@ class SelectOneImageView : RelativeLayout {
         delImage: Int = 0,
         addImage: Int = 0,
         canPreView: Boolean = true,
+        canDelete: Boolean = true,
         canPreViewDownload: Boolean = false,
         canPreViewDelete: Boolean = true,
         isCenterCrop: Boolean = false
@@ -85,6 +87,7 @@ class SelectOneImageView : RelativeLayout {
         this.delImage = delImage
         this.addImage = addImage
         this.canPreView = canPreView
+        this.canDelete = canDelete
         this.canPreViewDownload = canPreViewDownload
         this.canPreViewDelete = canPreViewDelete
         this.isCenterCrop = isCenterCrop
@@ -100,6 +103,7 @@ class SelectOneImageView : RelativeLayout {
         addImage =
             ta.getResourceId(R.styleable.SelectOneImageView_addImage, R.drawable.ic_add_image)
         canPreView = ta.getBoolean(R.styleable.SelectOneImageView_canPreView, true) // 能发预览图片
+        canDelete = ta.getBoolean(R.styleable.SelectOneImageView_canDelete,true) // 能否删除已选择的图片
         canPreViewDownload =
             ta.getBoolean(R.styleable.SelectOneImageView_canPreViewDownload, false) // 预览时能否长按下载
         canPreViewDelete =
@@ -110,7 +114,9 @@ class SelectOneImageView : RelativeLayout {
 
     fun updateImg() {
         showMedia?.let { media ->
-            iv_del.setVisible()
+            if (canDelete) {
+                iv_del.setVisible()
+            }
             loadImage(fiv, media.availablePath, isCenterCrop = isCenterCrop)
         } ?: run {
             iv_del.setGone()
@@ -131,8 +137,9 @@ class SelectOneImageView : RelativeLayout {
         tv_duration.setGone()
         updateImg()
         iv_del.click {
-            showMedia = null
-            updateImg()
+            if (canDelete) {
+                delSelImg()
+            }
         }
         fiv.click {
             if (showMedia == null) {
@@ -152,6 +159,9 @@ class SelectOneImageView : RelativeLayout {
                         }
                     })
             } else {
+                if (!canPreView){
+                    return@click
+                }
                 PictureSelector.create(context)
                     .openPreview()
                     .setImageEngine(getImageLoader())
@@ -223,6 +233,14 @@ class SelectOneImageView : RelativeLayout {
                 }
             }
         }
+    }
+
+    /**
+     * 删除已选择的图片
+     */
+    fun delSelImg(){
+        showMedia = null
+        updateImg()
     }
 
     var onSelectImgListener: OnSelectImgListener? = null

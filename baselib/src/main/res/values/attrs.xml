@@ -134,6 +134,7 @@
     <attr name="delImage" format="reference" />
     <attr name="addImage" format="reference" />
     <attr name="canPreView" format="boolean" />
+    <attr name="canDelete" format="boolean" />
     <attr name="isCenterCrop" format="boolean"/>
     <attr name="canPreViewDownload" format="boolean" />
     <attr name="canPreViewDelete" format="boolean" />
@@ -160,6 +161,7 @@
         <attr name="canPreView" />
         <attr name="canPreViewDownload" />
         <attr name="canPreViewDelete" />
+        <attr name="canDelete" />
         <attr name="isCenterCrop"/>
     </declare-styleable>
 </resources>

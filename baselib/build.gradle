@@ -184,7 +184,7 @@ dependencies {
     api 'com.aliyun.dpa:oss-android-sdk:2.9.9'
 
     //文件下载 https://github.com/ssseasonnn/RxDownload
-    api "com.github.ssseasonnn:RxDownload:1.0.9"
+    api "com.github.ssseasonnn:RxDownload:1.1.4"
 
     //改为xlog 系统保存日志文件 https://github.com/elvishew/XLog/blob/master/README_ZH.md
     api 'com.elvishew:xlog:1.6.1'
