@@ -79,6 +79,7 @@ class TestSelectImageFragment :
             "https://t7.baidu.com/it/u=2291349828,4144427007&fm=193&f=GIF"
         )
         mDataBinding.openimg.click {
+            startWebFragment("http://www.baidu.com", showToolbar = true, toolbarTitle = "百度一下", toolbarTitleCenter = true)
 //            toast { "点击成功" }
             myToast(it)
 //            startShowImageFragment(imgs)

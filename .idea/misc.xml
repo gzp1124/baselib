@@ -6,6 +6,7 @@
         <entry key="../../../../layout/custom_preview.xml" value="0.2408630179010018" />
         <entry key="../../.gradle/caches/transforms-3/012f5d8fe25a819ff02cfccbf0f25f80/transformed/jetified-pictureselector-v3.10.6/res/drawable/ps_preview_checkbox_selector.xml" value="0.1415" />
         <entry key="../../.gradle/caches/transforms-3/012f5d8fe25a819ff02cfccbf0f25f80/transformed/jetified-pictureselector-v3.10.6/res/drawable/ps_select_complete_bg.xml" value="0.25" />
+        <entry key="../../.gradle/caches/transforms-3/10fecdf6133051e59ab7ec01e2051ee8/transformed/jetified-pictureselector-v3.10.6/res/layout/ps_title_bar.xml" value="0.28229166666666666" />
         <entry key="app/src/main/res/layout-land/activity_main.xml" value="0.13125" />
         <entry key="app/src/main/res/layout-land/activity_test.xml" value="0.19166666666666668" />
         <entry key="app/src/main/res/layout/activity_change_night.xml" value="0.25" />
@@ -34,7 +35,7 @@
         <entry key="baselib/src/main/res/layout/base_state_page_view.xml" value="0.12259371833839919" />
         <entry key="baselib/src/main/res/layout/fragment_list.xml" value="0.20606884057971014" />
         <entry key="baselib/src/main/res/layout/fragment_show_image.xml" value="0.28125" />
-        <entry key="baselib/src/main/res/layout/fragment_web.xml" value="0.1" />
+        <entry key="baselib/src/main/res/layout/fragment_web.xml" value="0.18625429553264605" />
         <entry key="baselib/src/main/res/layout/gv_filter_image.xml" value="0.2939453125" />
         <entry key="baselib/src/main/res/layout/item_big_image.xml" value="0.28229166666666666" />
         <entry key="baselib/src/main/res/layout/ps_custom_album_folder_item.xml" value="0.28229166666666666" />

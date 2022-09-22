@@ -75,6 +75,9 @@ fun startCommonFragment(
 fun startWebFragment(
     url:String,
     useSystemWeb:Boolean = false,
+    showToolbar:Boolean = false,
+    toolbarTitle:String = "",
+    toolbarTitleCenter:Boolean = false,
     fragmentPath:String = "/common/web",
     bundle: Bundle? = null,
     useSwipeBack: Boolean = Settings.UI.useSwipeBack, // 使用系统浏览器
@@ -90,6 +93,9 @@ fun startWebFragment(
     }
     val myBundle = bundle ?: Bundle()
     myBundle.putString("url",url)
+    myBundle.putBoolean("showToolbar",showToolbar)
+    myBundle.putString("toolbarTitle",toolbarTitle)
+    myBundle.putBoolean("toolbarTitleCenter",toolbarTitleCenter)
     startCommonFragment(fragmentPath,myBundle,useSwipeBack, useImmersionBar, isHideBottom, autoSizeIsBaseOnWidth)
 }
 
