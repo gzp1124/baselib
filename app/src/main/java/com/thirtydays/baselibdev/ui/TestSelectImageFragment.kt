@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.view.View
 import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
+import com.aligit.base.bindingadapter.bindIsSelectClick
 import com.aligit.base.bindingadapter.loadImage
 import com.aligit.base.ext.startShowImageFragment
 import com.aligit.base.ext.startWebFragment
@@ -78,10 +79,11 @@ class TestSelectImageFragment :
             "https://t7.baidu.com/it/u=737555197,308540855&fm=193&f=GIF",
             "https://t7.baidu.com/it/u=2291349828,4144427007&fm=193&f=GIF"
         )
+        bindIsSelectClick(mDataBinding.openimg,false)
         mDataBinding.openimg.click {
-            startWebFragment("http://www.baidu.com", showToolbar = true, toolbarTitle = "百度一下", toolbarTitleCenter = true)
-//            toast { "点击成功" }
-            myToast(it)
+//            startWebFragment("http://www.baidu.com", showToolbar = true, toolbarTitle = "百度一下", toolbarTitleCenter = true)
+            toast { "点击成功" }
+//            myToast(it)
 //            startShowImageFragment(imgs)
 //            PermissionUtil.requestCamera({
 //                toast { "请求成功" }

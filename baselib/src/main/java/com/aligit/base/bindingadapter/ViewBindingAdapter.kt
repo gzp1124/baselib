@@ -21,6 +21,7 @@ fun bindInvisible(v: View, invisible: Boolean) {
 fun bindIsSelectClick(v: View, isSelect: Boolean) {
     v.isSelected = isSelect
     v.isClickable = isSelect
+    v.isEnabled = isSelect
 }
 
 @BindingAdapter(value = ["isOnlySelect"])
