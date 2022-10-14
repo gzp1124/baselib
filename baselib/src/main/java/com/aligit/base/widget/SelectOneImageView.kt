@@ -10,6 +10,7 @@ import android.widget.TextView
 import com.aligit.base.R
 import com.aligit.base.bindingadapter.loadImage
 import com.aligit.base.ext.getImageLoader
+import com.aligit.base.ext.tool.getLength
 import com.aligit.base.ext.tool.getSize
 import com.aligit.base.ext.tool.logi
 import com.aligit.base.ext.view.click
@@ -53,6 +54,7 @@ class SelectOneImageView : RelativeLayout {
     private var canPreViewDelete: Boolean = true // 预览时能否删除图片
     private var canDelete: Boolean = true // 选择图片后能否删除
     private var isCenterCrop: Boolean = false
+    private var autoShowImg:Boolean = true // 选择后自动显示图片，设置为 false 后要手动调用显示图片
 
     constructor(context: Context) : super(context) {
         init(context, null)
@@ -81,7 +83,8 @@ class SelectOneImageView : RelativeLayout {
         canDelete: Boolean = true,
         canPreViewDownload: Boolean = false,
         canPreViewDelete: Boolean = true,
-        isCenterCrop: Boolean = false
+        isCenterCrop: Boolean = false,
+        autoShowImg: Boolean = false
     ) : super(context) {
         this.openType = openType
         this.delImage = delImage
@@ -91,6 +94,7 @@ class SelectOneImageView : RelativeLayout {
         this.canPreViewDownload = canPreViewDownload
         this.canPreViewDelete = canPreViewDelete
         this.isCenterCrop = isCenterCrop
+        this.autoShowImg = autoShowImg
         init(context, null)
     }
 
@@ -109,15 +113,33 @@ class SelectOneImageView : RelativeLayout {
         canPreViewDelete =
             ta.getBoolean(R.styleable.SelectOneImageView_canPreViewDelete, true) // 预览时能否删除图片
         isCenterCrop = ta.getBoolean(R.styleable.SelectOneImageView_isCenterCrop, false)
+        autoShowImg = ta.getBoolean(R.styleable.SelectOneImageView_autoShowImg,true)
         ta.recycle()
     }
 
-    fun updateImg() {
+    /**
+     * 显示已选择的图片
+     * imgUrl 为空时显示从本地选择的图片，imgUrl 不为空时 显示 imgUrl 中的图片，相当于回显
+     */
+    fun showSelImg(imgUrl:String? = null){
+        if (imgUrl.getLength() > 0){
+            if (canDelete) {
+                iv_del.setVisible()
+            }
+            loadImage(fiv, imgUrl, isCenterCrop = isCenterCrop)
+        }else{
+            updateImg(true)
+        }
+    }
+
+    private fun updateImg(showSelImg:Boolean = false) {
         showMedia?.let { media ->
             if (canDelete) {
                 iv_del.setVisible()
             }
-            loadImage(fiv, media.availablePath, isCenterCrop = isCenterCrop)
+            if (autoShowImg || showSelImg) {
+                loadImage(fiv, media.availablePath, isCenterCrop = isCenterCrop)
+            }
         } ?: run {
             iv_del.setGone()
             fiv.setImageResource(addImage)

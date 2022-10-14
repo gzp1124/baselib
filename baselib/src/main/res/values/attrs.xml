@@ -138,6 +138,7 @@
     <attr name="isCenterCrop" format="boolean"/>
     <attr name="canPreViewDownload" format="boolean" />
     <attr name="canPreViewDelete" format="boolean" />
+    <attr name="autoShowImg" format="boolean"/>
 
     <declare-styleable name="SelectImageView">
         <attr name="maxSelectNum" />
@@ -163,5 +164,6 @@
         <attr name="canPreViewDelete" />
         <attr name="canDelete" />
         <attr name="isCenterCrop"/>
+        <attr name="autoShowImg"/>
     </declare-styleable>
 </resources>
