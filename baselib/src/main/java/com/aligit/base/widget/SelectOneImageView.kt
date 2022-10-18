@@ -11,6 +11,7 @@ import com.aligit.base.R
 import com.aligit.base.bindingadapter.loadImage
 import com.aligit.base.ext.getImageLoader
 import com.aligit.base.ext.tool.getLength
+import com.aligit.base.ext.tool.getMyRealPath
 import com.aligit.base.ext.tool.getSize
 import com.aligit.base.ext.tool.logi
 import com.aligit.base.ext.view.click
@@ -251,7 +252,7 @@ class SelectOneImageView : RelativeLayout {
                 showMedia = result[0]
                 updateImg()
                 showMedia?.let {
-                    onSelectImgListener?.onSelect(it.availablePath)
+                    onSelectImgListener?.onSelect(it.getMyRealPath(context))
                 }
             }
         }
@@ -273,5 +274,5 @@ class SelectOneImageView : RelativeLayout {
 
     fun getSelectMedia() = showMedia
 
-    fun getSelectImgPath() = showMedia?.availablePath
+    fun getSelectImgPath() = showMedia?.getMyRealPath(context)
 }

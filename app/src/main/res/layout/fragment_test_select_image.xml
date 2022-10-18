@@ -34,6 +34,7 @@
                 android:layout_height="100dp"
                 app:addImage="@mipmap/upload_front"
                 app:isCenterCrop="false"
+                android:id="@+id/selOneImg"
                 app:openType="0" />
 
             <com.aligit.base.widget.select_image.SelectImageView

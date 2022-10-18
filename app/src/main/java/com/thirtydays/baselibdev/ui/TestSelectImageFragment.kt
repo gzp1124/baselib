@@ -1,27 +1,29 @@
 package com.thirtydays.baselibdev.ui
 
 import android.Manifest
+import android.content.ContentUris
 import android.graphics.Color
+import android.os.Build
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import android.view.View
 import android.widget.ImageView
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.bindingadapter.bindIsSelectClick
 import com.aligit.base.bindingadapter.loadImage
-import com.aligit.base.ext.startShowImageFragment
-import com.aligit.base.ext.startWebFragment
 import com.aligit.base.ext.tool.dp2px
+import com.aligit.base.ext.tool.getPathFromUriString
 import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.ext.view.click
 import com.aligit.base.ui.fragment.BaseVmFragment
-import com.aligit.base.utils.PermissionUtil
 import com.aligit.base.widget.SelectOneImageView
 import com.aligit.base.widget.select_image.SelectImageView
 import com.aligit.base.widget.show_grid_image.ShowGridImageView
+import com.blankj.utilcode.util.UriUtils
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTestSelectImageBinding
 import com.xuexiang.xaop.annotation.Permission
-import com.xuexiang.xaop.annotation.SingleClick
 
 
 @Route(path = "/test/select_image")
@@ -90,6 +92,13 @@ class TestSelectImageFragment :
 //            })
         }
 
+        mDataBinding.selOneImg.onSelectImgListener = object : SelectOneImageView.OnSelectImgListener {
+            override fun onSelect(path: String) {
+                toast { path }
+                log("gzp1124111"+path)
+            }
+        }
+
         loadImage(
             mDataBinding.iv,
             "https://t7.baidu.com/it/u=963301259,1982396977&fm=193&f=GIF",
@@ -110,4 +119,6 @@ class TestSelectImageFragment :
 //        toast { "点击啦啦啦啦啦啦啦啦啦啦" }
         log("lai l l l l l l l ")
     }
+
+
 }

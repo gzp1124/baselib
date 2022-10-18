@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aligit.base.R
 import com.aligit.base.ext.getImageLoader
+import com.aligit.base.ext.tool.getMyRealPath
 import com.aligit.base.ext.tool.logi
 import com.blankj.utilcode.util.ConvertUtils
 import com.luck.picture.lib.basic.*
@@ -231,7 +232,7 @@ class SelectImageView : RelativeLayout {
         if (mAdapter.data == null) return null
         val res = mutableListOf<String>()
         mAdapter.data?.forEach { img ->
-            res.add(img.availablePath)
+            res.add(img.getMyRealPath(context))
         }
         return res
     }
