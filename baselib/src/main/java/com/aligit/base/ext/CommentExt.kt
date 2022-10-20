@@ -88,6 +88,7 @@ fun startWebFragment(
         // 打开系统浏览器
         val uri: Uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         AppContext.startActivity(intent)
         return
     }
