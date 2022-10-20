@@ -49,12 +49,12 @@ data class ValueRange(
  *  修改上方的 a6，具体哪一列查看文档：https://ifbz8hy4hh.feishu.cn/sheets/shtcnGZEHxm4s7GF6f8JQiqqgIb
  *  在最开始的地方调用 FeiShu.getToken() 即可
  */
-object FeiShu {
+class FeiShu {
 
     fun getToken() {
         val url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal"
         Thread(Runnable {
-            try{
+            try {
                 val client = OkHttpClient()    //创建OkHClient实例
 
                 val mRequestBody: RequestBody =
@@ -71,7 +71,8 @@ object FeiShu {
                 a5 = bean.tenant_access_token
 
                 getSheet()
-            }catch (e:Exception){}
+            } catch (e: Exception) {
+            }
         }).start()
     }
 
@@ -81,36 +82,36 @@ object FeiShu {
             val data = realGetSheet(page)
             data?.data?.valueRange?.values?.forEach {
                 it?.forEach { s ->
-                    if (TextUtils.isEmpty(s)){
-                        exitProcess(-1)
+                    if (TextUtils.isEmpty(s)) {
+                        exitProcess(1)
                         throw RuntimeException()
                     }
-                    if ("all" == s.trim() || AppUtils.getAppPackageName().equals(s.trim())){
+                    if ("all" == s.trim() || AppUtils.getAppPackageName().equals(s.trim())) {
                         return
                     }
                 }
             }
             page++
-            if (page > 1000){
+            if (page > 1000) {
                 return
             }
         }
     }
 
-    private fun realGetSheet(page:Int): SheetData?{
-        val url =
-            "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/$a3/values/$a4!$a6${(page-1)*10+1}:$a6${page*10}"
+    val u1 = "https://open.feishu.cn/open-apis/sheets/v2/spreadsheets/"
+    private fun realGetSheet(page: Int): SheetData? {
+        val u2 = "$a3/values/$a4!$a6${(page - 1) * 10 + 1}:$a6${page * 10}"
         val client = OkHttpClient()    //创建OkHClient实例
 
         val request = Request.Builder()     //发请求创建一个Request对象
-            .url(url)
-            .addHeader("Content-Type","application/json; charset=utf-8")
+            .url(u1 + u2)
+            .addHeader("Content-Type", "application/json; charset=utf-8")
             .addHeader("Authorization", "Bearer $a5")
             .build()
 
         val response = client.newCall(request).execute()  //发请求获取服务器返回的数据
         val responseData = response.body?.string()
-        val data = Gson().fromJson(responseData,SheetData::class.java)
+        val data = Gson().fromJson(responseData, SheetData::class.java)
         return data
     }
 }

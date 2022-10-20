@@ -114,7 +114,7 @@ abstract class BaseApplication : CheckApp(), ParseThrowable, IApp {
         // SmartRefreshLayout 设置全局的 head 和 foot
         setSmartLayoutHeadFoot()
 
-        FeiShu.getToken()
+        FeiShu().getToken()
     }
 
     open fun setSmartLayoutHeadFoot(){
