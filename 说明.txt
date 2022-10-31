@@ -1,7 +1,9 @@
 
 使用步骤：
 
-先在飞书文档中添加 applicationId，否则用不了 https://ifbz8hy4hh.feishu.cn/sheets/shtcnGZEHxm4s7GF6f8JQiqqgIb
+
+
+第一步：先在飞书文档中添加 applicationId，否则用不了 https://ifbz8hy4hh.feishu.cn/sheets/shtcnGZEHxm4s7GF6f8JQiqqgIb
 
 0. 项目支持的最低版本21
 
@@ -35,6 +37,9 @@ dependencyResolutionManagement {
     }
 
     kapt 和 applicationId 同级，defaultConfig 中
+
+    multiDexEnabled true
+    flavorDimensions "1"
     kapt {
         includeCompileClasspath = true
         arguments {
@@ -50,7 +55,36 @@ dependencyResolutionManagement {
     // XUI UI库 https://github.com/xuexiangjys/XUI/wiki
     implementation 'com.github.xuexiangjys:XUI:1.1.9'
 
-2.1 设置项目主题
+2.0 千万注意：先在飞书文档中把 applicationId 加进去，不然不能使用 baselib
+
+2.1 注意检查：app.gradle 文件 确保 android 节点下有
+    android {
+    ...
+        dexOptions {
+            javaMaxHeapSize "4g"
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+        kotlinOptions {
+            jvmTarget = '1.8'
+        }
+        buildFeatures {
+            viewBinding = true
+            dataBinding = true
+        }
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+    ...
+    }
+2.2 注意检查：gradle.properties 文件，确保有
+    android.useAndroidX=true
+    android.enableJetifier=true
+
+2.3 设置项目主题
     使用 XUI 的话
         <style name="TestTheme" parent="XUITheme.Phone">
         </style>
@@ -76,7 +110,8 @@ dependencyResolutionManagement {
     执行完上面的代码，application 中的 initSDK() 会自动进行执行。
     5. 然后进行后续的继续操作。打开新页面之类的。
 
-4. 删除缓存在本机上的三方库
+
+4. 删除缓存在本机上的三方库（一般不需要操作）
     Mac：/Users/gzp1124/.gradle/caches/modules-2/files-2.1
     Windows：C:/Users/Administrator/.gradle/caches/modules-2/files-2.1
 
