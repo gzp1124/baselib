@@ -2,6 +2,7 @@ package com.aligit.base.model
 
 import com.aligit.base.net.livedata_api.IResponse
 
+
 class StringResponse() : IResponse<String> {
     override val resultStatus: Boolean
         get() = true
@@ -20,7 +21,7 @@ open class BaseResponse<T>(
     override val resultData: T?
 ) : IResponse<T> {
 
-    override fun toString(): String {
+     override fun toString(): String {
         return "BaseResponse(errorMessage=$errorMessage, errorCode=$errorCode, resultStatus=$resultStatus, resultData=$resultData)"
     }
 }

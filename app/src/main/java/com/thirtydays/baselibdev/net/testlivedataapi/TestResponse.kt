@@ -3,6 +3,7 @@ package com.thirtydays.baselibdev.net.testlivedataapi
 import com.aligit.base.model.BaseResponse
 import com.aligit.base.net.livedata_api.IResponse
 
+
 /**
  * 这里只是示范不同字段的时候怎么处理，没有直接使用
  */
