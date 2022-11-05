@@ -74,7 +74,11 @@ object Settings {
         // token 异常的状态码 (即 app_token 失效)
         var tokenErrCode : String? = null
         // 保存 cookie
-        var saveCookie: Boolean = true
+        var saveCookie: Boolean = false
+        // 使用 okhttp 缓存
+        var useCache: Boolean = false
+        // okhttp 的最大缓存
+        var cacheSize: Long = 1024 * 1024 * 100
 
         var connectTimeout: Long = 5L   // 连接超时事件，单位秒
         var readTimeout: Long = 5L      // 读取超时时间，单位秒

@@ -25,10 +25,15 @@ object ApiFactory {
     fun makeClientBuilder(addHeadBlock: (Request.Builder) -> Unit = {}): OkHttpClient.Builder {
         val file = File(AppContext.cacheDir, Settings.fileSavePath.httpCachePath)
         val clientBuilder = OkHttpClient.Builder()
-            .cache(Cache(file, 1024 * 1024 * 100))
             .connectTimeout(Settings.Request.connectTimeout, TimeUnit.MINUTES)
             .readTimeout(Settings.Request.readTimeout, TimeUnit.MINUTES)
             .writeTimeout(Settings.Request.writeTimeout, TimeUnit.MINUTES)
+
+        if (Settings.Request.useCache){
+            clientBuilder.cache(Cache(file, Settings.Request.cacheSize))
+        }else{
+            clientBuilder.cache(null)
+        }
         //保存 cookie
         if (Settings.Request.saveCookie) {
             val cookieJar = PersistentCookieJar(
