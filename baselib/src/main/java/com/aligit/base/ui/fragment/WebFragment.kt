@@ -14,6 +14,7 @@ import com.aligit.base.ext.tool.getLength
 import com.aligit.base.ext.tool.log
 import com.aligit.base.ext.tool.toast
 import com.aligit.base.ext.view.setGone
+import com.aligit.base.ext.view.setVisible
 import com.aligit.base.ui.activity.CommonActivityEvent
 import com.aligit.base.ui.activity.CommonActivityOnResult
 import java.io.File
@@ -22,14 +23,8 @@ import java.io.File
 open class WebFragment : BaseVmFragment<FragmentWebBinding>(R.layout.fragment_web),
     CommonActivityEvent, CommonActivityOnResult {
     protected var mUrl: String = ""
-    private var showToolbar:Boolean = false
-    private var toolbarTitle:String = ""
-    private var toolbarTitleCenter:Boolean = false
     override fun onInitDataBinding() {
         mUrl = arguments?.getString("url") ?: ""
-        showToolbar = arguments?.getBoolean("showToolbar") ?: false
-        toolbarTitle = arguments?.getString("toolbarTitle") ?: ""
-        toolbarTitleCenter = arguments?.getBoolean("toolbarTitleCenter") ?: false
         if (mUrl.getLength() == 0){
             toast { "url is empty" }
         }else {
@@ -44,16 +39,11 @@ open class WebFragment : BaseVmFragment<FragmentWebBinding>(R.layout.fragment_we
     private fun initTitle(){
         val childHead = setHeadTitleView()
         mDataBinding.run {
-            if (childHead == null){
-                toolbar.setGone(!showToolbar)
-                toolbar.setNavigationOnClickListener { activity?.finish() }
-                centerTitle.text = toolbarTitle
-                leftTitle.text = toolbarTitle
-                centerTitle.setGone(!toolbarTitleCenter)
-                leftTitle.setGone(toolbarTitleCenter)
-            }else{
-                toolbar.setGone()
-                headLin.addView(childHead)
+            childHead?.let {
+                headLin.addView(it)
+                headLin.setVisible()
+            } ?: let {
+                headLin.setGone()
             }
         }
     }

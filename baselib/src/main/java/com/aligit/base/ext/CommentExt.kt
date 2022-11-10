@@ -41,7 +41,7 @@ inline fun <reified T : View> Dialog.find(@IdRes id: Int): T = findViewById(id)
 /**
  * 判断类型是否一致
  */
-inline fun <reified T:Any> checkType(t:Any):Boolean{
+inline fun <reified T : Any> checkType(t: Any): Boolean {
     return T::class.java.isAssignableFrom(t.javaClass)
 }
 
@@ -55,36 +55,44 @@ inline fun <reified T:Any> checkType(t:Any):Boolean{
  * @param autoSizeIsBaseOnWidth autosize 基于宽度适配，会覆盖 Settings.AutoSize.autoSizeIsBaseOnWidth
  */
 fun startCommonFragment(
-    fragmentPath:String,
+    fragmentPath: String,
     bundle: Bundle? = null,
     useSwipeBack: Boolean = Settings.UI.useSwipeBack,
     useImmersionBar: Boolean = Settings.UI.useImmersionBar,
     isHideBottom: Boolean = !Settings.UI.hasNavigationBar,
     autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,
-){
-    val i = Intent(ActivityUtils.getTopActivity(),CommonActivity::class.java)
-    i.putExtra("useSwipeBack",useSwipeBack)
-    i.putExtra("useImmersionBar",useImmersionBar)
-    i.putExtra("isHideBottom",isHideBottom)
-    i.putExtra("autoSizeIsBaseOnWidth",autoSizeIsBaseOnWidth)
-    i.putExtra("fragmentBundle",bundle)
-    i.putExtra("fragmentPath",fragmentPath)
+    showToolbar: Boolean = false,
+    toolbarTitle: String = "",
+    toolbarTitleCenter: Boolean = false,
+) {
+    val i = Intent(ActivityUtils.getTopActivity(), CommonActivity::class.java)
+    i.putExtra("useSwipeBack", useSwipeBack)
+    i.putExtra("useImmersionBar", useImmersionBar)
+    i.putExtra("isHideBottom", isHideBottom)
+    i.putExtra("autoSizeIsBaseOnWidth", autoSizeIsBaseOnWidth)
+    i.putExtra("fragmentBundle", bundle)
+    i.putExtra("fragmentPath", fragmentPath)
+
+    i.putExtra("showToolbar", showToolbar)
+    i.putExtra("toolbarTitle", toolbarTitle)
+    i.putExtra("toolbarTitleCenter", toolbarTitleCenter)
     ActivityUtils.startActivity(i)
 }
 
 fun startWebFragment(
-    url:String,
-    useSystemWeb:Boolean = false,
-    showToolbar:Boolean = false,
-    toolbarTitle:String = "",
-    toolbarTitleCenter:Boolean = false,
-    fragmentPath:String = "/common/web",
+    url: String,
+    useSystemWeb: Boolean = false,
+    showToolbar: Boolean = false,
+    toolbarTitle: String = "",
+    toolbarTitleCenter: Boolean = false,
+    fragmentPath: String = "/common/web",
     bundle: Bundle? = null,
     useSwipeBack: Boolean = Settings.UI.useSwipeBack, // 使用系统浏览器
     useImmersionBar: Boolean = Settings.UI.useImmersionBar,
     isHideBottom: Boolean = !Settings.UI.hasNavigationBar,
-    autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,){
-    if (useSystemWeb){
+    autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,
+) {
+    if (useSystemWeb) {
         // 打开系统浏览器
         val uri: Uri = Uri.parse(url)
         val intent = Intent(Intent.ACTION_VIEW, uri)
@@ -93,37 +101,56 @@ fun startWebFragment(
         return
     }
     val myBundle = bundle ?: Bundle()
-    myBundle.putString("url",url)
-    myBundle.putBoolean("showToolbar",showToolbar)
-    myBundle.putString("toolbarTitle",toolbarTitle)
-    myBundle.putBoolean("toolbarTitleCenter",toolbarTitleCenter)
-    startCommonFragment(fragmentPath,myBundle,useSwipeBack, useImmersionBar, isHideBottom, autoSizeIsBaseOnWidth)
+    myBundle.putString("url", url)
+    startCommonFragment(
+        fragmentPath,
+        myBundle,
+        useSwipeBack,
+        useImmersionBar,
+        isHideBottom,
+        autoSizeIsBaseOnWidth,
+        showToolbar,
+        toolbarTitle,
+        toolbarTitleCenter
+    )
 }
 
 fun startShowImageFragment(
-    urls:List<String>? = null, // 传递图片链接地址，方法内会转成对象列表
-    imgBeans:ArrayList<ShowImageBean>? = null, // 直接传递对象列表
-    currentIndex:Int = 0,
-    fragmentPath:String = "/common/showimage",
+    urls: List<String>? = null, // 传递图片链接地址，方法内会转成对象列表
+    imgBeans: ArrayList<ShowImageBean>? = null, // 直接传递对象列表
+    currentIndex: Int = 0,
+    fragmentPath: String = "/common/showimage",
     bundle: Bundle? = null,
     useSwipeBack: Boolean = Settings.UI.useSwipeBack,
     useImmersionBar: Boolean = Settings.UI.useImmersionBar,
     isHideBottom: Boolean = !Settings.UI.hasNavigationBar,
-    autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,){
+    autoSizeIsBaseOnWidth: Boolean = Settings.AutoSize.autoSizeIsBaseOnWidth,
+    showToolbar: Boolean = false,
+    toolbarTitle: String = "",
+    toolbarTitleCenter: Boolean = false,
+) {
     val myBundle = bundle ?: Bundle()
     var myImgBeans = arrayListOf<ShowImageBean>()
-    if (imgBeans != null){
+    if (imgBeans != null) {
         myImgBeans = imgBeans
-    }else if (urls != null){
+    } else if (urls != null) {
         urls.forEach {
-            myImgBeans.add(SimpleShowImageBean(it,false))
+            myImgBeans.add(SimpleShowImageBean(it, false))
         }
     }
-    myBundle.putParcelableArrayList("showimage",myImgBeans)
-    myBundle.putInt("currentIndex",currentIndex)
-    startCommonFragment(fragmentPath,myBundle,useSwipeBack, useImmersionBar, isHideBottom, autoSizeIsBaseOnWidth)
+    myBundle.putParcelableArrayList("showimage", myImgBeans)
+    myBundle.putInt("currentIndex", currentIndex)
+    startCommonFragment(
+        fragmentPath,
+        myBundle,
+        useSwipeBack,
+        useImmersionBar,
+        isHideBottom,
+        autoSizeIsBaseOnWidth,showToolbar, toolbarTitle, toolbarTitleCenter
+    )
 }
-inline fun dowithTry(catchBlock: (e: Throwable) -> Unit = {},block: () -> Unit) {
+
+inline fun dowithTry(catchBlock: (e: Throwable) -> Unit = {}, block: () -> Unit) {
     try {
         block()
     } catch (e: Throwable) {
@@ -143,7 +170,7 @@ println(first)
 val (first, second, third) = guardLet("Hello", null, Thing("Hello")) { return }
 println(first)
  */
-inline fun <T: Any> checkNullLet(vararg elements: T?, closure: () -> Nothing): List<T> {
+inline fun <T : Any> checkNullLet(vararg elements: T?, closure: () -> Nothing): List<T> {
     return if (elements.all { it != null }) {
         elements.filterNotNull()
     } else {
@@ -167,13 +194,13 @@ ifLet("Hello", 9, null) {
 println(first)
 }
  */
-inline fun <T: Any> ifNotNullLet(vararg elements: T?, closure: (List<T>) -> Unit) {
+inline fun <T : Any> ifNotNullLet(vararg elements: T?, closure: (List<T>) -> Unit) {
     if (elements.all { it != null }) {
         closure(elements.filterNotNull())
     }
 }
 
-inline fun <reified T> T.deepCopy() : T {
+inline fun <reified T> T.deepCopy(): T {
     return GsonUtils.fromJson(GsonUtils.toJson(this), T::class.java)
 }
 

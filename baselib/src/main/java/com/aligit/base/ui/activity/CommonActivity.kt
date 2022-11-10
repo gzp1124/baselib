@@ -8,6 +8,7 @@ import com.alibaba.android.arouter.launcher.ARouter
 import com.aligit.base.R
 import com.aligit.base.Settings
 import com.aligit.base.databinding.ActivityCommonBinding
+import com.aligit.base.ext.view.setGone
 
 interface CommonActivityEvent {
     fun onKeyDown(keyCode: Int, event: KeyEvent): Boolean
@@ -22,7 +23,24 @@ class CommonActivity : BaseVmActivity<ActivityCommonBinding>(R.layout.activity_c
     var fragmentPath: String? = ""
     var fragmentBundle: Bundle? = null
 
+    private var showToolbar:Boolean = false
+    private var toolbarTitle:String = ""
+    private var toolbarTitleCenter:Boolean = false
+
     override fun onInitDataBinding() {
+
+        showToolbar = intent.getBooleanExtra("showToolbar",false)
+        toolbarTitle = intent.getStringExtra("toolbarTitle") ?: ""
+        toolbarTitleCenter = intent.getBooleanExtra("toolbarTitleCenter",false)
+
+        mDataBinding.run {
+            toolbar.setGone(!showToolbar)
+            toolbar.setNavigationOnClickListener { finish() }
+            centerTitle.text = toolbarTitle
+            leftTitle.text = toolbarTitle
+            centerTitle.setGone(!toolbarTitleCenter)
+            leftTitle.setGone(toolbarTitleCenter)
+        }
     }
 
     override fun isSupportSwipeBack(): Boolean {

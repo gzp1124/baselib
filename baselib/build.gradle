@@ -257,7 +257,7 @@ afterEvaluate {
 
                 groupId = 'com.gzp1124.baselib'
                 artifactId = 'baselib'
-                version = '1.4.13'
+                version = '1.4.20'
             }
         }
 
@@ -266,7 +266,7 @@ afterEvaluate {
                 url 'https://packages.aliyun.com/maven/repository/2124813-release-mj2kic/' // 公司maven仓库地址
                 credentials {
                     username '61027f4b4e5db15d525d1ad9'     // maven仓库账号
-                    password 'HC1VV(O4p7lR'   // maven仓库密码
+                    password 'HC1VV(O4p7lR'   // maven仓库密码，这个密码不能泄漏，有读写权限
                 }
             }
         }

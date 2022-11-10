@@ -13,8 +13,9 @@
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/headLin"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <com.scwang.smart.refresh.layout.SmartRefreshLayout
@@ -32,8 +33,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
         </com.scwang.smart.refresh.layout.SmartRefreshLayout>
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/bottomLin"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
     </LinearLayout>
