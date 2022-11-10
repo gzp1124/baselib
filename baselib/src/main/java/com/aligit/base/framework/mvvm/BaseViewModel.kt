@@ -208,7 +208,7 @@ abstract class BaseViewModel : ViewModel() {
      */
     fun <R, Y, T : IResponse<Y>, W> requestDataToLiveData(
         reqBolck: (W) -> Flow<T>,
-        watchTag: UnPeekLiveData<W> = refreshTrigger as UnPeekLiveData<W>,
+        watchTag: UnPeekLiveData<W>,
         showLoading: Boolean = Settings.Request.showLoading,
         loadingTips: String? = null,
         ignoreCacheErr: Boolean = false,
