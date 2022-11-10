@@ -15,9 +15,9 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:visibility="gone"
             android:background="@color/base_white"
             android:minHeight="48dp"
+            android:visibility="gone"
             app:contentInsetStartWithNavigation="0dp"
             app:navigationIcon="@drawable/ps_ic_black_back">
 

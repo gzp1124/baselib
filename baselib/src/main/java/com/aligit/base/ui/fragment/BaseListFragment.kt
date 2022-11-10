@@ -53,15 +53,19 @@ abstract class BaseListFragment<B> : BaseVmFragment<FragmentListBinding>(R.layou
     override fun onInitDataBinding() {
         mDataBinding.vm = vm
         vm?.page?.postValue(Settings.Request.pageStartIndex)
+        mDataBinding.headLin.removeAllViews()
         if (headTitleViewIsAlwaysTop()) {
             setHeadTitleView()?.forEach { mDataBinding.headLin.addView(it) }
         }
+        mDataBinding.bottomLin.removeAllViews()
         if (bottomViewIsAlwaysBottom()) {
             setBottomView()?.forEach { mDataBinding.bottomLin.addView(it) }
         }
         mDataBinding.rootVV.setBackgroundResource(setBackgroundResource())
         mDataBinding.recyclerView.also {
             it.adapter = mAdapter.apply {
+                removeAllHeaderView()
+                removeAllFooterView()
                 if (!headTitleViewIsAlwaysTop()) {
                     setHeadTitleView()?.forEach { it1 -> addHeaderView(it1) }
                 }
