@@ -57,6 +57,7 @@ class MainActivity : BaseVmActivity<ActivityMainBinding>(R.layout.activity_main)
         MainBean("使用Flow代替LiveData", "/test/flow", true),
         MainBean("测试沉浸式问题", "/test/immersionBar", false),
         MainBean("测试定位获取经纬度", "/test/getlocation", false),
+        MainBean("测试影片播放","/test/4kmovie",true),
         MainBean("测试 XUI 库的使用", "/test/test_xui", true)
     )
 

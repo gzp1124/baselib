@@ -50,7 +50,8 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true">
 
-        <activity android:name="com.aligit.base.ui.activity.CommonActivity" />
+        <activity android:name="com.aligit.base.ui.activity.CommonActivity"
+            android:configChanges="orientation|screenSize" />
 
         <!-- 360 640 Settings 中设置 -->
         <!-- <meta-data
