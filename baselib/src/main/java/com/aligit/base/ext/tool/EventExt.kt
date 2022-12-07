@@ -11,6 +11,10 @@ import org.greenrobot.eventbus.EventBus
  * author : gzp1124
  * time   : 2020/7/3
  * desc   :
+@Subscribe(threadMode = ThreadMode.MAIN)
+public void onReceiveMsg(EventMessage message) {
+Log.e(TAG, "onReceiveMsg: " + message.toString());
+}
 </pre> *
  */
 fun Activity.registerEvent() {
