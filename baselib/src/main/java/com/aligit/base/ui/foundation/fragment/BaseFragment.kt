@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.IdRes
 import androidx.annotation.Nullable
 import androidx.lifecycle.Lifecycle
@@ -167,11 +168,23 @@ abstract class BaseFragment : LazyLoadFragment(), SimpleImmersionOwner {
     fun showFragment(
         @IdRes containerId: Int,
         key: String,
+        hideSameFrameId: Boolean = true,
         createFragment: (key: String) -> BaseFragment
     ) {
         FragmentUtils.getFragments(childFragmentManager)?.forEach { f ->
-            if (f != null && f is BaseFragment && f.isShow) {
-                FragmentUtils.hide(f)
+            if (hideSameFrameId) {
+                if (f != null && f is BaseFragment && f.isShow) {
+                    f.view?.parent?.let {
+                        val cid = (it as ViewGroup).id
+                        if (containerId == cid){
+                            FragmentUtils.hide(f)
+                        }
+                    }
+                }
+            }else {
+                if (f != null && f is BaseFragment && f.isShow) {
+                    FragmentUtils.hide(f)
+                }
             }
         }
         FragmentUtils.findFragment(childFragmentManager, key)?.let {
