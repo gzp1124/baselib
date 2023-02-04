@@ -38,6 +38,12 @@ abstract class BaseVmActivity<DataBinding : ViewDataBinding>(
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        /*
+        简化的写法，可以省去 layoutId
+        mDataBinding = ActivityPlayPickBinding.inflate(layoutInflater)
+        val rootView: View = mDataBinding!!.root
+         */
+
         mDataBinding = DataBindingUtil.setContentView(this, layoutId)
         mDataBinding.lifecycleOwner = this
 //        mDataBinding.root.fitsSystemWindows = true
