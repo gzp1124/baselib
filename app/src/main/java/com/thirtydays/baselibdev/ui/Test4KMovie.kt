@@ -4,8 +4,11 @@ import com.alibaba.android.arouter.facade.annotation.Route
 import com.aligit.base.ext.startWebFragment
 import com.aligit.base.ext.view.click
 import com.aligit.base.ui.fragment.BaseVmFragment
+import com.blankj.utilcode.util.KeyboardUtils
+import com.lxj.xpopup.XPopup
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTest4kMovieBinding
+
 
 @Route(path = "/test/4kmovie")
 class Test4KMovie : BaseVmFragment<FragmentTest4kMovieBinding>(R.layout.fragment_test_4k_movie) {
@@ -20,12 +23,14 @@ class Test4KMovie : BaseVmFragment<FragmentTest4kMovieBinding>(R.layout.fragment
 
     override fun onInitDataBinding() {
         mDataBinding.run {
-            webView.overRegUrls.addAll(listOf(
+            webView.overRegUrls.addAll(
+                listOf(
                     "https://shp.qpic.cn/wanjiashequ_pic/0/0f3c7d3af3efda8ef4d1f1c1f26f5081/0",
                     "https://www.o8tv.com/user/reg.html",
                     "https://www.o8tv.com/user/findpass.html",
                     "https://www.o8tv.com/user/login.html"
-                ))
+                )
+            )
 //            webView.setWebViwClient(object : WebViewClient() {
 //                // 要拦截的 url
 //                val overUrls =
@@ -42,8 +47,18 @@ class Test4KMovie : BaseVmFragment<FragmentTest4kMovieBinding>(R.layout.fragment
             m1.click { loadUrl(urls[0]) }
             m2.click { loadUrl(urls[1]) }
             m3.click { loadUrl(urls[2]) }
-            m4.click { loadUrl(urls[3]) }
+            m4.click { showinput() }
+            m5.click { loadUrl(urls[4]) }
         }
+    }
+
+    fun showinput() {
+        XPopup.Builder(context).asInputConfirm(
+            "我是标题", "请输入内容。"
+        ) { text ->
+            KeyboardUtils.hideSoftInput(requireActivity())
+            startWebFragment(url = text)
+        }.show()
     }
 
     private fun loadUrl(url: String?) {

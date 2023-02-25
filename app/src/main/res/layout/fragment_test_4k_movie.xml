@@ -29,6 +29,11 @@
             android:text="影片4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/m5"
+            android:text="影片5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <com.aligit.base.common.web.MyWebView
             android:id="@+id/webView"
