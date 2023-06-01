@@ -23,7 +23,7 @@ import com.aligit.base.widget.show_grid_image.ShowGridImageView
 import com.blankj.utilcode.util.UriUtils
 import com.thirtydays.baselibdev.R
 import com.thirtydays.baselibdev.databinding.FragmentTestSelectImageBinding
-import com.xuexiang.xaop.annotation.Permission
+//import com.xuexiang.xaop.annotation.Permission
 
 
 @Route(path = "/test/select_image")
@@ -114,7 +114,7 @@ class TestSelectImageFragment :
         )
     }
 
-    @Permission(Manifest.permission.CAMERA)
+//    @Permission(Manifest.permission.CAMERA)
     fun myToast(v: View){
 //        toast { "点击啦啦啦啦啦啦啦啦啦啦" }
         log("lai l l l l l l l ")

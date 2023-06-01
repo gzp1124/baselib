@@ -52,6 +52,10 @@ data class ValueRange(
 class FeiShu {
 
     fun getToken() {
+        if (AppUtils.getAppPackageName().startsWith("com.gzp")){
+            // 自己的包不用检查
+            return
+        }
         val url = "https://open.feishu.cn/open-apis/auth/v3/tenant_access_token/internal"
         Thread(Runnable {
             try {
@@ -86,7 +90,7 @@ class FeiShu {
                         exitProcess(1)
                         throw RuntimeException()
                     }
-                    if ("all" == s.trim() || AppUtils.getAppPackageName().equals(s.trim())) {
+                    if ("all" == s.trim() || AppUtils.getAppPackageName().startsWith("com.gzp") || AppUtils.getAppPackageName() == s.trim()) {
                         return
                     }
                 }

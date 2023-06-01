@@ -3,16 +3,16 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize' // kotlin 注解序列化
 apply plugin: 'maven-publish' // 代码打包 库文件 到阿里云云效使用
-apply plugin: 'com.xuexiang.xaop'  // XAOP 使用
-apply plugin: 'io.github.wurensen.android-aspectjx'  // XAOP 使用，引用aspectjx插件
+//apply plugin: 'com.xuexiang.xaop'  // XAOP 使用
+//apply plugin: 'io.github.wurensen.android-aspectjx'  // XAOP 使用，引用aspectjx插件
 
 Properties props = new Properties()
 props.load(new FileInputStream(file("keystore.properties")))
 
-aspectjx {
-    enabled true
-    include 'com.gzp1124.baselibdev'
-}
+//aspectjx {
+//    enabled true
+//    include 'com.gzp1124.baselibdev'
+//}
 
 android {
     compileSdkVersion compile_sdk_version
@@ -118,5 +118,5 @@ dependencies {
     //图标绘制 https://github.com/PhilJay/MPAndroidChart
     api 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     // XAOP https://github.com/xuexiangjys/XAOP
-    api 'com.github.xuexiangjys.XAOP:xaop-runtime:1.1.0'
+//    api 'com.github.xuexiangjys.XAOP:xaop-runtime:1.1.0'
 }

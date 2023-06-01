@@ -21,8 +21,8 @@ buildscript {
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
-        classpath 'com.github.xuexiangjys.XAOP:xaop-plugin:1.1.0' // XAOP 使用
-        classpath 'io.github.wurensen:gradle-android-plugin-aspectjx:3.0.0' // XAOP 使用
+//        classpath 'com.github.xuexiangjys.XAOP:xaop-plugin:1.1.0' // XAOP 使用
+//        classpath 'io.github.wurensen:gradle-android-plugin-aspectjx:3.0.0' // XAOP 使用
     }
 }
 

@@ -16,7 +16,20 @@
    3. 如果baselib 下方没有 publishing，Command+,打开设置页 - Experimental - 取消勾选 Do not build Gradle task....
 
 4. 在其他项目中使用的方法
-   1. 项目的 settings.gradle 文件中，只读密码放心用
+    0. 项目的 gradle 中
+```
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+plugins {
+    id 'com.android.application' version '7.2.2' apply false
+    id 'com.android.library' version '7.2.2' apply false
+    id 'org.jetbrains.kotlin.android' version '1.6.10' apply false
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+```
+    1. 项目的 settings.gradle 文件中，只读密码放心用
 ```
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -48,13 +61,44 @@ dependencyResolutionManagement {
     }
 
     kapt 和 applicationId 同级，defaultConfig 中
-    kapt {
-        includeCompileClasspath = true
-        arguments {
-            arg("AROUTER_MODULE_NAME", project.getName())
+
+    defaultConfig {
+        ...
+        multiDexEnabled true
+        kapt {
+            includeCompileClasspath = true
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
         }
+    
+        ndk {
+            //设置支持的SO库架构
+            abiFilters "arm64-v8a", "armeabi-v7a"
+        }
+        ...
     }
 
+    
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    
     使用baselib
     implementation 'com.gzp1124.baselib:baselib:1.4.0'
     kapt "com.alibaba:arouter-compiler:1.5.2"
@@ -63,6 +107,11 @@ dependencyResolutionManagement {
     // XUI UI库 https://github.com/xuexiangjys/XUI/wiki
     implementation 'com.github.xuexiangjys:XUI:1.1.9'
 ```
+3. 在 gradle.properties 中添加
+   android.useAndroidX=true
+   android.enableJetifier=true
+
+4. 创建 Application 并在 mainifast.xml 中指定
 
 5. 使用欢迎页让用户接受隐私政策，不接受隐私政策不进入APP
    因为最新的隐私政策原因，不这么做APP可能无法上线
